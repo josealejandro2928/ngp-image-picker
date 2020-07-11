@@ -1,4 +1,4 @@
-app-ngp-image-picker {
+ngp-image-picker {
   .place-image {
 
     flex-direction: column;
@@ -265,6 +265,10 @@ app-ngp-image-picker {
 
   .mat-form-field-appearance-fill .mat-form-field-flex {
     background-color: #fafafa !important;
+  }
+
+  .mat-select-panel {
+    background: #fafafa !important;
   }
 
   input.mat-input-element {

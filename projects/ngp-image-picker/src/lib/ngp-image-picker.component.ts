@@ -1,4 +1,3 @@
-import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 export interface ImagePickerConf {
@@ -17,7 +16,7 @@ export interface ImageConverterInput {
   maintainRatio?: boolean;
 }
 @Component({
-  selector: 'app-ngp-image-picker',
+  selector: 'ngp-image-picker',
   templateUrl: './ngp-image-picker.component.html',
   styleUrls: ['./ngp-image-picker.component.scss'],
   encapsulation: ViewEncapsulation.None,

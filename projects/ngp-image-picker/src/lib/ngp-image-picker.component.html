@@ -1,11 +1,14 @@
 <div *ngIf="!loadImage" class="place-image">
-  <div class="image-holder" [ngStyle]="{'width': this.config.width,'height': this.config.height,'borderRadius':this.config.borderRadius}">
+  <div class="image-holder"
+    [ngStyle]="{'width': this.config.width,'height': this.config.height,'borderRadius':this.config.borderRadius}">
 
-    <button matTooltip="{{labels['Upload a image']}}" class="image-upload-btn" mat-icon-button (click)="onUpload($event)">
+    <button matTooltip="{{labels['Upload a image']}}" class="image-upload-btn" mat-icon-button
+      (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
 
-    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker"
+      (change)="handleFileSelect($event)">
 
   </div>
 
@@ -13,7 +16,8 @@
 <div *ngIf="loadImage" class="place-image">
   <div class="image-holder-loaded" [ngStyle]="{'height': this.config.height,'borderRadius':this.config.borderRadius}">
     <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{'borderRadius':this.config.borderRadius}">
-    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker"
+      (change)="handleFileSelect($event)">
     <p *ngIf="this.calculateSize()" class="mat-caption image-caption">
       size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
       <span matTooltip="{{labels['You must edit the image in order to resize it']}}" *ngIf="this.calculateSize()>120"
@@ -23,10 +27,10 @@
     </p>
   </div>
   <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx" class="editing-bar-btn mt-2">
-    <button matTooltip="{{labels['Upload a image']}}" mat-icon-button (click)="onUpload($event)">
+    <button mat-icon-button matTooltip="{{labels['Upload a image']}}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
-    <button matTooltip="{{labels['Open the editor panel']}}" mat-icon-button (click)="onOpenEditPanel()">
+    <button mat-icon-button matTooltip="{{labels['Open the editor panel']}}" (click)="onOpenEditPanel()">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
     <a matTooltip="{{labels['Download the image']}}" [href]="this.imageSrc" mat-icon-button download>
@@ -61,16 +65,17 @@
 
       <p class="item-panel">{{labels['Quality']}}</p>
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-        <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0"
-          [max]="100" [step]="1" [thumbLabel]="true">
+        <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality"
+          [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
       </div>
 
-      <p class="item-panel">{{labels['Max dimensions']}} <mat-checkbox style="float: right;" [(ngModel)]="maintainAspectRatio"
-          color="accent">
+      <p class="item-panel">{{labels['Max dimensions']}} <mat-checkbox style="float: right;"
+          [(ngModel)]="maintainAspectRatio" color="accent">
           <span class="mat-caption">{{labels['aspect-ratio']}}</span> </mat-checkbox>
       </p>
-      <div fxLayout="row wrap" style="margin-top: 8px !important;" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+      <div fxLayout="row wrap" style="margin-top: 8px !important;" fxLayoutAlign="space-between start"
+        fxLayoutGap="gappx">
         <mat-form-field fxFlex="48" appearance="fill">
           <mat-label>{{labels['max-width(px)']}}</mat-label>
           <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-width(px)']}}"
@@ -78,8 +83,8 @@
         </mat-form-field>
         <mat-form-field fxFlex="48" appearance="fill">
           <mat-label>{{labels['max-height(px)']}}</mat-label>
-          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-height(px)']}}"
-            [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
+          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput
+            placeholder="{{labels['max-height(px)']}}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
         </mat-form-field>
       </div>
 
