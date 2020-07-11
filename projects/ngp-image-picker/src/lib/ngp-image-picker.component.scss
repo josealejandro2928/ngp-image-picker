@@ -149,7 +149,19 @@ ngp-image-picker {
 
     .editing-bar-btn {
 
-      button,
+      button {
+        margin: 4px 4px;
+        color: #424242;
+        transition: all .5s ease;
+
+        &:hover {
+          transform: scale(1.25);
+          margin: 4px 8px;
+          transition: all .25s ease-in;
+        }
+
+      }
+
       a {
         margin: 4px 4px;
         color: #424242;
@@ -160,6 +172,7 @@ ngp-image-picker {
           margin: 4px 8px;
           transition: all .25s ease-in;
         }
+
       }
 
 
