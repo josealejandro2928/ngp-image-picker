@@ -10,6 +10,8 @@
 # dependencies
 /node_modules
 
+/projects/ngp-image-picker/node_modules
+
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
