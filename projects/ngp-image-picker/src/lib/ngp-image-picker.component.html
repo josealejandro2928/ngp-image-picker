@@ -1,0 +1,107 @@
+<div *ngIf="!loadImage" class="place-image">
+  <div class="image-holder" [ngStyle]="{'width': this.config.width,'height': this.config.height,'borderRadius':this.config.borderRadius}">
+
+    <button matTooltip="{{labels['Upload a image']}}" class="image-upload-btn" mat-icon-button (click)="onUpload($event)">
+      <mat-icon class="mat-18">add_a_photo</mat-icon>
+    </button>
+
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
+
+  </div>
+
+</div>
+<div *ngIf="loadImage" class="place-image">
+  <div class="image-holder-loaded" [ngStyle]="{'height': this.config.height,'borderRadius':this.config.borderRadius}">
+    <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{'borderRadius':this.config.borderRadius}">
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
+    <p *ngIf="this.calculateSize()" class="mat-caption image-caption">
+      size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
+      <span matTooltip="{{labels['You must edit the image in order to resize it']}}" *ngIf="this.calculateSize()>120"
+        style="color: #f44336; font-weight: 400;">
+        &nbsp; {{labels['too large']}}
+      </span>
+    </p>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx" class="editing-bar-btn mt-2">
+    <button matTooltip="{{labels['Upload a image']}}" mat-icon-button (click)="onUpload($event)">
+      <mat-icon class="mat-18">add_a_photo</mat-icon>
+    </button>
+    <button matTooltip="{{labels['Open the editor panel']}}" mat-icon-button (click)="onOpenEditPanel()">
+      <mat-icon class="mat-18">edit</mat-icon>
+    </button>
+    <a matTooltip="{{labels['Download the image']}}" [href]="this.imageSrc" mat-icon-button download>
+      <mat-icon class="mat-18">cloud_download</mat-icon>
+    </a>
+  </div>
+
+
+</div>
+
+<div *ngIf="showEditPanel" id="popup" class="popup">
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
+    <button mat-icon-button (click)="this.showEditPanel = false">
+      <mat-icon class="mat-18">clear</mat-icon>
+    </button>
+  </div>
+
+  <div class="image-container" fxFlexFill fxLayout="row wrap" fxLayoutAlign="center start">
+    <div id="image-holder-full" class="image-holder-full">
+      <img [src]="this.imageSrc" />
+
+      <!-- <div id="image-croper" class="image-croper">
+        <div id="image-croper-header">
+          <mat-icon>drag_indicator</mat-icon>
+
+        </div>
+      </div> -->
+    </div>
+
+    <div class="control-panel" fxLayout="column" fxLayoutAlign="start stretch">
+      <p class="title-panel">{{labels['Control Panel']}}</p>
+
+      <p class="item-panel">{{labels['Quality']}}</p>
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+        <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0"
+          [max]="100" [step]="1" [thumbLabel]="true">
+        </mat-slider>
+      </div>
+
+      <p class="item-panel">{{labels['Max dimensions']}} <mat-checkbox style="float: right;" [(ngModel)]="maintainAspectRatio"
+          color="accent">
+          <span class="mat-caption">{{labels['aspect-ratio']}}</span> </mat-checkbox>
+      </p>
+      <div fxLayout="row wrap" style="margin-top: 8px !important;" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+        <mat-form-field fxFlex="48" appearance="fill">
+          <mat-label>{{labels['max-width(px)']}}</mat-label>
+          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-width(px)']}}"
+            [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000">
+        </mat-form-field>
+        <mat-form-field fxFlex="48" appearance="fill">
+          <mat-label>{{labels['max-height(px)']}}</mat-label>
+          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-height(px)']}}"
+            [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
+        </mat-form-field>
+      </div>
+
+      <p class="item-panel">{{labels['Format']}}</p>
+      <div style="margin-top: 8px !important;" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+        <mat-form-field fxFlex="100" appearance="fill" color="accent">
+          <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
+            <mat-option *ngFor="let format of allFormats" [value]="format">
+              {{format}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <p *ngIf="this.calculateSize()" class="mat-caption" style="text-align: end;margin: 8px 0px;">
+        size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
+        <span matTooltip="{{labels['You must edit the image in order to resize it']}}" *ngIf="this.calculateSize()>120"
+          style="color: #f44336; font-weight: 400;">
+          &nbsp; {{labels['too large']}}
+        </span>
+      </p>
+
+    </div>
+  </div>
+</div>

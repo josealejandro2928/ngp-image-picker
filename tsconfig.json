@@ -6,5 +6,12 @@
 */
 {
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./projects/ngp-image-picker/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngp-image-picker/tsconfig.spec.json"
+    }
+]
 }

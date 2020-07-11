@@ -1,0 +1,14 @@
+{
+  "name": "ngp-image-picker",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.0.3",
+    "@angular/core": "^10.0.3"
+  },
+  "dependencies": {
+    "@angular/cdk": "^10.0.1",
+    "@angular/flex-layout": "^10.0.0-beta.32",
+    "@angular/material": "^10.0.1",
+    "tslib": "^2.0.0"
+  }
+}
