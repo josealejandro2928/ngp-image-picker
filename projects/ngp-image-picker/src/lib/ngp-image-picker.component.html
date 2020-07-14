@@ -26,7 +26,9 @@
       </span>
     </p>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx" class="editing-bar-btn mt-2">
+  <div
+    style="flex-direction: row;box-sizing: border-box;display: flex;place-content: flex-start;align-items: flex-start;"
+    class="editing-bar-btn mt-2">
     <button mat-icon-button matTooltip="{{labels['Upload a image']}}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
@@ -42,13 +44,14 @@
 </div>
 
 <div *ngIf="showEditPanel" id="popup" class="popup">
-  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
+  <div
+    style="flex-direction: row; box-sizing: border-box;display: flex;place-content: center flex-end;align-items: center;">
     <button mat-icon-button (click)="this.showEditPanel = false">
       <mat-icon class="mat-18">clear</mat-icon>
     </button>
   </div>
 
-  <div class="image-container" fxFlexFill fxLayout="row wrap" fxLayoutAlign="center start">
+  <div class="image-container">
     <div id="image-holder-full" class="image-holder-full">
       <img [src]="this.imageSrc" />
 
@@ -60,11 +63,12 @@
       </div> -->
     </div>
 
-    <div class="control-panel" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="control-panel">
       <p class="title-panel">{{labels['Control Panel']}}</p>
 
       <p class="item-panel">{{labels['Quality']}}</p>
-      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+      <div
+        style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start;">
         <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality"
           [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
@@ -74,14 +78,14 @@
           [(ngModel)]="maintainAspectRatio" color="accent">
           <span class="mat-caption">{{labels['aspect-ratio']}}</span> </mat-checkbox>
       </p>
-      <div fxLayout="row wrap" style="margin-top: 8px !important;" fxLayoutAlign="space-between start"
-        fxLayoutGap="gappx">
-        <mat-form-field fxFlex="48" appearance="fill">
+      <div
+        style="margin-top: 8px !important;flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start;">
+        <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
           <mat-label>{{labels['max-width(px)']}}</mat-label>
           <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-width(px)']}}"
             [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000">
         </mat-form-field>
-        <mat-form-field fxFlex="48" appearance="fill">
+        <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
           <mat-label>{{labels['max-height(px)']}}</mat-label>
           <input (change)="onChangeSize($event.target.valueAsNumber)" matInput
             placeholder="{{labels['max-height(px)']}}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
@@ -89,8 +93,9 @@
       </div>
 
       <p class="item-panel">{{labels['Format']}}</p>
-      <div style="margin-top: 8px !important;" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-        <mat-form-field fxFlex="100" appearance="fill" color="accent">
+      <div
+        style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start;">
+        <mat-form-field style="max-width: 100%; width: 100%;" appearance="fill" color="accent">
           <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
             <mat-option *ngFor="let format of allFormats" [value]="format">
               {{format}}

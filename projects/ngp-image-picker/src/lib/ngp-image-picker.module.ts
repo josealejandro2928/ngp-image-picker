@@ -1,4 +1,3 @@
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgpImagePickerComponent } from './ngp-image-picker.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +17,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   imports: [
     CommonModule,
     MatIconModule,
-    FlexLayoutModule,
     MatButtonModule,
     MatTooltipModule,
     MatSliderModule,
@@ -28,7 +26,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSelectModule,
     MatInputModule,
     MatCheckboxModule,
-    FlexLayoutModule,
   ],
   exports: [NgpImagePickerComponent],
 })

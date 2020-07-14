@@ -1,7 +1,7 @@
 ngp-image-picker {
   p {
-    margin: 0px;
-    padding: 0px;
+    margin: 0px !important;
+    padding: 0px !important;
   }
 
   .place-image {
@@ -200,6 +200,15 @@ ngp-image-picker {
     .image-container {
       margin-top: 50px;
       margin-bottom: 50px;
+      height: 100%;
+      min-height: 100%;
+      min-width: 100%;
+      width: 100%;
+      flex-flow: row wrap;
+      box-sizing: border-box;
+      display: flex;
+      place-content: flex-start center;
+      align-items: flex-start;
 
       .image-holder-full {
         height: auto;
@@ -250,6 +259,12 @@ ngp-image-picker {
       max-width: 100%;
       width: 25rem;
       border-radius: 8px;
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+      place-content: stretch flex-start;
+      align-items: stretch;
+      max-width: 100%;
 
       .title-panel {
         padding: 0px 4px;

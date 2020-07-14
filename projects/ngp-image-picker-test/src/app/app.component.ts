@@ -18,4 +18,14 @@ export class AppComponent {
     width: '200px',
     height: '200px',
   };
+  config3: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'en',
+  };
+
+  initialImage = 'https://havanatursa.com/assets/images/carousel/Hoteles.webp';
+
+  onImageChanged(base64): void {
+    console.log('AppComponent -> onImageChanged -> base64', base64);
+  }
 }

@@ -4,4 +4,8 @@
   <br>
   <h2>Custom comfig</h2>
   <ngp-image-picker [_config]="config2"></ngp-image-picker>
+  <br>
+  <h2>Initial Image</h2>
+  <ngp-image-picker [_imageSrc]="initialImage" ($imageChanged)="onImageChanged($event)" [_config]="config3">
+  </ngp-image-picker>
 </div>
