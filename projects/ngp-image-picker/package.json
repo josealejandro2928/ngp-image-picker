@@ -1,6 +1,6 @@
 {
   "name": "ngp-image-picker",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "peerDependencies": {
     "@angular/common": "^10.0.3",
     "@angular/core": "^10.0.3",
@@ -9,5 +9,7 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "license": "MIT",
+  "keywords": ["angular", "angular-material", "material-rating", "image-picker", "image", "compress image"]
 }
