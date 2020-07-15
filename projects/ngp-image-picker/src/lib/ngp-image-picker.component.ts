@@ -74,7 +74,7 @@ export class NgpImagePickerComponent implements OnInit {
     'aspect-ratio': 'aspect-ratio',
     'max-width(px)': 'max-width(px)',
     'max-height(px)': 'max. alto',
-    Format: 'Formato',
+    Format: 'Format',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',

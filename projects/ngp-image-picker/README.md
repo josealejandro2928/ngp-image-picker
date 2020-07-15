@@ -124,4 +124,5 @@ Once you have selected an image, three buttons are enabled below the image:
 In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'. The 'Png' format is not affected by changing the quality ratio.
 
 ![Image Rating](https://havanatursa.com/assets/images/npm/Capture2.webp)
-![Image Rating](https://havanatursa.com/assets/images/npm/Capture3.webp)
+![Image Rating](https://havanatursa.com/assets/images/npm/Capture3.png)
+![Image Rating](https://havanatursa.com/assets/images/npm/Capture4.webp)
