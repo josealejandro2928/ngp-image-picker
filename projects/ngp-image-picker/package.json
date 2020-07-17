@@ -8,7 +8,8 @@
     "@angular/material": "^10.0.1"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "resize-observer": "^1.0.0"
   },
   "license": "MIT",
   "keywords": ["angular", "angular-material", "image picker", "image upload", "image editor", "image", "compress image"]

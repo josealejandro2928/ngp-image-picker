@@ -128,3 +128,6 @@ In the edit panel, you can change the quality ratio to compress the file size (i
 ![Image Rating](https://havanatursa.com/assets/images/npm/Capture3.PNG)
 ### All together
 ![Image Rating](https://havanatursa.com/assets/images/npm/Capture4.webp)
+
+### Live Demo
+[https://cogetuimagen.cubanearme.com/](https://cogetuimagen.cubanearme.com/)
