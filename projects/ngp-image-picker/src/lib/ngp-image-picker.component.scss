@@ -29,8 +29,8 @@ ngp-image-picker {
       background-color: #fcfcfc;
 
       @media (max-width:599px) {
-        max-width: 260px !important;
-        max-height: 195px !important;
+        max-width: 100% !important;
+        max-height: 250px !important;
       }
 
       .image-upload-btn {
@@ -181,7 +181,6 @@ ngp-image-picker {
 
   }
 
-
   .popup {
     width: 100vw;
     height: 100vh;
@@ -190,7 +189,7 @@ ngp-image-picker {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, .8);
-    z-index: 99999;
+    z-index: 1000;
     padding: 24px;
     color: white;
     box-sizing: border-box;
@@ -225,17 +224,17 @@ ngp-image-picker {
     }
 
     img {
-      max-height: 85%;
-      max-width: 70%;
+      max-height: 600px;
+      max-width: 100%;
       object-fit: cover;
       object-position: center;
-      margin: 16px;
+      margin: 8px;
       transition: all .5s ease;
     }
 
     @media (max-width:1024px) {
       background-color: rgba(0, 0, 0, .85);
-      padding: 16px;
+      padding: 8px;
 
       img {
         max-height: 98%;
@@ -254,10 +253,10 @@ ngp-image-picker {
     .control-panel {
       color: #fff;
       background-color: rgba(0, 0, 0, .92);
-      margin: 16px;
+      margin: 8px;
       padding: 16px;
       max-width: 100%;
-      width: 25rem;
+      width: 18rem;
       border-radius: 8px;
       flex-direction: column;
       box-sizing: border-box;
@@ -308,16 +307,20 @@ ngp-image-picker {
     color: rgba(0, 0, 0, .85);
   }
 
+  .mat-checkbox-background {
+    background-color: white;
+
+  }
+
   .image-croper {
     position: absolute;
-    min-width: 150px;
-    min-height: 150px;
+    width: 150px;
+    height: 150px;
     border: 2.5px solid #fafafa;
-    top: 40%;
-    left: 40%;
     box-sizing: border-box;
     resize: both;
     overflow: auto;
+    opacity: 0;
 
     #image-croper-header {
       padding: 10px;
@@ -325,12 +328,24 @@ ngp-image-picker {
       z-index: 10;
       background-color: transparent;
       color: #fff;
+      height: 85%;
 
       mat-icon {
         color: #fff;
 
       }
     }
+  }
+
+  .btn {
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    mat-icon {
+      color: rgba(0, 0, 0, 0.82);
+    }
+
   }
 
 

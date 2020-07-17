@@ -1,14 +1,11 @@
 <div *ngIf="!loadImage" class="place-image">
-  <div class="image-holder"
-    [ngStyle]="{'width': this.config.width,'height': this.config.height,'borderRadius':this.config.borderRadius}">
+  <div class="image-holder" [ngStyle]="{'width': this.config.width,'height': this.config.height,'borderRadius':this.config.borderRadius}">
 
-    <button matTooltip="{{labels['Upload a image']}}" class="image-upload-btn" mat-icon-button
-      (click)="onUpload($event)">
+    <button matTooltip="{{labels['Upload a image']}}" class="image-upload-btn" mat-icon-button (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
 
-    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker"
-      (change)="handleFileSelect($event)">
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
 
   </div>
 
@@ -16,8 +13,7 @@
 <div *ngIf="loadImage" class="place-image">
   <div class="image-holder-loaded" [ngStyle]="{'height': this.config.height,'borderRadius':this.config.borderRadius}">
     <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{'borderRadius':this.config.borderRadius}">
-    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker"
-      (change)="handleFileSelect($event)">
+    <input type="file" style="display: none;" [id]="'filePicker-'+this.uuidFilePicker" (change)="handleFileSelect($event)">
     <p *ngIf="this.calculateSize()" class="mat-caption image-caption">
       size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
       <span matTooltip="{{labels['You must edit the image in order to resize it']}}" *ngIf="this.calculateSize()>120"
@@ -26,8 +22,7 @@
       </span>
     </p>
   </div>
-  <div
-    style="flex-direction: row;box-sizing: border-box;display: flex;place-content: flex-start;align-items: flex-start;"
+  <div style="flex-direction: row;box-sizing: border-box;display: flex;place-content: flex-start;align-items: flex-start;"
     class="editing-bar-btn mt-2">
     <button mat-icon-button matTooltip="{{labels['Upload a image']}}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
@@ -35,7 +30,7 @@
     <button mat-icon-button matTooltip="{{labels['Open the editor panel']}}" (click)="onOpenEditPanel()">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
-    <a matTooltip="{{labels['Download the image']}}" [href]="this.imageSrc" mat-icon-button download>
+    <a matTooltip="{{labels['Download the image']}}" [href]="this.imageSrc" mat-icon-button download="{{imageName}}">
       <mat-icon class="mat-18">cloud_download</mat-icon>
     </a>
   </div>
@@ -44,38 +39,36 @@
 </div>
 
 <div *ngIf="showEditPanel" id="popup" class="popup">
-  <div
-    style="flex-direction: row; box-sizing: border-box;display: flex;place-content: center flex-end;align-items: center;">
-    <button mat-icon-button (click)="this.showEditPanel = false">
+  <div style="flex-direction: row; box-sizing: border-box;display: flex;place-content: center flex-end;align-items: center;">
+    <button mat-icon-button (click)="onCloseEditPanel()">
       <mat-icon class="mat-18">clear</mat-icon>
     </button>
   </div>
 
   <div class="image-container">
-    <div id="image-holder-full" class="image-holder-full">
-      <img [src]="this.imageSrc" />
+    <div class="image-holder-full">
+      <img id="image-full" [src]="this.imageSrc" />
 
-      <!-- <div id="image-croper" class="image-croper">
+      <div id="image-croper" class="image-croper">
         <div id="image-croper-header">
           <mat-icon>drag_indicator</mat-icon>
 
         </div>
-      </div> -->
+      </div>
     </div>
 
     <div class="control-panel">
       <p class="title-panel">{{labels['Control Panel']}}</p>
 
       <p class="item-panel">{{labels['Quality']}}</p>
-      <div
-        style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start;">
-        <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality"
-          [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
+      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start;">
+        <mat-slider style="max-width: 100%; width: 100%;" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0"
+          [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
       </div>
 
-      <p class="item-panel">{{labels['Max dimensions']}} <mat-checkbox style="float: right;"
-          [(ngModel)]="maintainAspectRatio" color="accent">
+      <p class="item-panel">{{labels['Max dimensions']}} <mat-checkbox style="float: right;" [(ngModel)]="maintainAspectRatio"
+          color="accent">
           <span class="mat-caption">{{labels['aspect-ratio']}}</span> </mat-checkbox>
       </p>
       <div
@@ -87,8 +80,8 @@
         </mat-form-field>
         <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
           <mat-label>{{labels['max-height(px)']}}</mat-label>
-          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput
-            placeholder="{{labels['max-height(px)']}}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
+          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-height(px)']}}"
+            [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
         </mat-form-field>
       </div>
 
@@ -103,6 +96,44 @@
           </mat-select>
         </mat-form-field>
       </div>
+
+      <p>
+        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" color="accent">
+          <p class="item-panel">{{labels['Crop']}}</p>
+        </mat-checkbox>
+        <button style="float: right;" mat-icon-button color="primary" (click)="onRestore()">
+          <mat-icon>
+            refresh
+          </mat-icon>
+        </button>
+      </p>
+
+      <ng-container *ngIf="showCrop">
+        <div
+          style="margin-top: 8px !important;flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start;">
+          <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
+            <mat-label>{{labels['width(px)']}}</mat-label>
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" matInput placeholder="{{labels['width(px)']}}"
+              [(ngModel)]="cropWidth" type="number" [min]="0" [max]="2000">
+          </mat-form-field>
+          <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
+            <mat-label>{{labels['height(px)']}}</mat-label>
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" matInput placeholder="{{labels['height(px)']}}"
+              [(ngModel)]="cropHeight" type="number" [min]="0" [max]="2000">
+          </mat-form-field>
+        </div>
+
+        <p>
+          <button mat-icon-button color="primary" (click)="onCrop()">
+            <mat-icon>
+              crop
+            </mat-icon>
+          </button>
+        </p>
+
+      </ng-container>
+
+
 
       <p *ngIf="this.calculateSize()" class="mat-caption" style="text-align: end;margin: 8px 0px;">
         size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
