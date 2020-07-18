@@ -75,13 +75,13 @@
         style="margin-top: 8px !important;flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start;">
         <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
           <mat-label>{{labels['max-width(px)']}}</mat-label>
-          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-width(px)']}}"
-            [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000">
+          <input (change)="onChangeSize(true,false)" matInput placeholder="{{labels['max-width(px)']}}" [(ngModel)]="maxWidth" type="number"
+            [min]="0" [max]="2000">
         </mat-form-field>
         <mat-form-field style="max-width: 48%; width: 48%;" appearance="fill">
           <mat-label>{{labels['max-height(px)']}}</mat-label>
-          <input (change)="onChangeSize($event.target.valueAsNumber)" matInput placeholder="{{labels['max-height(px)']}}"
-            [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000">
+          <input (change)="onChangeSize(false,true)" matInput placeholder="{{labels['max-height(px)']}}" [(ngModel)]="maxHeight"
+            type="number" [min]="0" [max]="2000">
         </mat-form-field>
       </div>
 

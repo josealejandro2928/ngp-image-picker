@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ResizeObserver } from 'resize-observer';
-
+import { rejects } from 'assert';
 
 export interface ImagePickerConf {
   width?: string;
@@ -16,6 +16,8 @@ export interface ImageConverterInput {
   quality?: number;
   dataType?: string;
   maintainRatio?: boolean;
+  changeHeight?: boolean;
+  changeWidth?: boolean;
 }
 
 @Component({
@@ -249,8 +251,13 @@ export class NgpImagePickerComponent implements OnInit {
         let height = input.height ? input.height : img.height;
 
         if (maintainRatio) {
-          canvas.width = width;
-          canvas.height = width / ratio;
+          if (input.changeHeight) {
+            canvas.width = height * ratio;
+            canvas.height = height;
+          } else {
+            canvas.width = width;
+            canvas.height = width / ratio;
+          }
         } else {
           canvas.width = width;
           canvas.height = height;
@@ -327,7 +334,7 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  async onChangeSize(value) {
+  async onChangeSize(changeWidth?, changeHeight?) {
     let qualityItem = this.quality / 100;
     this.maxHeight = this.maxHeight && +this.maxHeight ? this.maxHeight : 2000;
     this.maxWidth = this.maxWidth && +this.maxWidth ? this.maxWidth : 2000;
@@ -340,6 +347,8 @@ export class NgpImagePickerComponent implements OnInit {
         dataType: this.format,
         quality: qualityItem,
         maintainRatio: this.maintainAspectRatio,
+        changeHeight: changeHeight,
+        changeWidth: changeWidth,
       };
       this.imageSrc = await this.resizedataURL(this.originImageSrc, input);
       this.$imageChanged.next(this.imageSrc);
@@ -369,9 +378,11 @@ export class NgpImagePickerComponent implements OnInit {
     if (document.getElementById(elemnt.id + '-header')) {
       /* if present, the header is where you move the DIV from:*/
       document.getElementById(elemnt.id + '-header').onmousedown = dragMouseDown;
+      document.getElementById(elemnt.id + '-header').ontouchstart = dragMouseDown;
     } else {
       /* otherwise, move the DIV from anywhere inside the DIV:*/
       elemnt.onmousedown = dragMouseDown;
+      elemnt.ontouchstart = dragMouseDown;
     }
 
     function dragMouseDown(e) {
@@ -381,8 +392,10 @@ export class NgpImagePickerComponent implements OnInit {
       pos3 = e.clientX;
       pos4 = e.clientY;
       document.onmouseup = closeDragElement;
+      document.ontouchend = closeDragElement;
       // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
+      document.ontouchmove = elementDrag;
     }
 
     function elementDrag(e) {
@@ -411,6 +424,8 @@ export class NgpImagePickerComponent implements OnInit {
       /* stop moving when mouse button is released:*/
       document.onmouseup = null;
       document.onmousemove = null;
+      document.ontouchend = null;
+      document.ontouchmove = null;
     }
   }
 
@@ -419,7 +434,6 @@ export class NgpImagePickerComponent implements OnInit {
     if (this.showCrop) {
       croper.style.opacity = '1.0';
       this.dragElement(croper);
-      const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
       this.observer = new ResizeObserver((entries) => {
         entries.forEach((entry) => {
           if (this.showEditPanel) {
@@ -433,7 +447,9 @@ export class NgpImagePickerComponent implements OnInit {
             this.cropWidth = rectElemnt.width;
             this.cropHeight = rectElemnt.height;
             if (entry.target.id == 'image-full') {
-              elemntCropper.style.top = '15%';
+              if (rectHolder.top > 0) {
+                elemntCropper.style.top = rectHolder.top + 4 + 'px';
+              }
               elemntCropper.style.left = rectHolder.left + 4 + 'px';
             }
           }
