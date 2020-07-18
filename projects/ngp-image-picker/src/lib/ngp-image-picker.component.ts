@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ResizeObserver } from 'resize-observer';
-import { rejects } from 'assert';
 
 export interface ImagePickerConf {
   width?: string;
