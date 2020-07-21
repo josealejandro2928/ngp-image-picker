@@ -83,13 +83,9 @@ ngp-image-picker {
       height: 240px;
       border-radius: 16px;
       max-width: 100% !important;
-      width: 100%;
+      min-width: 300px;
       box-sizing: border-box;
-      background-color: #eeeeee;
-      padding: 3px;
-      // border: 2px solid #757575;
-      // resize: horizontal;
-      // overflow-x: auto;
+      padding: 2px;
 
       .image-caption {
         position: absolute;
