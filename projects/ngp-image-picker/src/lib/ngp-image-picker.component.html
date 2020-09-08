@@ -143,13 +143,28 @@
 
 
 
-      <p *ngIf="this.calculateSize()" class="mat-caption" style="text-align: end;margin: 8px 0px;">
-        size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
-        <span matTooltip="{{labels['You must edit the image in order to resize it']}}" *ngIf="this.calculateSize()>120"
-          style="color: #f44336; font-weight: 400;">
-          &nbsp; {{labels['too large']}}
-        </span>
-      </p>
+      <div style="flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      place-content: center space-between;
+      align-items: center;">
+
+        <button style="padding: 0px 8px;
+        height: 34px;
+        box-sizing: border-box;
+        background-color: #fff;
+        color: black;" mat-flat-button (click)="onCloseEditPanel()">Guardar</button>
+
+        <p *ngIf="this.calculateSize()" class="mat-caption" style="margin: 8px 0px;">
+          size: {{this.calculateSize()}}Kb &nbsp; {{this.format}}
+          <span matTooltip="{{labels['You must edit the image in order to resize it']}}"
+            *ngIf="this.calculateSize()>120" style="color: #f44336; font-weight: 400;">
+            &nbsp; {{labels['too large']}}
+          </span>
+        </p>
+
+      </div>
+
 
     </div>
   </div>

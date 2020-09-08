@@ -198,7 +198,7 @@ export class NgpImagePickerComponent implements OnInit {
   parseToBase64(imageUrl) {
     let types = imageUrl.split('.');
     let type = types[types.length - 1];
-    console.log('ImagePickerComponent -> ngOnInit -> type', type);
+    // console.log('ImagePickerComponent -> ngOnInit -> type', type);
     if (type && (type == 'png' || type == 'jpeg' || type == 'webp')) {
       type = type;
     } else {
