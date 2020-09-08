@@ -5,6 +5,8 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { ResizeObserver } from 'resize-observer';
 
@@ -52,6 +54,8 @@ export class NgpImagePickerComponent implements OnInit {
   @Input() set _config(value) {
     this.processConfig(value);
   }
+
+  @ViewChild('imagePicker', { static: false }) imagePicker: ElementRef;
 
   config: ImagePickerConf = {
     height: '240px',
@@ -131,23 +135,24 @@ export class NgpImagePickerComponent implements OnInit {
 
   onUpload(event) {
     event.preventDefault();
-    const element: HTMLElement = document.getElementById(
-      'filePicker-' + this.uuidFilePicker
-    ) as HTMLElement;
-    element.click();
+    // const element: HTMLElement = document.getElementById('filePicker-' + this.uuidFilePicker) as HTMLElement;
+    this.imagePicker.nativeElement.click();
+    // element.click();
   }
 
   handleFileSelect(evt) {
-    const files = evt.target.files;
-    const file = files[0];
-    this.imageName = file.name.split('.')[0];
-    // console.log('NgpImagePickerComponent -> handleFileSelect -> file.name', file.name);
-    this.fileType = file.type;
-    this.urlImage = `data:${file.type};base64,`;
-    if (files && file) {
-      const reader = new FileReader();
-      reader.onload = this.handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(file);
+    const files = evt.target?.files;
+    if (files) {
+      const file = files[0];
+      this.imageName = file.name.split('.')[0];
+      // console.log('NgpImagePickerComponent -> handleFileSelect -> file.name', file.name);
+      this.fileType = file.type;
+      this.urlImage = `data:${file.type};base64,`;
+      if (files && file) {
+        const reader = new FileReader();
+        reader.onload = this.handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(file);
+      }
     }
   }
 
