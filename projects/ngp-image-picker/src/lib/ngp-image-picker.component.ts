@@ -106,16 +106,14 @@ export class NgpImagePickerComponent implements OnInit {
   @Input() set _imageSrc(value) {
     if (value != undefined) {
       this.parseToBase64(value).then((dataUri) => {
-        // this.imageSrc = dataUri;
-        // this.originImageSrc = dataUri;
+        this.imageSrc = dataUri;
+        this.arrayCopiedImages = [];
+        this.arrayCopiedImages.push(this.imageSrc);
+        this.originImageSrc = value;
+        this.lastOriginSrc = value;
+        this.$imageOriginal.next(this.originImageSrc);
         this.loadImage = true;
       });
-      this.imageSrc = value;
-      this.arrayCopiedImages = [];
-      this.arrayCopiedImages.push(this.imageSrc);
-      this.originImageSrc = value;
-      this.lastOriginSrc = value;
-      this.$imageOriginal.next(this.originImageSrc);
     }
   }
 
@@ -221,7 +219,7 @@ export class NgpImagePickerComponent implements OnInit {
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        let dataURI = canvas.toDataURL(`image/${type}`, 0.96);
+        let dataURI = canvas.toDataURL(`image/${type}`, 1.0);
         return resolve({
           dataUri: dataURI,
           width: canvas.width,
@@ -569,6 +567,7 @@ export class NgpImagePickerComponent implements OnInit {
         this.maxHeight = canvas.height;
         this.lastOriginSrc = this.originImageSrc + '';
         this.originImageSrc = dataUri;
+        this.$imageChanged.next(this.imageSrc);
       })
       .catch((e) => {
         console.log(e);
@@ -585,5 +584,6 @@ export class NgpImagePickerComponent implements OnInit {
       this.imageSrc = this.lastOriginSrc;
       this.originImageSrc = this.lastOriginSrc + '';
     }
+    this.$imageChanged.next(this.imageSrc);
   }
 }
