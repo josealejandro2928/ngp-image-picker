@@ -102,6 +102,7 @@ export class NgpImagePickerComponent implements OnInit {
 
   labels = this.labelEn;
   arrayCopiedImages: any[] = [];
+
   @Input() set _imageSrc(value) {
     if (value != undefined) {
       this.parseToBase64(value).then((dataUri) => {
