@@ -35,6 +35,73 @@ export interface ImageConverterInput {
   encapsulation: ViewEncapsulation.None,
 })
 export class NgpImagePickerComponent implements OnInit {
+  config: ImagePickerConf = {
+    height: '240px',
+    width: '320px',
+    borderRadius: '16px',
+    compressInitial: true,
+    language: 'en',
+  };
+
+  observer = null;
+  showCrop = false;
+  imageSrc: any;
+  originImageSrc: any;
+  loadImage = false;
+  fileType;
+  urlImage;
+  uuidFilePicker = Date.now().toString(20);
+  showEditPanel = false;
+  quality = 96;
+  format = 'jpeg';
+  allFormats = ['webp', 'jpeg', 'png'];
+  maxHeight = 2000;
+  maxWidth = 2000;
+  cropHeight = 150;
+  cropWidth = 150;
+  maintainAspectRatio = true;
+  imageName = 'donload';
+  lastOriginSrc;
+  ///////////////////////////////////////////////////////
+  labelEn: any = {
+    'Upload a image': 'Upload a image',
+    'You must edit the image in order to resize it':
+      'You must edit the image in order to resize it',
+    'too large': 'too large',
+    'Open the editor panel': 'Open the editor panel',
+    'Download the image': 'Download the image',
+    'Control Panel': 'Control Panel',
+    Quality: 'Quality',
+    'Max dimensions': 'Max dimensions',
+    'aspect-ratio': 'aspect-ratio',
+    'max-width(px)': 'max-width(px)',
+    'max-height(px)': 'max-height(px)',
+    Format: 'Format',
+    Crop: 'Crop',
+    'width(px)': 'width(px)',
+    'height(px)': 'height(px)',
+  };
+  labelEs: any = {
+    'Upload a image': 'Suba una imagen',
+    'You must edit the image in order to resize it':
+      'Debe editar la imagen para disminuir su tamaño',
+    'too large': 'muy grande',
+    'Open the editor panel': 'Abra el panel de edición',
+    'Download the image': 'Descarge la imagen',
+    'Control Panel': 'Panel de control',
+    Quality: 'Calidad',
+    'Max dimensions': 'Dimensiones',
+    'aspect-ratio': 'relación-aspecto',
+    'max-width(px)': 'max. ancho',
+    'max-height(px)': 'max. alto',
+    Format: 'Formato',
+    Crop: 'Recortar',
+    'width(px)': 'ancho(px)',
+    'height(px)': 'altura(px)',
+  };
+
+  labels = this.labelEn;
+  arrayCopiedImages: any[] = [];
   @Input() set _imageSrc(value) {
     if (value != undefined) {
       this.parseToBase64(value).then((dataUri) => {
@@ -56,76 +123,8 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   @ViewChild('imagePicker', { static: false }) imagePicker: ElementRef;
-
-  config: ImagePickerConf = {
-    height: '240px',
-    width: '320px',
-    borderRadius: '16px',
-    compressInitial: true,
-    language: 'en',
-  };
-
-  observer = null;
-  showCrop = false;
-
   @Output() $imageChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() $imageOriginal: EventEmitter<any> = new EventEmitter<any>();
-
-  imageSrc: any;
-  originImageSrc: any;
-  loadImage = false;
-  fileType;
-  urlImage;
-  uuidFilePicker = Date.now().toString(20);
-  showEditPanel = false;
-  quality = 96;
-  format = 'jpeg';
-  allFormats = ['webp', 'jpeg', 'png'];
-  maxHeight = 2000;
-  maxWidth = 2000;
-  cropHeight = 150;
-  cropWidth = 150;
-  maintainAspectRatio = true;
-  imageName = 'donload';
-  lastOriginSrc;
-  ///////////////////////////////////////////////////////
-  labelEn: any = {
-    'Upload a image': 'Upload a image',
-    'You must edit the image in order to resize it': 'You must edit the image in order to resize it',
-    'too large': 'too large',
-    'Open the editor panel': 'Open the editor panel',
-    'Download the image': 'Download the image',
-    'Control Panel': 'Control Panel',
-    Quality: 'Quality',
-    'Max dimensions': 'Max dimensions',
-    'aspect-ratio': 'aspect-ratio',
-    'max-width(px)': 'max-width(px)',
-    'max-height(px)': 'max-height(px)',
-    Format: 'Format',
-    Crop: 'Crop',
-    'width(px)': 'width(px)',
-    'height(px)': 'height(px)',
-  };
-  labelEs: any = {
-    'Upload a image': 'Suba una imagen',
-    'You must edit the image in order to resize it': 'Debe editar la imagen para disminuir su tamaño',
-    'too large': 'muy grande',
-    'Open the editor panel': 'Abra el panel de edición',
-    'Download the image': 'Descarge la imagen',
-    'Control Panel': 'Panel de control',
-    Quality: 'Calidad',
-    'Max dimensions': 'Dimensiones',
-    'aspect-ratio': 'relación-aspecto',
-    'max-width(px)': 'max. ancho',
-    'max-height(px)': 'max. alto',
-    Format: 'Formato',
-    Crop: 'Recortar',
-    'width(px)': 'ancho(px)',
-    'height(px)': 'altura(px)',
-  };
-
-  labels = this.labelEn;
-  arrayCopiedImages: any[] = [];
 
   constructor() {}
 
@@ -166,7 +165,10 @@ export class NgpImagePickerComponent implements OnInit {
         quality: 0.92,
         maintainRatio: true,
       };
-      this.imageSrc = await this.resizedataURL(this.urlImage + base64textString, input);
+      this.imageSrc = await this.resizedataURL(
+        this.urlImage + base64textString,
+        input
+      );
     } else {
       this.imageSrc = this.urlImage + base64textString;
       this.arrayCopiedImages = [];
@@ -263,7 +265,8 @@ export class NgpImagePickerComponent implements OnInit {
       img.src = datas + '';
       img.crossOrigin = 'Anonymous';
       let quality = input.quality ? input.quality : 1.0;
-      let maintainRatio = input.maintainRatio != undefined ? input.maintainRatio : true;
+      let maintainRatio =
+        input.maintainRatio != undefined ? input.maintainRatio : true;
 
       img.onload = function () {
         var canvas = document.createElement('canvas');
@@ -412,8 +415,12 @@ export class NgpImagePickerComponent implements OnInit {
       pos4 = 0;
     if (document.getElementById(elemnt.id + '-header')) {
       /* if present, the header is where you move the DIV from:*/
-      document.getElementById(elemnt.id + '-header').onmousedown = dragMouseDown;
-      document.getElementById(elemnt.id + '-header').ontouchstart = dragMouseDown;
+      document.getElementById(
+        elemnt.id + '-header'
+      ).onmousedown = dragMouseDown;
+      document.getElementById(
+        elemnt.id + '-header'
+      ).ontouchstart = dragMouseDown;
     } else {
       /* otherwise, move the DIV from anywhere inside the DIV:*/
       elemnt.onmousedown = dragMouseDown;
@@ -448,10 +455,21 @@ export class NgpImagePickerComponent implements OnInit {
       const rectHolder = holderImage.getBoundingClientRect();
       const rectElemnt = elemnt.getBoundingClientRect();
       if (newTop >= rectHolder.y + 8) {
-        elemnt.style.top = Math.min(newTop, rectHolder.y + rectHolder.height - rectElemnt.height - 4) + 'px';
+        elemnt.style.top =
+          Math.min(
+            newTop,
+            rectHolder.y + rectHolder.height - rectElemnt.height - 4
+          ) + 'px';
       }
-      if (newLeft > rectHolder.x + 4 && rectHolder.x + rectHolder.width > rectElemnt.x + rectElemnt.width + 2) {
-        elemnt.style.left = Math.min(newLeft, rectHolder.x + rectHolder.width - rectElemnt.width - 4) + 'px';
+      if (
+        newLeft > rectHolder.x + 4 &&
+        rectHolder.x + rectHolder.width > rectElemnt.x + rectElemnt.width + 2
+      ) {
+        elemnt.style.left =
+          Math.min(
+            newLeft,
+            rectHolder.x + rectHolder.width - rectElemnt.width - 4
+          ) + 'px';
       }
     }
 
@@ -473,10 +491,13 @@ export class NgpImagePickerComponent implements OnInit {
         entries.forEach((entry) => {
           if (this.showEditPanel) {
             const elemntCropper = document.getElementById('image-croper');
-            const rectHolder = document.getElementById('image-full').getBoundingClientRect();
+            const rectHolder = document
+              .getElementById('image-full')
+              .getBoundingClientRect();
             const rectElemnt = elemntCropper.getBoundingClientRect();
             const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 4;
-            const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 4;
+            const maxHeight =
+              rectHolder.y + rectHolder.height - rectElemnt.y - 4;
             elemntCropper.style.maxWidth = maxWidth + 'px';
             elemntCropper.style.maxHeight = maxHeight + 'px';
             this.cropWidth = rectElemnt.width;
@@ -505,7 +526,9 @@ export class NgpImagePickerComponent implements OnInit {
     type = type ? type : this.format;
     const croper = document.getElementById('image-croper');
     const rectCroper = croper.getBoundingClientRect();
-    const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
+    const dataHolderRect = document
+      .getElementById('image-full')
+      .getBoundingClientRect();
     const canvas = document.createElement('canvas');
     new Promise((resolve, reject) => {
       let ctx = canvas.getContext('2d');
@@ -527,7 +550,7 @@ export class NgpImagePickerComponent implements OnInit {
           0,
           0,
           newWidth,
-          newHeight,
+          newHeight
         );
         // ctx.drawImage(image, 90, 130, 50, 60, 10, 10, 50, 60);
         resolve(canvas.toDataURL(`image/${type}`, 0.98));
