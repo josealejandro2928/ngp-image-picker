@@ -83,7 +83,6 @@ ngp-image-picker {
       height: 240px;
       border-radius: 16px;
       max-width: 100% !important;
-      min-width: 300px;
       box-sizing: border-box;
       padding: 2px;
 
@@ -97,7 +96,7 @@ ngp-image-picker {
       img {
         height: 100%;
         max-height: 100%;
-        width: auto;
+        width: 100%;
         max-width: 100%;
         object-fit: cover;
         object-position: center;
