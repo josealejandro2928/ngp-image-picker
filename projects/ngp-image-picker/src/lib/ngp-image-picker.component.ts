@@ -219,7 +219,7 @@ export class NgpImagePickerComponent implements OnInit {
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        let dataURI = canvas.toDataURL(`image/${type}`, 0.98);
+        let dataURI = canvas.toDataURL(`image/${type}`, 0.96);
         return resolve({
           dataUri: dataURI,
           width: canvas.width,
