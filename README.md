@@ -22,6 +22,16 @@ ng add @angular/material
 
 Importing the BrowserAnimationsModule into your application enables Angular's animation system. Declining this will disable most of Angular Material's animations.
 
+### External Resource
+
+`NgpImagePicker`, for use the functionality of cropping images, the ResizeObserver api is used
+The ResizeObserver interface reports changes to the dimensions of an Element's content or border box, or the bounding box of an SVGElement.
+Install the package
+
+```sh
+npm i resize-observer --save
+```
+
 ### Usages
 
 You must import the module `NgpImagePicker` where you will use it and use the component
@@ -128,3 +138,6 @@ In the edit panel, you can change the quality ratio to compress the file size (i
 ![Image Rating](https://havanatursa.com/assets/images/npm/Capture3.PNG)
 ### All together
 ![Image Rating](https://havanatursa.com/assets/images/npm/Capture4.webp)
+
+### Live Demo
+[https://cogetuimagen.cubanearme.com/](https://cogetuimagen.cubanearme.com/)
