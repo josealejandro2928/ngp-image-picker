@@ -79,7 +79,7 @@
 
       <p class="item-panel">
         {{ labels['Max dimensions'] }}
-        <mat-checkbox style="float: right" [(ngModel)]="maintainAspectRatio" color="accent">
+        <mat-checkbox style="float: right" [(ngModel)]="maintainAspectRatio" color="primary">
           <span class="mat-caption">{{ labels['aspect-ratio'] }}</span>
         </mat-checkbox>
       </p>
@@ -97,7 +97,7 @@
 
       <p class="item-panel">{{ labels['Format'] }}</p>
       <div style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" color="accent">
+        <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" color="primary">
           <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
             <mat-option *ngFor="let format of allFormats" [value]="format">
               {{ format }}
@@ -107,7 +107,7 @@
       </div>
 
       <p>
-        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" color="accent">
+        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" color="primary">
           <p class="item-panel">{{ labels['Crop'] }}</p>
         </mat-checkbox>
         <button style="float: right" mat-icon-button color="primary" (click)="onRestore()">
