@@ -73,7 +73,7 @@
 
       <p class="item-panel">{{ labels['Quality'] }}</p>
       <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-slider style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
+        <mat-slider color="primary" style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
       </div>
 
