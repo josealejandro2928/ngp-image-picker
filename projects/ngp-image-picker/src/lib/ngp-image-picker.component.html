@@ -32,7 +32,7 @@
 
   <div
     style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start"
-    class="editing-bar-btn ">
+    class="editing-bar-btn">
     <button mat-icon-button matTooltip="{{ labels['Upload a image'] }}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
@@ -43,7 +43,7 @@
       download="{{ imageName }}">
       <mat-icon class="mat-18">cloud_download</mat-icon>
     </a>
-    <button matTooltip="{{ labels['Remove'] }}" (click)="onRemove()">
+    <button mat-icon-button  matTooltip="{{ labels['Remove'] }}" (click)="onRemove()">
       <mat-icon class="mat-18">delete</mat-icon>
     </button>
   </div>

@@ -611,6 +611,7 @@ export class NgpImagePickerComponent implements OnInit {
     this.arrayCopiedImages = [];
     this.lastOriginSrc = null;
     this.$imageOriginal.next(null);
+    this.$imageChanged.next(null);
     this.format = 'jpeg';
     this.maxHeight = 2000;
     this.maxWidth = 2000;
