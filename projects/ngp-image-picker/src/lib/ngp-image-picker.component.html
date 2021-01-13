@@ -1,57 +1,57 @@
 <div *ngIf="!loadImage" class="place-image">
-  <div
-    class="image-holder"
-    [ngStyle]="{
+  <div class="image-holder" [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
       borderRadius: this.config.borderRadius
-    }"
-  >
-    <button matTooltip="{{ labels['Upload a image'] }}" class="image-upload-btn" mat-icon-button (click)="onUpload($event)">
+    }">
+    <button matTooltip="{{ labels['Upload a image'] }}" class="image-upload-btn" mat-icon-button
+      (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
 
-    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
+    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker"
+      (change)="handleFileSelect($event)" />
   </div>
 </div>
 <div *ngIf="loadImage" class="place-image">
-  <div
-    class="image-holder-loaded"
-    [ngStyle]="{
+  <div class="image-holder-loaded" [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
       borderRadius: this.config.borderRadius
-    }"
-  >
+    }">
     <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{ borderRadius: this.config.borderRadius }" />
-    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
+    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker"
+      (change)="handleFileSelect($event)" />
   </div>
-  <p
-    *ngIf="this.calculateSize()"
-    class="mat-caption image-caption"
-    [ngStyle]="{
+  <p *ngIf="this.calculateSize()" class="mat-caption image-caption" [ngStyle]="{
       color: this.calculateSize() > 120 ? '#f44336' : 'unset',
       fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
-    }"
-  >
+    }">
     size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
   </p>
 
-  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start" class="editing-bar-btn mt-2">
+  <div
+    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start"
+    class="editing-bar-btn ">
     <button mat-icon-button matTooltip="{{ labels['Upload a image'] }}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
     <button mat-icon-button matTooltip="{{ labels['Open the editor panel'] }}" (click)="onOpenEditPanel()">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
-    <a matTooltip="{{ labels['Download the image'] }}" [href]="this.imageSrc" mat-icon-button download="{{ imageName }}">
+    <a matTooltip="{{ labels['Download the image'] }}" [href]="this.imageSrc" mat-icon-button
+      download="{{ imageName }}">
       <mat-icon class="mat-18">cloud_download</mat-icon>
     </a>
+    <button matTooltip="{{ labels['Remove'] }}" (click)="onRemove()">
+      <mat-icon class="mat-18">delete</mat-icon>
+    </button>
   </div>
 </div>
 
 <div *ngIf="showEditPanel" id="popup" class="popup">
-  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
+  <div
+    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
     <button mat-icon-button (click)="onCloseEditPanel()">
       <mat-icon class="mat-18">clear</mat-icon>
     </button>
@@ -72,8 +72,10 @@
       <p class="title-panel">{{ labels['Control Panel'] }}</p>
 
       <p class="item-panel">{{ labels['Quality'] }}</p>
-      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-slider color="primary" style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)" [(ngModel)]="quality" [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
+      <div
+        style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
+        <mat-slider color="primary" style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)"
+          [(ngModel)]="quality" [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
       </div>
 
@@ -83,20 +85,24 @@
           <span class="mat-caption">{{ labels['aspect-ratio'] }}</span>
         </mat-checkbox>
       </p>
-      <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
+      <div
+        style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
         <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
           <mat-label>{{ labels['max-width(px)'] }}</mat-label>
-          <input (change)="onChangeSize(true, false)" matInput placeholder="{{ labels['max-width(px)'] }}" [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000" />
+          <input (change)="onChangeSize(true, false)" matInput placeholder="{{ labels['max-width(px)'] }}"
+            [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000" />
         </mat-form-field>
 
         <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
           <mat-label>{{ labels['max-height(px)'] }}</mat-label>
-          <input (change)="onChangeSize(false, true)" matInput placeholder="{{ labels['max-height(px)'] }}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000" />
+          <input (change)="onChangeSize(false, true)" matInput placeholder="{{ labels['max-height(px)'] }}"
+            [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000" />
         </mat-form-field>
       </div>
 
       <p class="item-panel">{{ labels['Format'] }}</p>
-      <div style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
+      <div
+        style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
         <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" color="primary">
           <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
             <mat-option *ngFor="let format of allFormats" [value]="format">
@@ -116,30 +122,17 @@
       </p>
 
       <ng-container *ngIf="showCrop">
-        <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
+        <div
+          style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
           <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
             <mat-label>{{ labels['width(px)'] }}</mat-label>
-            <input
-              (change)="onChangeCrop($event.target.valueAsNumber)"
-              matInput
-              placeholder="{{ labels['width(px)'] }}"
-              [(ngModel)]="cropWidth"
-              type="number"
-              [min]="0"
-              [max]="2000"
-            />
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" matInput placeholder="{{ labels['width(px)'] }}"
+              [(ngModel)]="cropWidth" type="number" [min]="0" [max]="2000" />
           </mat-form-field>
           <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
             <mat-label>{{ labels['height(px)'] }}</mat-label>
-            <input
-              (change)="onChangeCrop($event.target.valueAsNumber)"
-              matInput
-              placeholder="{{ labels['height(px)'] }}"
-              [(ngModel)]="cropHeight"
-              type="number"
-              [min]="0"
-              [max]="2000"
-            />
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" matInput
+              placeholder="{{ labels['height(px)'] }}" [(ngModel)]="cropHeight" type="number" [min]="0" [max]="2000" />
           </mat-form-field>
         </div>
 
@@ -150,17 +143,15 @@
         </p>
       </ng-container>
 
-      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center">
-        <button style="padding: 0px 8px; height: 34px; box-sizing: border-box; background-color: #fff; color: black" mat-flat-button (click)="onCloseEditPanel()">Guardar</button>
+      <div
+        style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center">
+        <button style="padding: 0px 8px; height: 34px; box-sizing: border-box; background-color: #fff; color: black"
+          mat-flat-button (click)="onCloseEditPanel()">Guardar</button>
 
-        <p
-          *ngIf="this.calculateSize()"
-          class="mat-caption image-caption"
-          [ngStyle]="{
+        <p *ngIf="this.calculateSize()" class="mat-caption image-caption" [ngStyle]="{
             color: this.calculateSize() > 120 ? '#f44336' : 'unset',
             fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
-          }"
-        >
+          }">
           size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
         </p>
       </div>

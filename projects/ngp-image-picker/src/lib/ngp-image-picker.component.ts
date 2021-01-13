@@ -80,6 +80,7 @@ export class NgpImagePickerComponent implements OnInit {
     Crop: 'Crop',
     'width(px)': 'width(px)',
     'height(px)': 'height(px)',
+    'Remove': 'Remove',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',
@@ -89,6 +90,7 @@ export class NgpImagePickerComponent implements OnInit {
     'Open the editor panel': 'Abra el panel de edición',
     'Download the image': 'Descarge la imagen',
     'Control Panel': 'Panel de control',
+    'Remove': 'Quitar',
     Quality: 'Calidad',
     'Max dimensions': 'Dimensiones',
     'aspect-ratio': 'relación-aspecto',
@@ -98,6 +100,7 @@ export class NgpImagePickerComponent implements OnInit {
     Crop: 'Recortar',
     'width(px)': 'ancho(px)',
     'height(px)': 'altura(px)',
+
   };
 
   labels = this.labelEn;
@@ -599,5 +602,21 @@ export class NgpImagePickerComponent implements OnInit {
       this.originImageSrc = this.lastOriginSrc + '';
     }
     this.$imageChanged.next(this.imageSrc);
+  }
+
+  onRemove() {
+    this.imageSrc = null;
+    this.originImageSrc = null;
+    this.loadImage = false;
+    this.arrayCopiedImages = [];
+    this.lastOriginSrc = null;
+    this.$imageOriginal.next(null);
+    this.format = 'jpeg';
+    this.maxHeight = 2000;
+    this.maxWidth = 2000;
+    this.cropHeight = 150;
+    this.cropWidth = 150;
+    this.maintainAspectRatio = true;
+    this.showEditPanel = false;
   }
 }

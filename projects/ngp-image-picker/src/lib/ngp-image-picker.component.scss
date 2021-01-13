@@ -146,6 +146,14 @@ ngp-image-picker {
     }
 
     .editing-bar-btn {
+      margin-top: 2px;
+
+      .mat-icon-button {
+        width: 30px !important;
+        height: 30px !important;
+        line-height: 30px !important;
+      }
+
 
       button {
         margin: 4px 4px;
