@@ -115,11 +115,11 @@ export class NgpImagePickerComponent implements OnInit {
         this.loadImage = true;
       });
     } else {
-      this.imageSrc = undefined;
-      this.originImageSrc = undefined;
+      this.imageSrc = null;
+      this.originImageSrc = null;
       this.loadImage = false;
       this.arrayCopiedImages = [];
-      this.lastOriginSrc = undefined;
+      this.lastOriginSrc = null;
       this.$imageOriginal.next(null);
       this.format = 'jpeg';
       this.maxHeight = 2000;
