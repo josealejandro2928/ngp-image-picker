@@ -114,6 +114,20 @@ export class NgpImagePickerComponent implements OnInit {
         this.$imageOriginal.next(this.originImageSrc);
         this.loadImage = true;
       });
+    } else {
+      this.imageSrc = undefined;
+      this.originImageSrc = undefined;
+      this.loadImage = false;
+      this.arrayCopiedImages = [];
+      this.lastOriginSrc = undefined;
+      this.$imageOriginal.next(null);
+      this.format = 'jpeg';
+      this.maxHeight = 2000;
+      this.maxWidth = 2000;
+      this.cropHeight = 150;
+      this.cropWidth = 150;
+      this.maintainAspectRatio = true;
+      this.showEditPanel = false;
     }
   }
 
@@ -125,9 +139,9 @@ export class NgpImagePickerComponent implements OnInit {
   @Output() $imageChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() $imageOriginal: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onUpload(event) {
     event.preventDefault();
