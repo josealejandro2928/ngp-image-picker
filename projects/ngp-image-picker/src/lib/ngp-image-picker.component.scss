@@ -149,9 +149,16 @@ ngp-image-picker {
       margin-top: 2px;
 
       .mat-icon-button {
-        width: 30px !important;
-        height: 30px !important;
-        line-height: 30px !important;
+        height: 20px;
+        line-height: 20px;
+        width: 24px;
+      }
+
+      mat-icon {
+        line-height: 20px !important;
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
       }
 
 
