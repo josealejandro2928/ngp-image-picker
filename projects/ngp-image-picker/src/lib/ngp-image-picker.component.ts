@@ -278,7 +278,7 @@ export class NgpImagePickerComponent implements OnInit {
   /////////////////////////////////////////////////
   resizedataURL(datas, input: ImageConverterInput): Promise<any> {
     return new Promise(async function (resolve, reject) {
-      var img = document.createElement('img');
+      let img = document.createElement('img');
       img.src = datas + '';
       img.crossOrigin = 'Anonymous';
       let quality = input.quality ? input.quality : 1.0;
