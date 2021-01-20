@@ -33,17 +33,17 @@
   <div
     style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start"
     class="editing-bar-btn">
-    <button mat-icon-button matTooltip="{{ labels['Upload a image'] }}" (click)="onUpload($event)">
+    <button *ngIf="!this.config.hideAddBtn" mat-icon-button matTooltip="{{ labels['Upload a image'] }}" (click)="onUpload($event)">
       <mat-icon class="mat-18">add_a_photo</mat-icon>
     </button>
-    <button mat-icon-button matTooltip="{{ labels['Open the editor panel'] }}" (click)="onOpenEditPanel()">
+    <button *ngIf="!this.config.hideEditBtn" mat-icon-button matTooltip="{{ labels['Open the editor panel'] }}" (click)="onOpenEditPanel()">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
-    <a matTooltip="{{ labels['Download the image'] }}" [href]="this.imageSrc" mat-icon-button
+    <a *ngIf="!this.config.hideDownloadBtn" matTooltip="{{ labels['Download the image'] }}" [href]="this.imageSrc" mat-icon-button
       download="{{ imageName }}">
       <mat-icon class="mat-18">cloud_download</mat-icon>
     </a>
-    <button mat-icon-button  matTooltip="{{ labels['Remove'] }}" (click)="onRemove()">
+    <button *ngIf="!this.config.hideDeleteBtn" mat-icon-button  matTooltip="{{ labels['Remove'] }}" (click)="onRemove()">
       <mat-icon class="mat-18">delete</mat-icon>
     </button>
   </div>

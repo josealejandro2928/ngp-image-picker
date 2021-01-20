@@ -16,6 +16,10 @@ export interface ImagePickerConf {
   borderRadius?: string;
   compressInitial?: boolean;
   language?: string;
+  hideDeleteBtn?: boolean;
+  hideDownloadBtn?: boolean;
+  hideEditBtn?: boolean;
+  hideAddBtn?: boolean;
 }
 
 export interface ImageConverterInput {
@@ -41,6 +45,11 @@ export class NgpImagePickerComponent implements OnInit {
     borderRadius: '16px',
     compressInitial: true,
     language: 'en',
+    hideDeleteBtn: false,
+    hideDownloadBtn: false,
+    hideEditBtn: false,
+    hideAddBtn: false,
+
   };
 
   observer = null;
@@ -52,7 +61,7 @@ export class NgpImagePickerComponent implements OnInit {
   urlImage;
   uuidFilePicker = Date.now().toString(20);
   showEditPanel = false;
-  quality = 96;
+  quality = 94;
   format = 'jpeg';
   allFormats = ['webp', 'jpeg', 'png'];
   maxHeight = 2000;
@@ -252,26 +261,18 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   processConfig(value: ImagePickerConf) {
-    if (value.height) {
-      this.config.height = value.height;
-    }
-    if (value.width) {
-      this.config.width = value.width;
-    }
-    if (value.borderRadius) {
-      this.config.borderRadius = value.borderRadius;
-    }
-    if (value.compressInitial != undefined) {
-      this.config.compressInitial = value.compressInitial;
-    }
-    if (value.language != undefined) {
-      if (value.language == 'en') {
-        this.labels = { ...this.labelEn };
-      }
-      if (value.language == 'es') {
-        this.labels = { ...this.labelEs };
+    if (value && value.constructor == Object) {
+      this.config = { ...this.config, ...value };
+      if (value.language != undefined) {
+        if (value.language == 'en') {
+          this.labels = { ...this.labelEn };
+        }
+        if (value.language == 'es') {
+          this.labels = { ...this.labelEs };
+        }
       }
     }
+
   }
 
   /////////////////////////////////////////////////
