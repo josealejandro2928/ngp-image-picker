@@ -61,7 +61,7 @@ export class NgpImagePickerComponent implements OnInit {
   urlImage;
   uuidFilePicker = Date.now().toString(20);
   showEditPanel = false;
-  quality = 94;
+  quality = 92;
   format = 'jpeg';
   allFormats = ['webp', 'jpeg', 'png'];
   maxHeight = 2000;
@@ -245,7 +245,7 @@ export class NgpImagePickerComponent implements OnInit {
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        let dataURI = canvas.toDataURL(`image/${type}`, 0.96);
+        let dataURI = canvas.toDataURL(`image/${type}`, 0.93);
         return resolve({
           dataUri: dataURI,
           width: canvas.width,
