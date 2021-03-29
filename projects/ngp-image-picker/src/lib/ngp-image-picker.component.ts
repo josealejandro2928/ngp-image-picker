@@ -113,6 +113,7 @@ export class NgpImagePickerComponent implements OnInit {
         this.lastOriginSrc = value;
         this.$imageOriginal.next(this.originImageSrc);
         this.loadImage = true;
+        this.chRef.markForCheck();
       });
     } else {
       this.imageSrc = null;
@@ -128,6 +129,7 @@ export class NgpImagePickerComponent implements OnInit {
       this.cropWidth = 150;
       this.maintainAspectRatio = true;
       this.showEditPanel = false;
+      this.chRef.markForCheck();
     }
   }
 
