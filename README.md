@@ -108,7 +108,7 @@ export class ExampleComponent {
 </ngp-image-picker>
 ```
 
-![Image Rating](https://havanatursa.com/assets/images/npm/Capture1.webp)
+![Image 1](https://havanatursa.com/assets/images/npm/Capture1.jpeg)
 
 ### More about the component
 
@@ -133,11 +133,11 @@ Once you have selected an image, three buttons are enabled below the image:
 
 In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'. The 'Png' format is not affected by changing the quality ratio.
 
-![Image Rating](https://havanatursa.com/assets/images/npm/Capture2.webp)
+![Image 2](https://havanatursa.com/assets/images/npm/Capture2.jpeg)
 ### Control section
-![Image Rating](https://havanatursa.com/assets/images/npm/Capture3.PNG)
+![Image 3](https://havanatursa.com/assets/images/npm/Capture3.jpeg)
 ### All together
-![Image Rating](https://havanatursa.com/assets/images/npm/Capture4.webp)
+![Image 4](https://havanatursa.com/assets/images/npm/Capture4.jpeg)
 
 ### Live Demo
 [https://cogetuimagen.cubanearme.com/](https://cogetuimagen.cubanearme.com/)
