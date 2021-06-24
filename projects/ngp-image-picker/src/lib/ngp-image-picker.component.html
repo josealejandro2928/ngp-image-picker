@@ -74,14 +74,14 @@
       <p class="item-panel">{{ labels['Quality'] }}</p>
       <div
         style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-slider color="primary" style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)"
+        <mat-slider [color]="color" style="max-width: 100%; width: 100%" (change)="onChangeQuality($event.value)"
           [(ngModel)]="quality" [min]="0" [max]="100" [step]="1" [thumbLabel]="true">
         </mat-slider>
       </div>
 
       <p class="item-panel">
         {{ labels['Max dimensions'] }}
-        <mat-checkbox style="float: right" [(ngModel)]="maintainAspectRatio" color="primary">
+        <mat-checkbox style="float: right" [(ngModel)]="maintainAspectRatio" [color]="color">
           <span class="mat-caption">{{ labels['aspect-ratio'] }}</span>
         </mat-checkbox>
       </p>
@@ -103,7 +103,7 @@
       <p class="item-panel">{{ labels['Format'] }}</p>
       <div
         style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" color="primary">
+        <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" [color]="color">
           <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
             <mat-option *ngFor="let format of allFormats" [value]="format">
               {{ format }}
@@ -113,10 +113,10 @@
       </div>
 
       <p>
-        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" color="primary">
+        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" [color]="color">
           <p class="item-panel">{{ labels['Crop'] }}</p>
         </mat-checkbox>
-        <button style="float: right" mat-icon-button color="primary" (click)="onRestore()">
+        <button style="float: right" mat-icon-button [color]="color" (click)="onRestore()">
           <mat-icon> refresh </mat-icon>
         </button>
       </p>
@@ -137,7 +137,7 @@
         </div>
 
         <p style="margin-bottom: 4px !important">
-          <button mat-icon-button color="primary" (click)="onCrop()">
+          <button mat-icon-button [color]="color" (click)="onCrop()">
             <mat-icon> crop </mat-icon>
           </button>
         </p>
