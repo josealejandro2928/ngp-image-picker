@@ -110,6 +110,24 @@ export class NgpImagePickerComponent implements OnInit {
     'width(px)'                                    : 'ancho(px)',
     'height(px)'                                   : 'altura(px)',
   };
+  labelFr: any        = {
+    'Upload a image'                               : 'Charger une image',
+    'You must edit the image in order to resize it': 'Vous devez éditer l\'image pour changer sa taille',
+    'too large'                                    : 'Trop grande',
+    'Open the editor panel'                        : 'Ouvrir le panneau d\'édition',
+    'Download the image'                           : 'Télécharger l\'image',
+    'Control Panel'                                : 'Panneau de commande',
+    Remove                                         : 'Supprimer',
+    Quality                                        : 'Qualité',
+    'Max dimensions'                               : 'Dimensions maximales',
+    'aspect-ratio'                                 : 'rapport de forme',
+    'max-width(px)'                                : 'largeur max.',
+    'max-height(px)'                               : 'hauteur max',
+    Format                                         : 'Format',
+    Crop                                           : 'Recadrer',
+    'width(px)'                                    : 'largeur(px)',
+    'height(px)'                                   : 'hauteur(px)',
+  };
 
   labels                   = this.labelEn;
   arrayCopiedImages: any[] = [];
@@ -271,6 +289,9 @@ export class NgpImagePickerComponent implements OnInit {
         }
         if (value.language == 'es') {
           this.labels = { ...this.labelEs };
+        }
+        if (value.language == 'fr') {
+          this.labels = { ...this.labelFr };
         }
       }
     }
