@@ -28,18 +28,6 @@
             "tsConfig": "projects/ngp-image-picker/tsconfig.spec.json",
             "karmaConfig": "projects/ngp-image-picker/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngp-image-picker/tsconfig.lib.json",
-              "projects/ngp-image-picker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }},
