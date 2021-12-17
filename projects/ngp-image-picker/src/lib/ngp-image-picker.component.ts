@@ -353,8 +353,7 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   calculateSize() {
-    let base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-    if (this.imageSrc && base64regex.test(this.imageSrc.split(',')[1])) {
+    if (this.imageSrc && this.imageSrc.length) {
       return Math.ceil(((3 / 4) * this.imageSrc.length) / 1024);
     } else {
       return;
