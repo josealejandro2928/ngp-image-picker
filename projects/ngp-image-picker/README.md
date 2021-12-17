@@ -1,7 +1,7 @@
 # NgpImagePicker
 
 Angular library based on angular material components for the selection, edition and compression of images in png, jpeg, webp formats
-This library was generated with Angular CLI version 10.0.0.
+This library was generated with Angular CLI version 10.0.0, and support the latest version of angular.
 
 ### Description
 
@@ -51,10 +51,7 @@ import { NgpImagePickerModule } from 'ngp-image-picker';
 In your component:
 
 ```html
-<ngp-image-picker
-  [_config]="imagePickerConf"
-  ($imageChanged)="onImageChange($event)"
-></ngp-image-picker>
+<ngp-image-picker [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
 ```
 
 In .ts file
@@ -62,10 +59,10 @@ In .ts file
 ```typescript
 export class ExampleComponent {
   imagePickerConf: ImagePickerConf = {
-    borderRadius: "4px",
-    language: "en",
-    width: "320px",
-    height: "240px",
+    borderRadius: '4px',
+    language: 'en',
+    width: '320px',
+    height: '240px',
   };
 }
 ```
@@ -75,20 +72,20 @@ export class ExampleComponent {
 ```typescript
 export class ExampleComponent {
   config1: ImagePickerConf = {
-    borderRadius: "16px",
-    language: "en",
+    borderRadius: '16px',
+    language: 'en',
   };
   config2: ImagePickerConf = {
-    borderRadius: "50%",
-    language: "es",
-    width: "200px",
-    height: "200px",
+    borderRadius: '50%',
+    language: 'es',
+    width: '200px',
+    height: '200px',
   };
   config3: ImagePickerConf = {
-    borderRadius: "4px",
-    language: "en",
+    borderRadius: '4px',
+    language: 'en',
   };
-  initialImage = "https://havanatursa.com/assets/images/carousel/Hoteles.webp";
+  initialImage = 'https://havanatursa.com/assets/images/carousel/Hoteles.webp';
 }
 ```
 
@@ -100,15 +97,10 @@ export class ExampleComponent {
 <ngp-image-picker [_config]="config2"></ngp-image-picker>
 <br />
 <h2>Initial Image</h2>
-<ngp-image-picker
-  [_imageSrc]="initialImage"
-  ($imageChanged)="onImageChanged($event)"
-  [_config]="config3"
->
-</ngp-image-picker>
+<ngp-image-picker [_imageSrc]="initialImage" ($imageChanged)="onImageChanged($event)" [_config]="config3"> </ngp-image-picker>
 ```
 
-![Image 1](https://havanatursa.com/assets/images/npm/Capture1.jpeg)
+![Image 1](https://ngp-image-picker.surge.sh/assets/images/1.png)
 
 ### More about the component
 
@@ -133,11 +125,14 @@ Once you have selected an image, three buttons are enabled below the image:
 
 In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'. The 'Png' format is not affected by changing the quality ratio.
 
-![Image 2](https://havanatursa.com/assets/images/npm/Capture2.jpeg)
-### Control section
-![Image 3](https://havanatursa.com/assets/images/npm/Capture3.jpeg)
-### All together
-![Image 4](https://havanatursa.com/assets/images/npm/Capture4.jpeg)
+![Image 2](https://ngp-image-picker.surge.sh/assets/images/2.png)
 
-### Live Demo
-[https://cogetuimagen.cubanearme.com/](https://cogetuimagen.cubanearme.com/)
+### Control section
+
+![Image 3](https://ngp-image-picker.surge.sh/assets/images/3.png)
+
+### All together
+
+![Image 4](https://ngp-image-picker.surge.sh/assets/images/4.png)
+
+### [DEMO](https://ngp-image-picker.surge.sh/)
