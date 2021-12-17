@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ImagePickerConf } from 'ngp-image-picker';
+import { Component }       from '@angular/core';
+import { ImagePickerConf } from '../../../ngp-image-picker/src/lib/ngp-image-picker.component';
 
 @Component({
   selector: 'app-root',

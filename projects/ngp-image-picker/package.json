@@ -1,6 +1,6 @@
 {
   "name": "ngp-image-picker",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "peerDependencies": {
     "@angular/common": "^10.0.3",
     "@angular/core": "^10.0.3",
