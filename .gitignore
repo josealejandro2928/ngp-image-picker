@@ -49,3 +49,7 @@ testem.log
 Thumbs.db
 /.angular/
 package-lock.json
+/projects/ngp-image-picker-test/.angular/
+projects/ngp-image-picker-test/yarn.lock
+projects/ngp-image-picker/yarn.lock
+yarn.lock
