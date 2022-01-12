@@ -1,17 +1,15 @@
 ngp-image-picker {
   p {
-    margin: 0px !important;
-    padding: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .place-image {
-
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
     place-content: flex-start;
     align-items: flex-start;
-
 
     .image-holder {
       flex-direction: column;
@@ -24,7 +22,6 @@ ngp-image-picker {
       height: 240px;
       border-radius: 16px;
       max-width: 100% !important;
-      box-sizing: border-box;
       border: 2px rgba(0, 0, 0, .30) solid;
       background-color: #fcfcfc;
 
@@ -68,7 +65,6 @@ ngp-image-picker {
           opacity: 1.0;
           transition: all .5s ease;
         }
-
       }
     }
 
@@ -83,14 +79,12 @@ ngp-image-picker {
       width: 320px;
       height: 240px;
       border-radius: 4px;
-      box-sizing: border-box;
       padding: 2px;
 
       .image-caption {
         position: absolute;
         right: 0;
         bottom: -22px;
-
       }
 
       img {
@@ -141,7 +135,6 @@ ngp-image-picker {
           opacity: 1.0;
           transition: all .5s ease;
         }
-
       }
     }
 
@@ -161,7 +154,6 @@ ngp-image-picker {
         height: 20px !important;
       }
 
-
       button {
         margin: 4px 4px;
         color: #424242;
@@ -172,7 +164,6 @@ ngp-image-picker {
           margin: 4px 8px;
           transition: all .25s ease-in;
         }
-
       }
 
       a {
@@ -185,13 +176,8 @@ ngp-image-picker {
           margin: 4px 8px;
           transition: all .25s ease-in;
         }
-
       }
-
-
-
     }
-
   }
 
   .popup {
@@ -229,8 +215,6 @@ ngp-image-picker {
         position: relative;
         display: contents;
       }
-
-
     }
 
     mat-icon {
@@ -254,14 +238,12 @@ ngp-image-picker {
         max-height: 100%;
         max-width: 100%;
       }
-
     }
 
     @media (max-width:599px) {
       img {
-        margin: 0px;
+        margin: 0;
       }
-
     }
 
     .control-panel {
@@ -277,29 +259,25 @@ ngp-image-picker {
       display: flex;
       place-content: stretch flex-start;
       align-items: stretch;
-      max-width: 100%;
 
       @media (max-width:599px) {
-        margin: 8px 0px;
+        margin: 8px 0;
         width: 100%;
-
       }
 
       .title-panel {
-        padding: 0px 4px;
+        padding: 0 4px;
         font-size: 17px;
         font-weight: 500;
         margin-bottom: 16px !important;
       }
 
       .item-panel {
-        padding: 0px 4px;
+        padding: 0 4px;
         font-size: 14px;
         font-weight: 500;
       }
     }
-
-
   }
 
   @keyframes show {
@@ -329,7 +307,6 @@ ngp-image-picker {
 
   .mat-checkbox-background {
     background-color: white;
-
   }
 
   .image-croper {
@@ -352,7 +329,6 @@ ngp-image-picker {
 
       mat-icon {
         color: #fff;
-
       }
     }
   }
@@ -365,8 +341,5 @@ ngp-image-picker {
     mat-icon {
       color: rgba(0, 0, 0, 0.82);
     }
-
   }
-
-
 }

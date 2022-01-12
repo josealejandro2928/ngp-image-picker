@@ -71,7 +71,7 @@ export class NgpImagePickerComponent implements OnInit {
   cropHeight = 150;
   cropWidth = 150;
   maintainAspectRatio = true;
-  imageName = 'donload';
+  imageName = 'download';
   lastOriginSrc;
   ///////////////////////////////////////////////////////
   labelEn: any = {
@@ -247,12 +247,12 @@ export class NgpImagePickerComponent implements OnInit {
     let type = types[types.length - 1];
     // console.log('ImagePickerComponent -> ngOnInit -> type', type);
     if (type && (type == 'png' || type == 'jpeg' || type == 'webp')) {
-      type = type;
+
     } else {
       type = 'jpeg';
     }
     this.format = type;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let img = document.createElement('img');
       img.crossOrigin = 'Anonymous';
       img.src = imageUrl;
@@ -299,7 +299,7 @@ export class NgpImagePickerComponent implements OnInit {
 
   /////////////////////////////////////////////////
   resizedataURL(datas, input: ImageConverterInput): Promise<any> {
-    return new Promise(async function (resolve, reject) {
+    return new Promise(async function (resolve) {
       let img = document.createElement('img');
       img.src = datas + '';
       img.crossOrigin = 'Anonymous';
@@ -307,8 +307,8 @@ export class NgpImagePickerComponent implements OnInit {
       let maintainRatio = input.maintainRatio != undefined ? input.maintainRatio : true;
 
       img.onload = function () {
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
         let ratio = img.width / img.height;
         let width = input.width ? input.width : img.width;
         let height = input.height ? input.height : img.height;
@@ -328,7 +328,7 @@ export class NgpImagePickerComponent implements OnInit {
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         let type = input.dataType ? input.dataType : 'webp';
-        var dataURI = canvas.toDataURL(`image/${type}`, quality);
+        const dataURI = canvas.toDataURL(`image/${type}`, quality);
         resolve({
           dataUri: dataURI,
           width: canvas.width,
@@ -360,12 +360,12 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  async onChangeQuality(event) {
+  async onChangeQuality() {
     const qualityItem = this.quality / 100;
     this.maxHeight = this.maxHeight && +this.maxHeight ? this.maxHeight : 2000;
-    // console.log('ImagePickerComponent -> onChangeQuality -> this.maxHeight', this.maxHeight);
+
     this.maxWidth = this.maxWidth && +this.maxWidth ? this.maxWidth : 2000;
-    // console.log('ImagePickerComponent -> onChangeQuality ->  this.maxWidth', this.maxWidth);
+
     await this.wait(250);
     try {
       const input: ImageConverterInput = {
@@ -384,11 +384,11 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  async onChangeFormat(format) {
+  async onChangeFormat() {
     let qualityItem = this.quality / 100;
     this.maxHeight = this.maxHeight && +this.maxHeight ? this.maxHeight : 2000;
     this.maxWidth = this.maxWidth && +this.maxWidth ? this.maxWidth : 2000;
-    // console.log('ImagePickerComponent -> onChangeFormat -> this.maintainAspectRatio', this.maintainAspectRatio);
+
     await this.wait(250);
     try {
       let input: ImageConverterInput = {
@@ -430,36 +430,34 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  onChangeCrop(data) {
-    const croper = document.getElementById('image-croper');
-    croper.style.width = this.cropWidth + 'px';
-    croper.style.height = this.cropHeight + 'px';
+  onChangeCrop() {
+    const cropper = document.getElementById('image-croper');
+    cropper.style.width = this.cropWidth + 'px';
+    cropper.style.height = this.cropHeight + 'px';
   }
-
-  ////////////////////////////////////////////////
 
   wait(ms?): Promise<any> {
     ms = ms ? ms : 1000;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(true);
       }, ms);
     });
   }
 
-  dragElement(elemnt) {
-    var pos1 = 0,
+  dragElement(element) {
+    let pos1 = 0,
       pos2 = 0,
       pos3 = 0,
       pos4 = 0;
-    if (document.getElementById(elemnt.id + '-header')) {
+    if (document.getElementById(element.id + '-header')) {
       /* if present, the header is where you move the DIV from:*/
-      document.getElementById(elemnt.id + '-header').onmousedown = dragMouseDown;
-      document.getElementById(elemnt.id + '-header').ontouchstart = dragMouseDown;
+      document.getElementById(element.id + '-header').onmousedown = dragMouseDown;
+      document.getElementById(element.id + '-header').ontouchstart = dragMouseDown;
     } else {
       /* otherwise, move the DIV from anywhere inside the DIV:*/
-      elemnt.onmousedown = dragMouseDown;
-      elemnt.ontouchstart = dragMouseDown;
+      element.onmousedown = dragMouseDown;
+      element.ontouchstart = dragMouseDown;
     }
 
     function dragMouseDown(e) {
@@ -485,15 +483,15 @@ export class NgpImagePickerComponent implements OnInit {
       pos3 = e.clientX;
       pos4 = e.clientY;
 
-      const newTop = elemnt.offsetTop - pos2;
-      const newLeft = elemnt.offsetLeft - pos1;
+      const newTop = element.offsetTop - pos2;
+      const newLeft = element.offsetLeft - pos1;
       const rectHolder = holderImage.getBoundingClientRect();
-      const rectElemnt = elemnt.getBoundingClientRect();
+      const rectElement = element.getBoundingClientRect();
       if (newTop >= rectHolder.y + 8) {
-        elemnt.style.top = Math.min(newTop, rectHolder.y + rectHolder.height - rectElemnt.height - 4) + 'px';
+        element.style.top = Math.min(newTop, rectHolder.y + rectHolder.height - rectElement.height - 4) + 'px';
       }
-      if (newLeft > rectHolder.x + 4 && rectHolder.x + rectHolder.width > rectElemnt.x + rectElemnt.width + 2) {
-        elemnt.style.left = Math.min(newLeft, rectHolder.x + rectHolder.width - rectElemnt.width - 4) + 'px';
+      if (newLeft > rectHolder.x + 4 && rectHolder.x + rectHolder.width > rectElement.x + rectElement.width + 2) {
+        element.style.left = Math.min(newLeft, rectHolder.x + rectHolder.width - rectElement.width - 4) + 'px';
       }
     }
 
@@ -507,10 +505,10 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   onCropStateChange() {
-    const croper = document.getElementById('image-croper');
+    const cropper = document.getElementById('image-croper');
     if (this.showCrop) {
-      croper.style.opacity = '1.0';
-      this.dragElement(croper);
+      cropper.style.opacity = '1.0';
+      this.dragElement(cropper);
       this.observer = new ResizeObserver((entries) => {
         entries.forEach((entry) => {
           if (this.showEditPanel) {
@@ -535,7 +533,7 @@ export class NgpImagePickerComponent implements OnInit {
       this.observer.observe(document.getElementById('image-croper'));
       this.observer.observe(document.getElementById('image-full'));
     } else {
-      croper.style.opacity = '0.0';
+      cropper.style.opacity = '0.0';
       if (this.observer instanceof ResizeObserver) {
         this.observer.unobserve(document.getElementById('image-croper'));
         this.observer.unobserve(document.getElementById('image-full'));
@@ -545,13 +543,13 @@ export class NgpImagePickerComponent implements OnInit {
 
   onCrop(type?) {
     type = type ? type : this.format;
-    const croper = document.getElementById('image-croper');
-    const rectCroper = croper.getBoundingClientRect();
+    const cropper = document.getElementById('image-croper');
+    const rectCroper = cropper.getBoundingClientRect();
     const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
     const canvas = document.createElement('canvas');
     new Promise((resolve, reject) => {
       let ctx = canvas.getContext('2d');
-      let img = document.getElementById('image-full');
+      // let img = document.getElementById('image-full');
       let image = new Image();
       image.src = this.imageSrc;
       image.onload = () => {
