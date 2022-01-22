@@ -8,13 +8,10 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./projects/ngp-image-picker/tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./e2e/tsconfig.json"
+      "path": "./projects/ngp-image-picker/tsconfig.spec.json"
     }
 ]
 }
