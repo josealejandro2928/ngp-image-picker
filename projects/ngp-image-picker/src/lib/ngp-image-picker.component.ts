@@ -1,15 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ViewEncapsulation,
-  ViewChild,
-  ElementRef,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ResizeObserver } from 'resize-observer';
 
 export interface ImagePickerConf {
@@ -112,10 +101,10 @@ export class NgpImagePickerComponent implements OnInit {
   };
   labelFr: any = {
     'Upload a image': 'Charger une image',
-    'You must edit the image in order to resize it': 'Vous devez éditer l\'image pour changer sa taille',
+    'You must edit the image in order to resize it': "Vous devez éditer l'image pour changer sa taille",
     'too large': 'Trop grande',
-    'Open the editor panel': 'Ouvrir le panneau d\'édition',
-    'Download the image': 'Télécharger l\'image',
+    'Open the editor panel': "Ouvrir le panneau d'édition",
+    'Download the image': "Télécharger l'image",
     'Control Panel': 'Panneau de commande',
     Remove: 'Supprimer',
     Quality: 'Qualité',
@@ -132,7 +121,7 @@ export class NgpImagePickerComponent implements OnInit {
   labels = this.labelEn;
   arrayCopiedImages: any[] = [];
 
-  @Input() color: 'primary' | 'warn' | 'accent' = 'primary';
+  @Input() color: string = '#1e88e5';
 
   @Input() set _imageSrc(value) {
     if (value != undefined) {
@@ -172,11 +161,9 @@ export class NgpImagePickerComponent implements OnInit {
   @Output() $imageChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() $imageOriginal: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private chRef: ChangeDetectorRef) {
-  }
+  constructor(private chRef: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onUpload(event) {
     event.preventDefault();
@@ -227,6 +214,7 @@ export class NgpImagePickerComponent implements OnInit {
     }
     this.$imageChanged.next(this.imageSrc);
     this.loadImage = true;
+    this.chRef.markForCheck();
   }
 
   onOpenEditPanel() {
@@ -253,9 +241,9 @@ export class NgpImagePickerComponent implements OnInit {
     }
     this.format = type;
     return new Promise((resolve, reject) => {
-      let img = document.createElement('img');
+      // let img = document.createElement('img');
+      let img = new Image();
       img.crossOrigin = 'Anonymous';
-      img.src = imageUrl;
       this.maxHeight = img.height;
       this.maxWidth = img.width;
       img.onload = function () {
@@ -272,6 +260,7 @@ export class NgpImagePickerComponent implements OnInit {
           height: canvas.height,
         });
       };
+      img.src = imageUrl;
     }).then((data: any) => {
       // console.log('ImagePickerComponent -> ngOnInit -> data', data);
       this.maxHeight = data.height;
@@ -361,6 +350,8 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   async onChangeQuality(event) {
+    // console.log('🚀 ~ file: ngp-image-picker.component.ts ~ line 352 ~ NgpImagePickerComponent ~ onChangeQuality ~ event', event);
+
     const qualityItem = this.quality / 100;
     this.maxHeight = this.maxHeight && +this.maxHeight ? this.maxHeight : 2000;
     // console.log('ImagePickerComponent -> onChangeQuality -> this.maxHeight', this.maxHeight);
@@ -375,11 +366,12 @@ export class NgpImagePickerComponent implements OnInit {
         quality: qualityItem,
         maintainRatio: this.maintainAspectRatio,
       };
-
       this.imageSrc = await this.resizedataURL(this.originImageSrc, input);
       this.$imageChanged.next(this.imageSrc);
       this.loadImage = true;
+      this.chRef.markForCheck();
     } catch (error) {
+      this.chRef.markForCheck();
       this.loadImage = true;
     }
   }

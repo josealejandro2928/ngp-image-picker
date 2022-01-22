@@ -54,7 +54,7 @@ ngp-image-picker {
           width: 30px;
           height: 30px;
 
-          mat-icon {
+          .material-icons {
             font-size: 30px;
             width: 30px;
             height: 30px;
@@ -114,7 +114,7 @@ ngp-image-picker {
         height: 50px;
         color: #424242;
 
-        mat-icon {
+        .material-icons {
           font-size: 50px;
           width: 50px;
           height: 50px;
@@ -127,7 +127,7 @@ ngp-image-picker {
           width: 30px;
           height: 30px;
 
-          mat-icon {
+          .material-icons {
             font-size: 30px;
             width: 30px;
             height: 30px;
@@ -148,13 +148,13 @@ ngp-image-picker {
     .editing-bar-btn {
       margin-top: 2px;
 
-      .mat-icon-button {
+      .material-icons-button {
         height: 20px;
         line-height: 20px;
         width: 24px;
       }
 
-      mat-icon {
+      .material-icons {
         line-height: 20px !important;
         font-size: 20px !important;
         width: 20px !important;
@@ -233,7 +233,7 @@ ngp-image-picker {
 
     }
 
-    mat-icon {
+    .material-icons {
       color: white;
     }
 
@@ -293,7 +293,7 @@ ngp-image-picker {
       }
 
       .item-panel {
-        padding: 0px 4px;
+        padding: 0px 0px;
         font-size: 14px;
         font-weight: 500;
       }
@@ -352,7 +352,7 @@ ngp-image-picker {
       color: #fff;
       height: 85%;
 
-      mat-icon {
+      .material-icons {
         color: #fff;
 
       }
@@ -364,11 +364,69 @@ ngp-image-picker {
     border-radius: 4px;
     cursor: pointer;
 
-    mat-icon {
+    .material-icons {
       color: rgba(0, 0, 0, 0.82);
     }
-
   }
 
+  .icon-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
+    border-radius: 50%;
+    cursor: pointer;
+
+    :active {
+      transform: scale(.95);
+    }
+  }
+
+  .input-range {
+    margin-bottom: 16px;
+    margin-top: 4px;
+  }
+
+  .input-range[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    margin-top: -2px;
+    border-radius: 50%;
+  }
+
+  .input-range[type="range"]::-moz-range-thumb {
+    height: 24px;
+    width: 24px;
+    margin-top: -2px;
+    border-radius: 50%;
+  }
+
+  .caption {
+    font-size: 11px;
+    margin-top: 2px !important;
+    margin-bottom: 0px !important;
+  }
+
+  .form-field {
+    margin-bottom: 16px;
+    label {
+      font-size: 12px;
+      opacity: .92;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input {
+      height: 34px;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: none;
+      padding: 2px 8px;
+      outline: none;
+    }
+  }
 
 }
