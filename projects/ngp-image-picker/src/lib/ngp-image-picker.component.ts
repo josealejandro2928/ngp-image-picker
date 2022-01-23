@@ -80,6 +80,7 @@ export class NgpImagePickerComponent implements OnInit {
     'width(px)': 'width(px)',
     'height(px)': 'height(px)',
     Remove: 'Remove',
+    Save: 'Save',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',
@@ -98,6 +99,7 @@ export class NgpImagePickerComponent implements OnInit {
     Crop: 'Recortar',
     'width(px)': 'ancho(px)',
     'height(px)': 'altura(px)',
+    Save: 'Guardar',
   };
   labelFr: any = {
     'Upload a image': 'Charger une image',
@@ -116,6 +118,7 @@ export class NgpImagePickerComponent implements OnInit {
     Crop: 'Recadrer',
     'width(px)': 'largeur(px)',
     'height(px)': 'hauteur(px)',
+    Save: 'Sauvez',
   };
 
   labels = this.labelEn;
@@ -393,8 +396,10 @@ export class NgpImagePickerComponent implements OnInit {
       this.imageSrc = await this.resizedataURL(this.originImageSrc, input);
       this.$imageChanged.next(this.imageSrc);
       this.loadImage = true;
+      this.chRef.markForCheck();
     } catch (error) {
       this.loadImage = true;
+      this.chRef.markForCheck();
     }
   }
 
@@ -417,8 +422,10 @@ export class NgpImagePickerComponent implements OnInit {
       this.imageSrc = await this.resizedataURL(this.originImageSrc, input);
       this.$imageChanged.next(this.imageSrc);
       this.loadImage = true;
+      this.chRef.markForCheck();
     } catch (error) {
       this.loadImage = true;
+      this.chRef.markForCheck();
     }
   }
 
@@ -426,6 +433,7 @@ export class NgpImagePickerComponent implements OnInit {
     const croper = document.getElementById('image-croper');
     croper.style.width = this.cropWidth + 'px';
     croper.style.height = this.cropHeight + 'px';
+    // this.chRef.markForCheck();
   }
 
   ////////////////////////////////////////////////
@@ -446,51 +454,83 @@ export class NgpImagePickerComponent implements OnInit {
       pos4 = 0;
     if (document.getElementById(elemnt.id + '-header')) {
       /* if present, the header is where you move the DIV from:*/
-      document.getElementById(elemnt.id + '-header').onmousedown = dragMouseDown;
-      document.getElementById(elemnt.id + '-header').ontouchstart = dragMouseDown;
+      document.getElementById(elemnt.id + '-header').onmousedown = dragPressOn;
+      document.getElementById(elemnt.id + '-header').ontouchstart = dragPressOn;
     } else {
       /* otherwise, move the DIV from anywhere inside the DIV:*/
-      elemnt.onmousedown = dragMouseDown;
-      elemnt.ontouchstart = dragMouseDown;
+      elemnt.ontouchstart = dragPressOn;
+      elemnt.onmousedown = dragPressOn;
     }
 
-    function dragMouseDown(e) {
+    function dragPressOn(e) {
+      let popup: any = document.querySelector('#popup');
+      popup.style.overflowY = 'hidden';
       e = e || window.event;
-      e.preventDefault();
-      // get the mouse cursor position at startup:
       pos3 = e.clientX;
       pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
       document.ontouchend = closeDragElement;
-      // call a function whenever the cursor moves:
-      document.onmousemove = elementDrag;
-      document.ontouchmove = elementDrag;
+      document.onmouseup = closeDragElement;
+      document.ontouchmove = elementDragTouch;
+      document.onmousemove = elementDragMouse;
     }
 
-    function elementDrag(e) {
+    function elementDragMouse(e) {
       let holderImage = document.getElementById('image-full');
       e = e || window.event;
-      e.preventDefault();
-      // calculate the new cursor position:
       pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
       pos3 = e.clientX;
+      pos2 = pos4 - e.clientY;
       pos4 = e.clientY;
 
-      const newTop = elemnt.offsetTop - pos2;
-      const newLeft = elemnt.offsetLeft - pos1;
-      const rectHolder = holderImage.getBoundingClientRect();
-      const rectElemnt = elemnt.getBoundingClientRect();
-      if (newTop >= rectHolder.y + 8) {
-        elemnt.style.top = Math.min(newTop, rectHolder.y + rectHolder.height - rectElemnt.height - 4) + 'px';
+      let newTop = elemnt.offsetTop - pos2;
+      let newLeft = elemnt.offsetLeft - pos1;
+      let rectHolder = holderImage.getBoundingClientRect();
+      let rectElemnt = elemnt.getBoundingClientRect();
+      // console.log('====================================');
+      // console.log(rectElemnt,rectHolder);
+      // console.log('====================================');
+      newTop = Math.max(newTop, rectHolder.top);
+      newTop = Math.min(newTop, rectHolder.bottom - rectElemnt.height);
+      newLeft = Math.max(newLeft, rectHolder.left);
+      newLeft = Math.min(newLeft, rectHolder.right - rectElemnt.width);
+      elemnt.style.top = newTop + 'px';
+      elemnt.style.left = newLeft + 'px';
+    }
+
+    function elementDragTouch(e) {
+      let holderImage = document.getElementById('image-full');
+      e = e || window.event;
+
+      if (e?.changedTouches?.length) {
+        pos1 = pos3 - e.changedTouches[0]?.clientX;
+        pos3 = e.changedTouches[0]?.clientX;
       }
-      if (newLeft > rectHolder.x + 4 && rectHolder.x + rectHolder.width > rectElemnt.x + rectElemnt.width + 2) {
-        elemnt.style.left = Math.min(newLeft, rectHolder.x + rectHolder.width - rectElemnt.width - 4) + 'px';
+      if (e?.changedTouches?.length) {
+        pos2 = pos4 - e.changedTouches[0]?.clientY;
+        pos4 = e.changedTouches[0]?.clientY;
       }
+
+      let newTop = elemnt.offsetTop - pos2;
+      let newLeft = elemnt.offsetLeft - pos1;
+      let rectHolder = holderImage.getBoundingClientRect();
+      let rectElemnt = elemnt.getBoundingClientRect();
+
+      // console.log('====================================');
+      // console.log(rectElemnt,rectHolder);
+      // console.log('====================================');
+
+      newTop = Math.max(newTop, rectHolder.top);
+      newTop = Math.min(newTop, rectHolder.bottom - rectElemnt.height);
+      newLeft = Math.max(newLeft, rectHolder.left);
+      newLeft = Math.min(newLeft, rectHolder.right - rectElemnt.width);
+      elemnt.style.top = newTop + 'px';
+      elemnt.style.left = newLeft + 'px';
     }
 
     function closeDragElement() {
       /* stop moving when mouse button is released:*/
+      let popup: any = document.querySelector('#popup');
+      popup.style.overflowY = 'auto';
       document.onmouseup = null;
       document.onmousemove = null;
       document.ontouchend = null;
@@ -509,17 +549,17 @@ export class NgpImagePickerComponent implements OnInit {
             const elemntCropper = document.getElementById('image-croper');
             const rectHolder = document.getElementById('image-full').getBoundingClientRect();
             const rectElemnt = elemntCropper.getBoundingClientRect();
-            const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 4;
-            const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 4;
+            const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 1;
+            const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 1;
             elemntCropper.style.maxWidth = maxWidth + 'px';
             elemntCropper.style.maxHeight = maxHeight + 'px';
             this.cropWidth = rectElemnt.width;
             this.cropHeight = rectElemnt.height;
             if (entry.target.id == 'image-full') {
               if (rectHolder.top > 0) {
-                elemntCropper.style.top = rectHolder.top + 4 + 'px';
+                elemntCropper.style.top = rectHolder.top + 1 + 'px';
               }
-              elemntCropper.style.left = rectHolder.left + 4 + 'px';
+              elemntCropper.style.left = rectHolder.left + 1 + 'px';
             }
           }
         });
@@ -541,7 +581,7 @@ export class NgpImagePickerComponent implements OnInit {
     const rectCroper = croper.getBoundingClientRect();
     const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
     const canvas = document.createElement('canvas');
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let ctx = canvas.getContext('2d');
       let img = document.getElementById('image-full');
       let image = new Image();
@@ -564,7 +604,7 @@ export class NgpImagePickerComponent implements OnInit {
           newHeight,
         );
         // ctx.drawImage(image, 90, 130, 50, 60, 10, 10, 50, 60);
-        resolve(canvas.toDataURL(`image/${type}`, 0.98));
+        return resolve(canvas.toDataURL(`image/${type}`, 0.98));
       };
       image.onerror = (e) => {
         reject(e);
@@ -580,6 +620,7 @@ export class NgpImagePickerComponent implements OnInit {
         this.lastOriginSrc = this.originImageSrc + '';
         this.originImageSrc = dataUri;
         this.$imageChanged.next(this.imageSrc);
+        this.chRef.markForCheck();
       })
       .catch((e) => {
         console.log(e);
@@ -587,12 +628,16 @@ export class NgpImagePickerComponent implements OnInit {
   }
 
   onRestore() {
-    if (this.arrayCopiedImages.length) {
+    // console.log('====================================');
+    // console.log(this.arrayCopiedImages);
+    // console.log('====================================');
+    if (this.arrayCopiedImages.length > 1) {
       let lastState = this.arrayCopiedImages.pop();
       this.imageSrc = lastState.lastImage;
       this.maxWidth = lastState.width;
       this.maxHeight = lastState.height;
       this.originImageSrc = this.lastOriginSrc + '';
+      this.chRef.markForCheck();
     } else {
       this.imageSrc = this.lastOriginSrc;
       this.originImageSrc = this.lastOriginSrc + '';

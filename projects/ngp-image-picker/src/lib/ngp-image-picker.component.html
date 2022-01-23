@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<div *ngIf="showEditPanel" id="popup" class="popup">
+<div #popup *ngIf="showEditPanel" id="popup" class="popup">
   <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
     <button class="icon-btn" (click)="onCloseEditPanel()">
       <span class="material-icons">clear</span>
@@ -66,8 +66,13 @@
       <img id="image-full" [src]="this.imageSrc" />
 
       <div id="image-croper" class="image-croper">
+        <div class="grid"></div>
         <div id="image-croper-header">
-          <mat-icon>drag_indicator</mat-icon>
+          <div
+            *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+            style="border: 1px dashed #fafafa; flex: 0 1 32%; width: 33%; height: 33%; background-color: rgba(0, 0, 0, 0.48)"
+          ></div>
+          <span class="material-icons" style="position: absolute; top: 0; left: 0">drag_indicator</span>
         </div>
       </div>
     </div>
@@ -82,6 +87,8 @@
 
       <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
         <input
+          [readonly]="showCrop"
+          [disabled]="showCrop"
           class="input-range"
           (change)="onChangeQuality($event)"
           [ngStyle]="{ maxWidth: '100%', width: '100%', color: color }"
@@ -104,84 +111,74 @@
       <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
         <div class="form-field" style="max-width: 48%; width: 48%">
           <label>{{ labels['max-width(px)'] }}</label>
-          <input (change)="onChangeSize(true, false)" placeholder="{{ labels['max-width(px)'] }}" [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000" />
+          <input
+            [readonly]="showCrop"
+            [disabled]="showCrop"
+            (change)="onChangeSize(true, false)"
+            placeholder="{{ labels['max-width(px)'] }}"
+            [(ngModel)]="maxWidth"
+            type="number"
+            [min]="0"
+            [max]="2000"
+          />
         </div>
 
         <div class="form-field" style="max-width: 48%; width: 48%">
           <label>{{ labels['max-height(px)'] }}</label>
-          <input (change)="onChangeSize(false, true)" placeholder="{{ labels['max-height(px)'] }}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000" />
+          <input
+            [readonly]="showCrop"
+            [disabled]="showCrop"
+            (change)="onChangeSize(false, true)"
+            placeholder="{{ labels['max-height(px)'] }}"
+            [(ngModel)]="maxHeight"
+            type="number"
+            [min]="0"
+            [max]="2000"
+          />
         </div>
       </div>
-
-      <!-- <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
-        <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
-          <mat-label>{{ labels['max-width(px)'] }}</mat-label>
-          <input (change)="onChangeSize(true, false)" matInput placeholder="{{ labels['max-width(px)'] }}" [(ngModel)]="maxWidth" type="number" [min]="0" [max]="2000" />
-        </mat-form-field>
-
-        <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
-          <mat-label>{{ labels['max-height(px)'] }}</mat-label>
-          <input (change)="onChangeSize(false, true)" matInput placeholder="{{ labels['max-height(px)'] }}" [(ngModel)]="maxHeight" type="number" [min]="0" [max]="2000" />
-        </mat-form-field>
-      </div> -->
 
       <p class="item-panel">{{ labels['Format'] }}</p>
       <div style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <mat-form-field class="no-input-style" style="max-width: 100%; width: 100%" appearance="fill" [color]="color">
-          <mat-select [(ngModel)]="format" (selectionChange)="onChangeFormat($event.value)">
-            <mat-option *ngFor="let format of allFormats" [value]="format">
-              {{ format }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="form-field" style="width: 100%">
+          <select [disabled]="showCrop" [(ngModel)]="format" (change)="onChangeFormat($event?.target?.value)">
+            <option *ngFor="let formatItem of allFormats" [value]="formatItem">{{ formatItem }}</option>
+          </select>
+        </div>
       </div>
 
-      <p>
-        <mat-checkbox (change)="onCropStateChange()" [(ngModel)]="showCrop" [color]="color">
-          <p class="item-panel">{{ labels['Crop'] }}</p>
-        </mat-checkbox>
-        <button style="float: right" [color]="color" (click)="onRestore()">
-          <mat-icon> refresh </mat-icon>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+        <span style="display: flex; align-items: center">
+          <input type="checkbox" (change)="onCropStateChange()" [(ngModel)]="showCrop" [style.color]="color" />
+          <span class="item-panel">{{ labels['Crop'] }}</span>
+        </span>
+
+        <button class="icon-btn" (click)="onRestore()">
+          <span class="material-icons"> refresh </span>
         </button>
-      </p>
+      </div>
 
       <ng-container *ngIf="showCrop">
         <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
-          <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
-            <mat-label>{{ labels['width(px)'] }}</mat-label>
-            <input
-              (change)="onChangeCrop($event.target.valueAsNumber)"
-              matInput
-              placeholder="{{ labels['width(px)'] }}"
-              [(ngModel)]="cropWidth"
-              type="number"
-              [min]="0"
-              [max]="2000"
-            />
-          </mat-form-field>
-          <mat-form-field class="no-input-style" style="max-width: 48%; width: 48%" appearance="fill">
-            <mat-label>{{ labels['height(px)'] }}</mat-label>
-            <input
-              (change)="onChangeCrop($event.target.valueAsNumber)"
-              matInput
-              placeholder="{{ labels['height(px)'] }}"
-              [(ngModel)]="cropHeight"
-              type="number"
-              [min]="0"
-              [max]="2000"
-            />
-          </mat-form-field>
+          <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
+            <label>{{ labels['width(px)'] }}</label>
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" placeholder="{{ labels['width(px)'] }}" [(ngModel)]="cropWidth" type="number" [min]="0" [max]="2000" />
+          </div>
+          <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
+            <label>{{ labels['height(px)'] }}</label>
+            <input (change)="onChangeCrop($event.target.valueAsNumber)" placeholder="{{ labels['height(px)'] }}" [(ngModel)]="cropHeight" type="number" [min]="0" [max]="2000" />
+          </div>
         </div>
 
         <p style="margin-bottom: 4px !important">
-          <button [color]="color" (click)="onCrop()">
-            <mat-icon> crop </mat-icon>
+          <button title="Cut the image" class="icon-btn" (click)="onCrop()">
+            <span class="material-icons"> crop </span>
           </button>
         </p>
       </ng-container>
 
-      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center">
-        <button style="padding: 0px 8px; height: 34px; box-sizing: border-box; background-color: #fff; color: black" mat-flat-button (click)="onCloseEditPanel()">Guardar</button>
+      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center; margin-top: 8px">
+        <button class="save-btn" (click)="onCloseEditPanel()">{{ labels['Save'] }}</button>
 
         <p
           *ngIf="this.calculateSize()"
