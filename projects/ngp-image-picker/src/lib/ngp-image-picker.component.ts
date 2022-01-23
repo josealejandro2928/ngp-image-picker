@@ -166,13 +166,24 @@ export class NgpImagePickerComponent implements OnInit {
 
   constructor(private chRef: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.appendLinkIconsToHead();
+  }
+
+  appendLinkIconsToHead() {
+    let head: HTMLElement = document.head;
+    let linkIcons: HTMLElement = head.querySelector('#ngp-image-picker-icons-id');
+    if (linkIcons) return;
+    let link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+    link.rel = 'stylesheet';
+    link.id = 'ngp-image-picker-icons-id';
+    head.appendChild(link);
+  }
 
   onUpload(event) {
     event.preventDefault();
-    // const element: HTMLElement = document.getElementById('filePicker-' + this.uuidFilePicker) as HTMLElement;
     this.imagePicker.nativeElement.click();
-    // element.click();
   }
 
   handleFileSelect(evt) {
@@ -180,7 +191,6 @@ export class NgpImagePickerComponent implements OnInit {
     if (files) {
       const file = files[0];
       this.imageName = file.name.split('.')[0];
-      // console.log('NgpImagePickerComponent -> handleFileSelect -> file.name', file.name);
       this.fileType = file.type;
       this.urlImage = `data:${file.type};base64,`;
       if (files && file) {

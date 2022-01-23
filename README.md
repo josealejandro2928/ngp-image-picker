@@ -4,11 +4,7 @@ Angular library for the selection, edition and compression of images in png, jpe
 This library was generated with Angular CLI version 10.0.0, and support the latest version of angular.
 Previous versions of this library relied entirely on angular material components.
 Today it is made with html and css without any extra components.
-You only need load the icons from here:
-(You should add this line to your index.html head)
-``` html
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /> 
-```
+
 ### Description
 
 In many projects it is of interest to upload images for a backend, and sometimes we have to consult other programs for the compression of images and the change of format to improve the performance of the page. With `NgpImagePicker` this is possible in real time with for each image that you want to upload.
