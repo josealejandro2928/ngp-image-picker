@@ -65,7 +65,7 @@
     <div class="image-holder-full">
       <img id="image-full" [src]="this.imageSrc" />
 
-      <div id="image-croper" class="image-croper">
+      <div id="image-croper" class="image-croper" [style.display]="showCrop ? '' : 'none'">
         <div class="grid"></div>
         <div id="image-croper-header">
           <div
