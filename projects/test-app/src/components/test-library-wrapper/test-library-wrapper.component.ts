@@ -8,10 +8,10 @@ import { ImagePickerConf } from 'ngp-image-picker';
 })
 export class TestLibraryWrapperComponent implements OnInit {
   config2: ImagePickerConf = {
-    borderRadius: '4px',
-    language: 'es',
-    width: '200px',
-    height: '200px',
+    borderRadius: '8px',
+    language: 'en',
+    width: '300px',
+    height: '300px',
   };
   initialImage:string = "../../assets/images/pexels-photo-842711.jpeg"
 
