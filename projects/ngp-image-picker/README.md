@@ -105,7 +105,7 @@ export interface ImagePickerConf {
   height?: string;
   borderRadius?: string;
   compressInitial?: boolean;
-  language?: string;
+  language?: string; // |en|es|fr|de|
 }
 ```
 
