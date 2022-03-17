@@ -97,7 +97,7 @@ export class ExampleComponent {
 
 ### More about the component
 
-The `NgpImagePicker` component has a setting to change the width and length of the loaded image. In addition to the language (only 'es' and 'en'). It also has an initial compression option that by default is true. The interface looks like this:
+The `NgpImagePicker` component has a setting to change the width and length of the loaded image. In addition to the language (|en|es|fr|de|). It also has an initial compression option that by default is true. The interface looks like this:
 
 ```typescript
 export interface ImagePickerConf {
@@ -105,7 +105,7 @@ export interface ImagePickerConf {
   height?: string;
   borderRadius?: string;
   compressInitial?: boolean;
-  language?: string; // |en|es|fr|de|
+  language?: string; // |en|es|fr|de| //
 }
 ```
 
