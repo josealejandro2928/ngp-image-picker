@@ -165,8 +165,8 @@ export class NgpImagePickerComponent implements OnInit {
       this.lastOriginSrc = null;
       this.$imageOriginal.next(null);
       this.format = 'jpeg';
-      this.maxHeight = 2000;
-      this.maxWidth = 2000;
+      this.maxHeight = 4000;
+      this.maxWidth = 4000;
       this.cropHeight = 150;
       this.cropWidth = 150;
       this.maintainAspectRatio = true;
@@ -350,6 +350,7 @@ export class NgpImagePickerComponent implements OnInit {
           canvas.height = height;
         }
 
+        // ctx.filter=`sepia(1)`;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         let type = input.dataType ? input.dataType : 'webp';
         var dataURI = canvas.toDataURL(`image/${type}`, quality);
