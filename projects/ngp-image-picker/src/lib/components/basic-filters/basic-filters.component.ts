@@ -16,7 +16,6 @@ export interface IBasicFilterState {
   styleUrls: ['./basic-filters.component.scss'],
 })
 export class BasicFiltersComponent implements OnInit {
-  @Input() filterState: IBasicFilterState | any = {};
   @Input() color: string;
   @Input() labels: any;
 
@@ -32,11 +31,17 @@ export class BasicFiltersComponent implements OnInit {
     sepia: 0,
   };
 
+  @Input() set filterState(value) {
+    if (value) {
+      this.state = JSON.parse(JSON.stringify({ ...this.state, ...value }));
+    }
+  }
+
   constructor() {}
 
   ngOnInit(): void {
-    this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.filterState }));
-    // console.log('🚀 ~ file: basic-filters.component.ts ~ line 25 ~ BasicFiltersComponent ~ ngOnInit ~ this.state', this.state);
+    // this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.filterState }));
+    // // console.log('🚀 ~ file: basic-filters.component.ts ~ line 25 ~ BasicFiltersComponent ~ ngOnInit ~ this.state', this.state);
   }
 
   onChange() {
