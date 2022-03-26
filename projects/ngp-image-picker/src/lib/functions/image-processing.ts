@@ -1,6 +1,6 @@
 import { IState } from '../components/edit-image/edit-image.component';
 
-export const MAX_BUFFER_UNDO_MEMORY = 50;
+export const MAX_BUFFER_UNDO_MEMORY = 10;
 
 export const convertImageUsingCanvas = (
   datas,
