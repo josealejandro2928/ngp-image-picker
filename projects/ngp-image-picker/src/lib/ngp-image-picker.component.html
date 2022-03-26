@@ -35,7 +35,7 @@
       fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
     }"
   >
-    size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
+    size: {{ this.calculateSize() }}Kb &nbsp; {{ this.state.format }}
   </p>
 
   <div
@@ -271,7 +271,7 @@
   *ngIf="showEditPanel"
   [imageSrc]="this.imageSrc"
   [originImageSrc]="this.originImageSrc"
-  [state]="this.state"
+  [initialState]="this.state"
   [labels]="this.labels"
   [color]="this.color"
   (closeModal)="this.onCloseEditPanel($event)"

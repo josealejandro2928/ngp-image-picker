@@ -12,8 +12,9 @@ export class TestLibraryWrapperComponent implements OnInit {
     language: 'en',
     width: '300px',
     height: '300px',
+    compressInitial: null,
   };
-  initialImage:string = "../../assets/images/pexels-photo-842711.jpeg"
+  initialImage: string = '../../assets/images/pexels-photo-842711.jpeg';
 
   constructor() {}
 

@@ -113,10 +113,6 @@
               <input type="checkbox" (change)="onCropStateChange()" [(ngModel)]="showCrop" [style.color]="color" />
               <span class="item-panel">{{ labels['Crop'] }}</span>
             </span>
-
-            <button class="icon-btn" (click)="onRestore()">
-              <span class="material-icons"> refresh </span>
-            </button>
           </div>
 
           <ng-container *ngIf="showCrop">
@@ -163,6 +159,14 @@
         </ng-container>
       </lib-tabs>
 
+      <button
+        [disabled]="this.state.arrayCopiedImages.length <= 1"
+        style="position: absolute; right: 10px; top: 30px"
+        class="icon-btn"
+        (click)="onRestore()"
+      >
+        <span class="material-icons"> refresh </span>
+      </button>
       <div
         style="
           flex-direction: row;

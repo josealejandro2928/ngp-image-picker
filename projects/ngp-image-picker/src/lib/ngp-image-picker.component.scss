@@ -345,6 +345,11 @@ ngp-image-picker {
     margin-bottom: 0px !important;
   }
 
+  button[disabled] {
+    filter: brightness(.5);
+    cursor: not-allowed;
+  }
+
 
 
 }

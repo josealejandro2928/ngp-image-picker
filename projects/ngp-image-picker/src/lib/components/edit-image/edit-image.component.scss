@@ -77,6 +77,7 @@
     place-content: stretch flex-start;
     align-items: stretch;
     max-width: 100%;
+    position: relative;
 
     @media (max-width:599px) {
       margin: 8px 0px;
