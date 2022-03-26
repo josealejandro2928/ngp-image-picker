@@ -86,6 +86,7 @@ export class NgpImagePickerComponent implements OnInit {
     Brightness: 'Brightness',
     Grayscale: 'Grayscale',
     Saturate: 'Saturate',
+    Sepia: 'Sepia',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',

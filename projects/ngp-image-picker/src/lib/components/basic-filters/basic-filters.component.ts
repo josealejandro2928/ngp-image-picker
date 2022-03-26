@@ -36,7 +36,7 @@ export class BasicFiltersComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.filterState }));
-    console.log('🚀 ~ file: basic-filters.component.ts ~ line 25 ~ BasicFiltersComponent ~ ngOnInit ~ this.state', this.state);
+    // console.log('🚀 ~ file: basic-filters.component.ts ~ line 25 ~ BasicFiltersComponent ~ ngOnInit ~ this.state', this.state);
   }
 
   onChange() {
