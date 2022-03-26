@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  padding: 0px 8px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  font-size: 16px;
+  border-bottom: 1px solid #323232;
+
+  .itemlabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem 0.65rem;
+    min-height: 48px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-transform: capitalize;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &.bottomLine {
+      position: relative;
+      opacity: 1;
+
+      div {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 3px;
+      }
+    }
+  }
+}
+
+.body{
+  padding: 16px 8px;
+}

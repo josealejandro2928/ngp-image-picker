@@ -1,5 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ResizeObserver } from 'resize-observer';
+
+export interface ImageConverterInput {
+  width?: number;
+  height?: number;
+  quality?: number;
+  dataType?: string;
+  maintainRatio?: boolean;
+  changeHeight?: boolean;
+  changeWidth?: boolean;
+}
 
 export interface ImagePickerConf {
   width?: string;
@@ -11,16 +32,6 @@ export interface ImagePickerConf {
   hideDownloadBtn?: boolean;
   hideEditBtn?: boolean;
   hideAddBtn?: boolean;
-}
-
-export interface ImageConverterInput {
-  width?: number;
-  height?: number;
-  quality?: number;
-  dataType?: string;
-  maintainRatio?: boolean;
-  changeHeight?: boolean;
-  changeWidth?: boolean;
 }
 
 @Component({
@@ -43,6 +54,26 @@ export class NgpImagePickerComponent implements OnInit {
     hideAddBtn: false,
   };
 
+  state: {
+    quality: number;
+    maxHeight: number;
+    maxWidth: number;
+    cropHeight: number;
+    cropWidth: number;
+    maintainAspectRatio: boolean;
+    format: string;
+    arrayCopiedImages: any[];
+  } = {
+    quality: 92,
+    maxHeight: 4000,
+    maxWidth: 4000,
+    cropHeight: 150,
+    cropWidth: 150,
+    maintainAspectRatio: true,
+    format: 'jpeg',
+    arrayCopiedImages: [],
+  };
+
   observer = null;
   showCrop = false;
   imageSrc: any;
@@ -62,6 +93,7 @@ export class NgpImagePickerComponent implements OnInit {
   maintainAspectRatio = true;
   imageName = 'donload';
   lastOriginSrc;
+
   ///////////////////////////////////////////////////////
   labelEn: any = {
     'Upload a image': 'Upload a image',
@@ -149,8 +181,7 @@ export class NgpImagePickerComponent implements OnInit {
     if (value != undefined) {
       this.parseToBase64(value).then((dataUri) => {
         this.imageSrc = dataUri;
-        this.arrayCopiedImages = [];
-        this.arrayCopiedImages.push(this.imageSrc);
+        this.state.arrayCopiedImages.push(this.imageSrc);
         this.originImageSrc = value;
         this.lastOriginSrc = value;
         this.$imageOriginal.next(this.originImageSrc);
@@ -161,9 +192,18 @@ export class NgpImagePickerComponent implements OnInit {
       this.imageSrc = null;
       this.originImageSrc = null;
       this.loadImage = false;
-      this.arrayCopiedImages = [];
+      this.state.arrayCopiedImages = [];
       this.lastOriginSrc = null;
       this.$imageOriginal.next(null);
+      this.state = {
+        ...this.state,
+        format: 'jpeg',
+        maxHeight: 4000,
+        maxWidth: 4000,
+        cropHeight: 150,
+        cropWidth: 150,
+        maintainAspectRatio: true,
+      };
       this.format = 'jpeg';
       this.maxHeight = 4000;
       this.maxWidth = 4000;
@@ -183,7 +223,13 @@ export class NgpImagePickerComponent implements OnInit {
   @Output() $imageChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() $imageOriginal: EventEmitter<any> = new EventEmitter<any>();
 
+  controlPanelIndex: number = 0;
+
   constructor(private chRef: ChangeDetectorRef) {}
+
+  onControlPanelIndexChange(index: number) {
+    this.controlPanelIndex = index;
+  }
 
   ngOnInit(): void {
     this.appendLinkIconsToHead();
@@ -227,6 +273,11 @@ export class NgpImagePickerComponent implements OnInit {
     this.lastOriginSrc = this.urlImage + base64textString;
     if (this.config.compressInitial) {
       this.quality = 92;
+      this.state = {
+        ...this.state,
+        quality: 92,
+        maintainAspectRatio: true,
+      };
       const input: ImageConverterInput = {
         dataType: this.format,
         quality: 0.92,
@@ -235,8 +286,8 @@ export class NgpImagePickerComponent implements OnInit {
       this.imageSrc = await this.resizedataURL(this.urlImage + base64textString, input);
     } else {
       this.imageSrc = this.urlImage + base64textString;
-      this.arrayCopiedImages = [];
-      this.arrayCopiedImages.push({
+      this.state.arrayCopiedImages = [];
+      this.state.arrayCopiedImages.push({
         lastImage: this.imageSrc,
         width: this.maxWidth,
         height: this.maxHeight,
@@ -253,31 +304,37 @@ export class NgpImagePickerComponent implements OnInit {
     this.showEditPanel = true;
   }
 
-  onCloseEditPanel() {
-    if (this.observer instanceof ResizeObserver) {
-      this.observer.unobserve(document.getElementById('image-croper'));
-      this.observer.unobserve(document.getElementById('image-full'));
-    }
-    this.showCrop = false;
+  onCloseEditPanel(data) {
+    console.log('🚀 ~ file: ngp-image-picker.component.ts ~ line 308 ~ NgpImagePickerComponent ~ onCloseEditPanel ~ data', data);
     this.showEditPanel = false;
   }
 
   parseToBase64(imageUrl) {
     let types = imageUrl.split('.');
     let type = types[types.length - 1];
-    // console.log('ImagePickerComponent -> ngOnInit -> type', type);
     if (type && (type == 'png' || type == 'jpeg' || type == 'webp')) {
       type = type;
     } else {
       type = 'jpeg';
     }
     this.format = type;
+    this.state = {
+      ...this.state,
+      format: type,
+    };
+
     return new Promise((resolve, reject) => {
-      // let img = document.createElement('img');
       let img = new Image();
       img.crossOrigin = 'Anonymous';
       this.maxHeight = img.height;
       this.maxWidth = img.width;
+
+      this.state = {
+        ...this.state,
+        maxHeight: img.height,
+        maxWidth: img.width,
+      };
+      const $this = this;
       img.onload = function () {
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
@@ -285,7 +342,7 @@ export class NgpImagePickerComponent implements OnInit {
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        let dataURI = canvas.toDataURL(`image/${type}`, 0.92);
+        let dataURI = canvas.toDataURL(`image/${type}`, $this.state.quality);
         return resolve({
           dataUri: dataURI,
           width: canvas.width,
@@ -294,9 +351,13 @@ export class NgpImagePickerComponent implements OnInit {
       };
       img.src = imageUrl;
     }).then((data: any) => {
-      // console.log('ImagePickerComponent -> ngOnInit -> data', data);
       this.maxHeight = data.height;
       this.maxWidth = data.width;
+      this.state = {
+        ...this.state,
+        maxHeight: data.height,
+        maxWidth: data.width,
+      };
       return data.dataUri;
     });
   }
@@ -361,11 +422,12 @@ export class NgpImagePickerComponent implements OnInit {
         });
       };
     }).then((data: any) => {
-      // console.log('ImagePickerComponent -> ngOnInit -> data', data);
-      this.maxHeight = data.height;
-      this.maxWidth = data.width;
-      if (this.arrayCopiedImages.length <= 20) {
-        this.arrayCopiedImages.push({
+      // this.maxHeight = data.height;
+      // this.maxWidth = data.width;
+      this.state = { ...this.state, maxHeight: data.height, maxWidth: data.width };
+
+      if (this.state.arrayCopiedImages.length <= 20) {
+        this.state.arrayCopiedImages.push({
           lastImage: data.dataUri,
           width: this.maxWidth,
           height: this.maxHeight,
@@ -664,11 +726,10 @@ export class NgpImagePickerComponent implements OnInit {
     // console.log('====================================');
     // console.log(this.arrayCopiedImages);
     // console.log('====================================');
-    if (this.arrayCopiedImages.length > 1) {
-      let lastState = this.arrayCopiedImages.pop();
+    if (this.state.arrayCopiedImages.length > 1) {
+      let lastState = this.state.arrayCopiedImages.pop();
       this.imageSrc = lastState.lastImage;
-      this.maxWidth = lastState.width;
-      this.maxHeight = lastState.height;
+      this.state = { ...this.state, maxHeight: lastState.height, maxWidth: lastState.width };
       this.originImageSrc = this.lastOriginSrc + '';
       this.chRef.markForCheck();
     } else {
@@ -682,16 +743,19 @@ export class NgpImagePickerComponent implements OnInit {
     this.imageSrc = null;
     this.originImageSrc = null;
     this.loadImage = false;
-    this.arrayCopiedImages = [];
+    this.state.arrayCopiedImages = [];
     this.lastOriginSrc = null;
     this.$imageOriginal.next(null);
     this.$imageChanged.next(null);
-    this.format = 'jpeg';
-    this.maxHeight = 2000;
-    this.maxWidth = 2000;
-    this.cropHeight = 150;
-    this.cropWidth = 150;
-    this.maintainAspectRatio = true;
+    this.state = {
+      ...this.state,
+      format: 'jpeg',
+      maxHeight: 4000,
+      maxWidth: 4000,
+      cropHeight: 150,
+      cropWidth: 150,
+      maintainAspectRatio: true,
+    };
     this.showEditPanel = false;
   }
 }

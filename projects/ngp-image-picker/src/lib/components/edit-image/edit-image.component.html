@@ -1,83 +1,6 @@
-<div *ngIf="!loadImage" class="place-image">
-  <div
-    class="image-holder"
-    [ngStyle]="{
-      width: this.config.width,
-      height: this.config.height,
-      borderRadius: this.config.borderRadius
-    }"
-  >
-    <button title="{{ labels['Upload a image'] }}" class="icon-btn image-upload-btn" (click)="onUpload($event)">
-      <!--  <span class="material-icons">add_a_photo</mat-icon> -->
-      <span class="material-icons">add_a_photo</span>
-    </button>
-
-    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
-  </div>
-</div>
-<div *ngIf="loadImage" class="place-image">
-  <div
-    class="image-holder-loaded"
-    [ngStyle]="{
-      width: this.config.width,
-      height: this.config.height,
-      borderRadius: this.config.borderRadius
-    }"
-  >
-    <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{ borderRadius: this.config.borderRadius }" />
-    <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
-  </div>
-  <p
-    *ngIf="this.calculateSize()"
-    class="caption image-caption"
-    [ngStyle]="{
-      color: this.calculateSize() > 120 ? '#f44336' : 'unset',
-      fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
-    }"
-  >
-    size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
-  </p>
-
-  <div
-    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start"
-    class="editing-bar-btn"
-  >
-    <button
-      class="icon-btn"
-      id="upload-img"
-      *ngIf="!this.config.hideAddBtn"
-      title="{{ labels['Upload a image'] }}"
-      (click)="onUpload($event)"
-    >
-      <span class="material-icons">add_a_photo</span>
-    </button>
-    <button
-      class="icon-btn"
-      id="edit-img"
-      *ngIf="!this.config.hideEditBtn"
-      title="{{ labels['Open the editor panel'] }}"
-      (click)="onOpenEditPanel()"
-    >
-      <span class="material-icons">edit</span>
-    </button>
-    <a
-      id="download-img"
-      *ngIf="!this.config.hideDownloadBtn"
-      title="{{ labels['Download the image'] }}"
-      [href]="this.imageSrc"
-      download="{{ imageName }}"
-    >
-      <span class="material-icons">cloud_download</span>
-    </a>
-    <button class="icon-btn" id="delete-img" *ngIf="!this.config.hideDeleteBtn" title="{{ labels['Remove'] }}" (click)="onRemove()">
-      <span class="material-icons">delete</span>
-    </button>
-  </div>
-</div>
-
-<!-- <div #popup *ngIf="showEditPanel" id="popup" class="popup">
- <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
-    <button class="icon-btn" (click)="onCloseEditPanel()">
+<div id="popup" class="popup">
+  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
+    <button class="icon-btn" (click)="onCloseEditPanel(false)">
       <span class="material-icons">clear</span>
     </button>
   </div>
@@ -103,7 +26,7 @@
         <ng-container *ngIf="controlPanelIndex == 0">
           <div style="display: flex; width: 100%; justify-content: space-between">
             <p class="item-panel">{{ labels['Quality'] }}</p>
-            <p class="item-panel">{{ quality + '%' }}</p>
+            <p class="item-panel">{{ this.state.quality + '%' }}</p>
           </div>
 
           <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -111,9 +34,9 @@
               [readonly]="showCrop"
               [disabled]="showCrop"
               class="input-range"
-              (change)="onChangeQuality($event)"
+              (change)="onChangeQuality()"
               [ngStyle]="{ maxWidth: '100%', width: '100%', color: color }"
-              [(ngModel)]="quality"
+              [(ngModel)]="this.state.quality"
               type="range"
               min="1"
               max="100"
@@ -124,7 +47,7 @@
           <div class="item-panel" style="display: flex; width: 100%; justify-content: space-between">
             {{ labels['Max dimensions'] }}
             <div style="display: flex; align-items: center">
-              <input type="checkbox" [(ngModel)]="maintainAspectRatio" [style.color]="color" />
+              <input type="checkbox" [(ngModel)]="this.state.maintainAspectRatio" [style.color]="color" />
               <span class="caption">{{ labels['aspect-ratio'] }}</span>
             </div>
           </div>
@@ -144,9 +67,9 @@
               <input
                 [readonly]="showCrop"
                 [disabled]="showCrop"
-                (change)="onChangeSize(true, false)"
+                (change)="onChangeSize(false)"
                 placeholder="{{ labels['max-width(px)'] }}"
-                [(ngModel)]="maxWidth"
+                [(ngModel)]="this.state.maxWidth"
                 type="number"
                 [min]="0"
                 [max]="2000"
@@ -158,9 +81,9 @@
               <input
                 [readonly]="showCrop"
                 [disabled]="showCrop"
-                (change)="onChangeSize(false, true)"
+                (change)="onChangeSize(true)"
                 placeholder="{{ labels['max-height(px)'] }}"
-                [(ngModel)]="maxHeight"
+                [(ngModel)]="this.state.maxHeight"
                 type="number"
                 [min]="0"
                 [max]="2000"
@@ -180,7 +103,7 @@
             "
           >
             <div class="form-field" style="width: 100%">
-              <select [disabled]="showCrop" [(ngModel)]="format" (change)="onChangeFormat($event?.target?.value)">
+              <select [disabled]="showCrop" [(ngModel)]="this.state.format" (change)="onChangeFormat()">
                 <option *ngFor="let formatItem of allFormats" [value]="formatItem">{{ formatItem }}</option>
               </select>
             </div>
@@ -250,7 +173,7 @@
           margin-top: 8px;
         "
       >
-        <button class="save-btn" (click)="onCloseEditPanel()">{{ labels['Save'] }}</button>
+        <button class="save-btn" (click)="onCloseEditPanel(true)">{{ labels['Save'] }}</button>
 
         <p
           *ngIf="this.calculateSize()"
@@ -265,14 +188,4 @@
       </div>
     </div>
   </div>
-</div> -->
-
-<lib-edit-image
-  *ngIf="showEditPanel"
-  [imageSrc]="this.imageSrc"
-  [originImageSrc]="this.originImageSrc"
-  [state]="this.state"
-  [labels]="this.labels"
-  [color]="this.color"
-  (closeModal)="this.onCloseEditPanel($event)"
-></lib-edit-image>
+</div>

@@ -213,9 +213,6 @@ ngp-image-picker {
     .image-container {
       margin-top: 50px;
       margin-bottom: 50px;
-      // height: 100%;
-      // min-height: 100%;
-      // min-width: 100%;
       width: 100%;
       flex-flow: row wrap;
       box-sizing: border-box;
@@ -229,8 +226,6 @@ ngp-image-picker {
         position: relative;
         display: contents;
       }
-
-
     }
 
     .material-icons {
@@ -315,58 +310,8 @@ ngp-image-picker {
   }
 
 
-  .mat-form-field-appearance-fill .mat-form-field-flex {
-    background-color: #fafafa !important;
-  }
 
-  .mat-select-panel {
-    background: #fafafa !important;
-  }
 
-  input.mat-input-element {
-    color: rgba(0, 0, 0, .85);
-  }
-
-  .mat-checkbox-background {
-    background-color: white;
-
-  }
-
-  .image-croper {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border: 2.5px solid #fafafa;
-    box-sizing: border-box;
-    resize: both;
-    overflow: auto;
-    opacity: 0;
-    border-radius: 4px;
-    overflow: hidden;
-    z-index: 10;
-
-    #image-croper-header {
-      padding: 0px;
-      cursor: move;
-      z-index: 9;
-      background-color: transparent;
-      color: #fff;
-      height: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      box-sizing: border-box;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: .8;
-      .material-icons {
-        color: #fff;
-
-      }
-    }
-
-  }
 
   .btn {
     padding: 4px 8px;
@@ -392,25 +337,7 @@ ngp-image-picker {
     }
   }
 
-  .input-range {
-    margin-bottom: 16px;
-    margin-top: 4px;
-  }
 
-  .input-range[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 24px;
-    width: 24px;
-    margin-top: -2px;
-    border-radius: 50%;
-  }
-
-  .input-range[type="range"]::-moz-range-thumb {
-    height: 24px;
-    width: 24px;
-    margin-top: -2px;
-    border-radius: 50%;
-  }
 
   .caption {
     font-size: 11px;
@@ -418,55 +345,6 @@ ngp-image-picker {
     margin-bottom: 0px !important;
   }
 
-  input[type="checkbox"] {
-    cursor: pointer;
-  }
 
-  .form-field {
-    margin-bottom: 16px;
-
-    label {
-      font-size: 12px;
-      opacity: .92;
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    input {
-      height: 34px;
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: none;
-      padding: 2px 8px;
-      outline: none;
-    }
-
-    select {
-      height: 34px;
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: none;
-      padding: 2px 8px;
-      outline: none;
-      background-color: white;
-    }
-  }
-
-  .save-btn {
-    padding: 0px 8px;
-    height: 34px;
-    box-sizing: border-box;
-    background-color: #fff;
-    color: black;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:active {
-      transform: scale(.95);
-    }
-  }
 
 }
