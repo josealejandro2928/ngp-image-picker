@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { convertImageUsingCanvas, dragElement } from '../../functions/image-processing';
+import { IBasicFilterState } from '../basic-filters/basic-filters.component';
 export interface ICacheData {
   lastImage: string;
   originImageSrc: string;
@@ -7,6 +8,7 @@ export interface ICacheData {
   height: number;
   quality: number;
   format: string;
+  basicFilters?: IBasicFilterState | null | undefined;
 }
 export interface IState {
   quality: number;
@@ -18,6 +20,7 @@ export interface IState {
   format: string;
   arrayCopiedImages: Array<ICacheData>;
   originImageSrc: string;
+  basicFilters?: IBasicFilterState;
 }
 @Component({
   selector: 'lib-edit-image',
@@ -37,8 +40,8 @@ export class EditImageComponent implements OnInit {
 
   state: IState = {
     quality: 92,
-    maxHeight: 4000,
-    maxWidth: 4000,
+    maxHeight: 1000,
+    maxWidth: 1000,
     cropHeight: 150,
     cropWidth: 150,
     maintainAspectRatio: true,
@@ -120,6 +123,7 @@ export class EditImageComponent implements OnInit {
           quality: newValue.quality,
           format: newValue.format,
           originImageSrc: newValue.originImageSrc,
+          basicFilters: newValue.basicFilters,
         };
         this.imageSrc = newValue.lastImage;
         this.chRef.markForCheck();
@@ -219,6 +223,7 @@ export class EditImageComponent implements OnInit {
             quality: this.state.quality,
             format: this.state.format,
             originImageSrc: this.state.originImageSrc,
+            basicFilters: this.state.basicFilters,
           });
         } else {
           this.state.arrayCopiedImages[this.state.arrayCopiedImages.length - 1] = {
@@ -228,6 +233,7 @@ export class EditImageComponent implements OnInit {
             quality: this.state.quality,
             format: this.state.format,
             originImageSrc: this.state.originImageSrc,
+            basicFilters: this.state.basicFilters,
           };
         }
         this.chRef.markForCheck();
@@ -235,5 +241,19 @@ export class EditImageComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+  }
+
+  async onChangeFilters(data: IBasicFilterState) {
+    try {
+      if (!this.state.basicFilters) {
+        this.state.basicFilters = data;
+      } else {
+        this.state.basicFilters = { ...this.state.basicFilters, ...data };
+      }
+      this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
+      this.chRef.markForCheck();
+    } catch (e) {
+      console.log('🚀 ~ file: edit-image.component.ts ~ line 250 ~ EditImageComponent ~ onChangeFilters ~ e', e);
+    }
   }
 }

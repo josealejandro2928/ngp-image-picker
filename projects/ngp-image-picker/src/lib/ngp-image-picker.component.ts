@@ -45,8 +45,8 @@ export class NgpImagePickerComponent implements OnInit {
 
   state: IState = {
     quality: 92,
-    maxHeight: 4000,
-    maxWidth: 4000,
+    maxHeight: 1000,
+    maxWidth: 1000,
     cropHeight: 150,
     cropWidth: 150,
     maintainAspectRatio: true,
@@ -54,9 +54,6 @@ export class NgpImagePickerComponent implements OnInit {
     arrayCopiedImages: [],
     originImageSrc: '',
   };
-
-  observer = null;
-  showCrop = false;
   imageSrc: any;
   loadImage = false;
   fileType;
@@ -84,6 +81,11 @@ export class NgpImagePickerComponent implements OnInit {
     'height(px)': 'height(px)',
     Remove: 'Remove',
     Save: 'Save',
+    Contrast: 'Contrast',
+    Blur: 'Blur',
+    Brightness: 'Brightness',
+    Grayscale: 'Grayscale',
+    Saturate: 'Saturate',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',
@@ -103,6 +105,12 @@ export class NgpImagePickerComponent implements OnInit {
     'width(px)': 'ancho(px)',
     'height(px)': 'altura(px)',
     Save: 'Guardar',
+    Contrast: 'Contraste',
+    Blur: 'Blur',
+    Brightness: 'Brillo',
+    Grayscale: 'Scala de gris',
+    Saturate: 'Saturación',
+    Sepia: 'Sepia',
   };
   labelFr: any = {
     'Upload a image': 'Charger une image',
@@ -122,6 +130,12 @@ export class NgpImagePickerComponent implements OnInit {
     'width(px)': 'largeur(px)',
     'height(px)': 'hauteur(px)',
     Save: 'Sauvez',
+    Contrast: 'Contraste',
+    Blur: 'Blur',
+    Brightness: 'Luminosité',
+    Grayscale: 'Grayscale',
+    Saturate: 'Saturer',
+    Sepia: 'Seiche',
   };
   labelDe: any = {
     'Upload a image': 'Bild hochladen',
@@ -141,6 +155,12 @@ export class NgpImagePickerComponent implements OnInit {
     'height(px)': 'Höhe(px)',
     Remove: 'Entfernen',
     Save: 'Speichern',
+    Contrast: 'Kontrast',
+    Blur: 'Blur',
+    Brightness: 'Helligkeit',
+    Grayscale: 'Graustufen',
+    Saturer: 'Sättigen',
+    Sepia: 'Tintenfisch',
   };
 
   labels = this.labelEn;
@@ -174,8 +194,8 @@ export class NgpImagePickerComponent implements OnInit {
       this.state = {
         ...this.state,
         format: 'jpeg',
-        maxHeight: 4000,
-        maxWidth: 4000,
+        maxHeight: 1000,
+        maxWidth: 1000,
         cropHeight: 150,
         cropWidth: 150,
         maintainAspectRatio: true,
@@ -366,8 +386,8 @@ export class NgpImagePickerComponent implements OnInit {
       ...this.state,
       originImageSrc: '',
       format: 'jpeg',
-      maxHeight: 4000,
-      maxWidth: 4000,
+      maxHeight: 1000,
+      maxWidth: 1000,
       cropHeight: 150,
       cropWidth: 150,
       maintainAspectRatio: true,

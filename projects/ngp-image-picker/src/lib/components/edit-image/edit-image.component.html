@@ -157,6 +157,14 @@
             </p>
           </ng-container>
         </ng-container>
+        <ng-container *ngIf="controlPanelIndex == 1">
+          <lib-basic-filters
+            [filterState]="this.state.basicFilters"
+            (changeFilter)="onChangeFilters($event)"
+            [labels]="this.labels"
+            [color]="this.color"
+          ></lib-basic-filters>
+        </ng-container>
       </lib-tabs>
 
       <button

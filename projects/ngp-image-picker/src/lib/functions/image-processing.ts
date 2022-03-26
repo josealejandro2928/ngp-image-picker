@@ -36,7 +36,9 @@ export const convertImageUsingCanvas = (
         canvas.width = width;
         canvas.height = height;
       }
-      // ctx.filter=`sepia(1)`;
+      if (state.basicFilters) {
+        ctx.filter = processFilter(state.basicFilters);
+      }
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       let type = state.format;
       var dataURI = canvas.toDataURL(`image/${type}`, quality);
@@ -58,6 +60,8 @@ export const convertImageUsingCanvas = (
         quality: state.quality,
         format: state.format,
         originImageSrc: state.originImageSrc,
+        basicFilters:state.basicFilters
+
       });
     } else {
       state.arrayCopiedImages[state.arrayCopiedImages.length - 1] = {
@@ -67,10 +71,23 @@ export const convertImageUsingCanvas = (
         quality: state.quality,
         format: state.format,
         originImageSrc: state.originImageSrc,
+        basicFilters:state.basicFilters
       };
     }
     return data.dataUri;
   });
+
+  function processFilter(data) {
+    return Object.keys(data)
+      .map((key) => {
+        if (['blur'].includes(key)) {
+          return `${key}(${data[key]}px)`;
+        } else {
+          return `${key}(${data[key]})`;
+        }
+      })
+      .join('');
+  }
 };
 
 export const dragElement = (elemnt) => {

@@ -9,7 +9,7 @@ import { ImagePickerConf } from 'ngp-image-picker';
 export class TestLibraryWrapperComponent implements OnInit {
   config2: ImagePickerConf = {
     borderRadius: '8px',
-    language: 'en',
+    language: 'es',
     width: '300px',
     height: '300px',
     compressInitial: null,
