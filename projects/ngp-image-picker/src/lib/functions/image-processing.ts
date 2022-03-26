@@ -1,5 +1,7 @@
 import { IState } from '../components/edit-image/edit-image.component';
 
+export const MAX_BUFFER_UNDO_MEMORY = 50;
+
 export const convertImageUsingCanvas = (
   datas,
   changeHeight = false,
@@ -52,7 +54,7 @@ export const convertImageUsingCanvas = (
     state.maxHeight = data.height;
     state.maxWidth = data.width;
 
-    if (state.arrayCopiedImages.length <= 20) {
+    if (state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
       state.arrayCopiedImages.push({
         lastImage: data.dataUri,
         width: state.maxWidth,
@@ -60,8 +62,7 @@ export const convertImageUsingCanvas = (
         quality: state.quality,
         format: state.format,
         originImageSrc: state.originImageSrc,
-        basicFilters:state.basicFilters
-
+        basicFilters: state.basicFilters,
       });
     } else {
       state.arrayCopiedImages[state.arrayCopiedImages.length - 1] = {
@@ -71,7 +72,7 @@ export const convertImageUsingCanvas = (
         quality: state.quality,
         format: state.format,
         originImageSrc: state.originImageSrc,
-        basicFilters:state.basicFilters
+        basicFilters: state.basicFilters,
       };
     }
     return data.dataUri;

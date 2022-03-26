@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { convertImageUsingCanvas, dragElement } from '../../functions/image-processing';
+import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY } from '../../functions/image-processing';
 import { IBasicFilterState } from '../basic-filters/basic-filters.component';
 export interface ICacheData {
   lastImage: string;
@@ -34,7 +34,7 @@ export class EditImageComponent implements OnInit {
   controlPanelIndex: number = 0;
   showCrop: boolean = false;
   observer: ResizeObserver = null;
-  allFormats = ['webp', 'jpeg', 'png', 'svg'];
+  allFormats = ['webp', 'jpeg', 'png'];
 
   @Input() initialState: IState | null | any = {};
 
@@ -56,7 +56,7 @@ export class EditImageComponent implements OnInit {
 
   ngOnInit() {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {
@@ -215,7 +215,7 @@ export class EditImageComponent implements OnInit {
         this.state.maxWidth = canvas.width;
         this.state.maxHeight = canvas.height;
         this.state.originImageSrc = dataUri;
-        if (this.state.arrayCopiedImages.length <= 20) {
+        if (this.state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
           this.state.arrayCopiedImages.push({
             lastImage: dataUri,
             width: this.state.maxWidth,
