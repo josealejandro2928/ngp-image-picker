@@ -129,9 +129,9 @@
               <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
                 <label>{{ labels['width(px)'] }}</label>
                 <input
-                  (change)="onChangeCrop($event.target.valueAsNumber)"
+                  (change)="onChangeCrop()"
                   placeholder="{{ labels['width(px)'] }}"
-                  [(ngModel)]="cropWidth"
+                  [(ngModel)]="this.state.cropWidth"
                   type="number"
                   [min]="0"
                   [max]="2000"
@@ -140,9 +140,9 @@
               <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
                 <label>{{ labels['height(px)'] }}</label>
                 <input
-                  (change)="onChangeCrop($event.target.valueAsNumber)"
+                  (change)="onChangeCrop()"
                   placeholder="{{ labels['height(px)'] }}"
-                  [(ngModel)]="cropHeight"
+                  [(ngModel)]="this.state.cropHeight"
                   type="number"
                   [min]="0"
                   [max]="2000"

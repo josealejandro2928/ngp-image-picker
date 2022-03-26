@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { convertImageUsingCanvas } from '../../functions/image-processing';
+import { convertImageUsingCanvas, dragElement } from '../../functions/image-processing';
 export interface ICacheData {
   lastImage: string;
+  originImageSrc: string;
   width: number;
   height: number;
   quality: number;
@@ -16,6 +17,7 @@ export interface IState {
   maintainAspectRatio: boolean;
   format: string;
   arrayCopiedImages: Array<ICacheData>;
+  originImageSrc: string;
 }
 @Component({
   selector: 'lib-edit-image',
@@ -25,10 +27,9 @@ export interface IState {
 export class EditImageComponent implements OnInit {
   @Input() labels: any;
   @Input() imageSrc: string;
-  @Input() originImageSrc: string;
   @Input() color: string;
   controlPanelIndex: number = 0;
-  showCrop: boolean;
+  showCrop: boolean = false;
   observer: ResizeObserver = null;
   allFormats = ['webp', 'jpeg', 'png', 'svg'];
 
@@ -43,6 +44,7 @@ export class EditImageComponent implements OnInit {
     maintainAspectRatio: true,
     format: 'jpeg',
     arrayCopiedImages: [],
+    originImageSrc: '',
   };
 
   @Output() closeModal = new EventEmitter<{ state: IState; imageSrc: string } | null | undefined>();
@@ -68,8 +70,6 @@ export class EditImageComponent implements OnInit {
     this.controlPanelIndex = idex;
   }
 
-  onCropStateChange() {}
-
   calculateSize() {
     if (this.imageSrc && this.imageSrc.length) {
       return Math.ceil(((3 / 4) * this.imageSrc.length) / 1024);
@@ -80,7 +80,7 @@ export class EditImageComponent implements OnInit {
 
   async onChangeSize(changeHeight = false) {
     try {
-      this.imageSrc = await convertImageUsingCanvas(this.originImageSrc, changeHeight, this.state);
+      this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, changeHeight, this.state);
       this.chRef.markForCheck();
     } catch (error) {
       console.log('🚀 ~ file: edit-image.component.ts ~ line 76 ~ EditImageComponent ~ onChangeSize ~ error', error);
@@ -90,7 +90,7 @@ export class EditImageComponent implements OnInit {
 
   async onChangeQuality() {
     try {
-      this.imageSrc = await convertImageUsingCanvas(this.originImageSrc, false, this.state);
+      this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
       this.chRef.markForCheck();
     } catch (error) {
       console.log('🚀 ~ file: edit-image.component.ts ~ line 86 ~ EditImageComponent ~ onChangeQuality ~ error', error);
@@ -100,7 +100,7 @@ export class EditImageComponent implements OnInit {
 
   async onChangeFormat() {
     try {
-      this.imageSrc = await convertImageUsingCanvas(this.originImageSrc, false, this.state);
+      this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
       this.chRef.markForCheck();
     } catch (error) {
       console.log('🚀 ~ file: edit-image.component.ts ~ line 98 ~ EditImageComponent ~ onChangeFormat ~ error', error);
@@ -119,6 +119,7 @@ export class EditImageComponent implements OnInit {
           maxWidth: newValue.width,
           quality: newValue.quality,
           format: newValue.format,
+          originImageSrc: newValue.originImageSrc,
         };
         this.imageSrc = newValue.lastImage;
         this.chRef.markForCheck();
@@ -126,19 +127,113 @@ export class EditImageComponent implements OnInit {
     } catch (e) {
       console.log('🚀 ~ file: edit-image.component.ts ~ line 126 ~ EditImageComponent ~ onRestore ~ e', e);
     }
-    // console.log('====================================');
-    // console.log(this.arrayCopiedImages);
-    // console.log('====================================');
-    // if (this.state.arrayCopiedImages.length > 1) {
-    //   let lastState = this.state.arrayCopiedImages.pop();
-    //   this.imageSrc = lastState.lastImage;
-    //   this.state = { ...this.state, maxHeight: lastState.height, maxWidth: lastState.width };
-    //   this.originImageSrc = this.lastOriginSrc + '';
-    //   this.chRef.markForCheck();
-    // } else {
-    //   this.imageSrc = this.lastOriginSrc;
-    //   this.originImageSrc = this.lastOriginSrc + '';
-    // }
-    // this.$imageChanged.next(this.imageSrc);
+  }
+
+  onCropStateChange() {
+    const croper = document.getElementById('image-croper');
+    if (this.showCrop) {
+      croper.style.opacity = '1.0';
+      dragElement(croper);
+      this.observer = new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+          const elemntCropper = document.getElementById('image-croper');
+          const rectHolder = document.getElementById('image-full').getBoundingClientRect();
+          const rectElemnt = elemntCropper.getBoundingClientRect();
+          const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 1;
+          const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 1;
+          elemntCropper.style.maxWidth = maxWidth + 'px';
+          elemntCropper.style.maxHeight = maxHeight + 'px';
+          this.state.cropWidth = rectElemnt.width;
+          this.state.cropHeight = rectElemnt.height;
+          if (entry.target.id == 'image-full') {
+            if (rectHolder.top > 0) {
+              elemntCropper.style.top = rectHolder.top + 1 + 'px';
+            }
+            elemntCropper.style.left = rectHolder.left + 1 + 'px';
+          }
+        });
+      });
+      this.observer.observe(document.getElementById('image-croper'));
+      this.observer.observe(document.getElementById('image-full'));
+      this.chRef.markForCheck();
+    } else {
+      croper.style.opacity = '0.0';
+      if (this.observer instanceof ResizeObserver) {
+        this.observer.unobserve(document.getElementById('image-croper'));
+        this.observer.unobserve(document.getElementById('image-full'));
+      }
+      this.chRef.markForCheck();
+    }
+  }
+
+  onChangeCrop() {
+    const croper = document.getElementById('image-croper');
+    croper.style.width = this.state.cropWidth + 'px';
+    croper.style.height = this.state.cropHeight + 'px';
+  }
+
+  onCrop() {
+    const croper = document.getElementById('image-croper');
+    const rectCroper = croper.getBoundingClientRect();
+    const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
+    const canvas = document.createElement('canvas');
+    return new Promise((resolve, reject) => {
+      let ctx = canvas.getContext('2d');
+      let image = new Image();
+      image.src = this.imageSrc;
+      image.onload = () => {
+        let ratio = image.height / dataHolderRect.height;
+        let newWidth = rectCroper.width * ratio;
+        let newHeight = rectCroper.height * ratio;
+        canvas.height = newHeight;
+        canvas.width = newWidth;
+        ctx.drawImage(
+          image,
+          Math.abs(rectCroper.x * ratio) - Math.abs(dataHolderRect.x * ratio),
+          Math.abs(rectCroper.y * ratio) - Math.abs(dataHolderRect.y * ratio),
+          newWidth,
+          newHeight,
+          0,
+          0,
+          newWidth,
+          newHeight,
+        );
+        return resolve(canvas.toDataURL(`image/${this.state.format}`, this.state.quality));
+      };
+      image.onerror = (e) => {
+        reject(e);
+      };
+    })
+      .then((dataUri: string) => {
+        this.imageSrc = dataUri;
+        this.showCrop = false;
+        this.onCropStateChange();
+        this.state.maxWidth = canvas.width;
+        this.state.maxHeight = canvas.height;
+        this.state.originImageSrc = dataUri;
+        if (this.state.arrayCopiedImages.length <= 20) {
+          this.state.arrayCopiedImages.push({
+            lastImage: dataUri,
+            width: this.state.maxWidth,
+            height: this.state.maxHeight,
+            quality: this.state.quality,
+            format: this.state.format,
+            originImageSrc: this.state.originImageSrc,
+          });
+        } else {
+          this.state.arrayCopiedImages[this.state.arrayCopiedImages.length - 1] = {
+            lastImage: dataUri,
+            width: this.state.maxWidth,
+            height: this.state.maxHeight,
+            quality: this.state.quality,
+            format: this.state.format,
+            originImageSrc: this.state.originImageSrc,
+          };
+        }
+        this.chRef.markForCheck();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }
