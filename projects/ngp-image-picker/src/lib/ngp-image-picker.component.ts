@@ -393,6 +393,8 @@ export class NgpImagePickerComponent implements OnInit {
       cropWidth: 150,
       maintainAspectRatio: true,
       arrayCopiedImages: [],
+      basicFilters: null,
+      quality: 92,
     };
     this.showEditPanel = false;
   }
