@@ -14,7 +14,7 @@
         <div id="image-croper-header">
           <div
             *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-            style="border: 1px dashed #fafafa; flex: 0 1 32%; width: 33%; height: 33%; background-color: rgba(0, 0, 0, 0.48)"
+            style="border: 1px dashed #fafafa; background-color: rgba(0, 0, 0, 0.48)"
           ></div>
           <span class="material-icons" style="position: absolute; top: 0; left: 0">drag_indicator</span>
         </div>
@@ -195,7 +195,7 @@
             fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
           }"
         >
-          size: {{ this.calculateSize() }}Kb &nbsp; {{ this.state.format}}
+          size: {{ this.calculateSize() }}Kb &nbsp; {{ this.state.format }}
         </p>
       </div>
     </div>

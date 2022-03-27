@@ -104,6 +104,8 @@
   position: absolute;
   width: 180px;
   height: 180px;
+  min-height: 64px;
+  min-width: 64px;
   border: 2.5px solid #fafafa;
   box-sizing: border-box;
   resize: both;
@@ -120,8 +122,9 @@
     background-color: transparent;
     color: #fff;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 0px;
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
     box-sizing: border-box;
     position: absolute;
