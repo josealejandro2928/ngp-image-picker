@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY } from '../../functions/image-processing';
+import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY, saveState } from '../../functions/image-processing';
 import { IBasicFilterState } from '../basic-filters/basic-filters.component';
 export interface ICacheData {
   lastImage: string;
@@ -215,27 +215,7 @@ export class EditImageComponent implements OnInit {
         this.state.maxWidth = canvas.width;
         this.state.maxHeight = canvas.height;
         this.state.originImageSrc = dataUri;
-        if (this.state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
-          this.state.arrayCopiedImages.push({
-            lastImage: dataUri,
-            width: this.state.maxWidth,
-            height: this.state.maxHeight,
-            quality: this.state.quality,
-            format: this.state.format,
-            originImageSrc: this.state.originImageSrc,
-            basicFilters: this.state.basicFilters,
-          });
-        } else {
-          this.state.arrayCopiedImages[this.state.arrayCopiedImages.length - 1] = {
-            lastImage: dataUri,
-            width: this.state.maxWidth,
-            height: this.state.maxHeight,
-            quality: this.state.quality,
-            format: this.state.format,
-            originImageSrc: this.state.originImageSrc,
-            basicFilters: this.state.basicFilters,
-          };
-        }
+        saveState(this.state, dataUri);
         this.chRef.markForCheck();
       })
       .catch((e) => {

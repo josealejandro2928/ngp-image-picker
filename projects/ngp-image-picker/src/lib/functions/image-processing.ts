@@ -1,6 +1,6 @@
 import { IState } from '../components/edit-image/edit-image.component';
 
-export const MAX_BUFFER_UNDO_MEMORY = 10;
+export const MAX_BUFFER_UNDO_MEMORY = 25;
 
 export const convertImageUsingCanvas = (
   datas,
@@ -53,28 +53,7 @@ export const convertImageUsingCanvas = (
   }).then((data: any) => {
     state.maxHeight = data.height;
     state.maxWidth = data.width;
-
-    if (state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
-      state.arrayCopiedImages.push({
-        lastImage: data.dataUri,
-        width: state.maxWidth,
-        height: state.maxHeight,
-        quality: state.quality,
-        format: state.format,
-        originImageSrc: state.originImageSrc,
-        basicFilters: state.basicFilters,
-      });
-    } else {
-      state.arrayCopiedImages[state.arrayCopiedImages.length - 1] = {
-        lastImage: data.dataUri,
-        width: state.maxWidth,
-        height: state.maxHeight,
-        quality: state.quality,
-        format: state.format,
-        originImageSrc: state.originImageSrc,
-        basicFilters: state.basicFilters,
-      };
-    }
+    saveState(state, data.dataUri);
     return data.dataUri;
   });
 
@@ -179,5 +158,29 @@ export const dragElement = (elemnt) => {
     document.onmousemove = null;
     document.ontouchend = null;
     document.ontouchmove = null;
+  }
+};
+
+export const saveState = (state: IState, lastImage?: string) => {
+  if (state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
+    state.arrayCopiedImages.push({
+      lastImage: lastImage,
+      width: state.maxWidth,
+      height: state.maxHeight,
+      quality: state.quality,
+      format: state.format,
+      originImageSrc: state.originImageSrc,
+      basicFilters: state.basicFilters,
+    });
+  } else {
+    state.arrayCopiedImages[state.arrayCopiedImages.length - 1] = {
+      lastImage: lastImage,
+      width: state.maxWidth,
+      height: state.maxHeight,
+      quality: state.quality,
+      format: state.format,
+      originImageSrc: state.originImageSrc,
+      basicFilters: state.basicFilters,
+    };
   }
 };

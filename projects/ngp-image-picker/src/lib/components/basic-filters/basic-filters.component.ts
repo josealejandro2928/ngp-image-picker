@@ -36,15 +36,29 @@ export class BasicFiltersComponent implements OnInit {
       this.state = JSON.parse(JSON.stringify({ ...this.state, ...value }));
     }
   }
+  debounceFlag = false;
 
   constructor() {}
 
-  ngOnInit(): void {
-    // this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.filterState }));
-    // // console.log('🚀 ~ file: basic-filters.component.ts ~ line 25 ~ BasicFiltersComponent ~ ngOnInit ~ this.state', this.state);
-  }
+  ngOnInit(): void {}
 
   onChange() {
-    this.changeFilter.next(this.state);
+    // this.changeFilter.next(this.state);
+    this.debounce(() => {
+      this.debounceFlag = false;
+      this.changeFilter.next(this.state);
+      console.log(this.state)
+    }, 150);
   }
+
+  debounce = (callback: Function, delay) => {
+    if (this.debounceFlag) return;
+    this.debounceFlag = true;
+    let timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      callback();
+      clearTimeout(timeout);
+    }, delay);
+  };
 }
