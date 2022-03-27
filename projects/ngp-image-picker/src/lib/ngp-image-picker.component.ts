@@ -263,6 +263,7 @@ export class NgpImagePickerComponent implements OnInit {
         ...this.state,
         quality: Math.min(this.config.compressInitial || 92, 100),
         maintainAspectRatio: true,
+        format: 'jpeg',
       };
       this.imageSrc = await convertImageUsingCanvas(this.urlImage + base64textString, false, this.state, { getDimFromImage: true });
     } else {

@@ -112,7 +112,7 @@ export interface ImagePickerConf {
 }
 ```
 
-It could be a basic information object with compression once the image is loaded:
+A basic configuration object with compression applied would be:
 
 ```typescript
 export class ExampleComponent {
@@ -122,17 +122,34 @@ export class ExampleComponent {
   };
  ```
 
+ The above example means that once an image is loaded from the file system, a compression quality is applied to it with a value of 0.9,
+ and the resulting image will be reformatted as a jpeg.
+
 ### Editing panel
 
 Once you have selected an image, 4 buttons are enabled below the image:
-1- load a new image.
-2-Open the editing panel.
-3-Download the image.
-4- Delete the image
 
-In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'. The 'Png' format is not affected by changing the quality ratio.
+1. load a new image.
+2. Open the editing panel.
+3. Download the image.
+4. Delete the image.
+
+In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'.
+The 'Png' format is not affected by changing the quality ratio.
 Another capability is that you can crop the image by simply dragging and dropping the cropping component. And by clicking on the crop button.
 
+**I just added a new tab for applying filters**. Now you can not only crop, compress and reformat your image, but you have new features like:
+
+1. Contrast level
+2. Brigthness level
+3. Gray
+4. Sepia
+5. Saturation
+6. Blur
+
+🔥🔥🔥🔥🔥 You can have in your website a component like the instagram or linkedin for editing your images. 🔥🔥🔥🔥🔥
+
+![Image 1](https://ngp-image-picker.surge.sh/assets/images/tab-section.png)
 ![Image 2](https://ngp-image-picker.surge.sh/assets/images/2.png)
 
 ### Control section

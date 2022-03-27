@@ -99,8 +99,9 @@ export class ExampleComponent {
 ### More about the component
 
 The `NgpImagePicker` component has a setting to change the width and length of the loaded image. In addition to the language (|en|es|fr|de|). It also has an initial compression ratio option that by default is null.
-It is important to note that the quality factor for image compression is only for formats such as: jpeg and webp. 
+It is important to note that the quality factor for image compression is only for formats such as: jpeg and webp.
 The interface looks like this:
+
 ```typescript
 export interface ImagePickerConf {
   width?: string;
@@ -110,7 +111,9 @@ export interface ImagePickerConf {
   language?: string; // |en|es|fr|de| //
 }
 ```
-It could be a basic information object with compression once the image is loaded:
+
+A basic configuration object with compression applied would be:
+
 ```typescript
 export class ExampleComponent {
   config1: ImagePickerConf = {
@@ -118,27 +121,48 @@ export class ExampleComponent {
     compressInitial: 90
   };
  ```
+
+ The above example means that once an image is loaded from the file system, a compression quality is applied to it with a value of 0.9,
+ and the resulting image will be reformatted as a jpeg.
+
 ### Editing panel
 
 Once you have selected an image, 4 buttons are enabled below the image:
-1- load a new image.
-2-Open the editing panel.
-3-Download the image.
-4- Delete the image
 
-In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'. The 'Png' format is not affected by changing the quality ratio.
+1. load a new image.
+2. Open the editing panel.
+3. Download the image.
+4. Delete the image.
+
+In the edit panel, you can change the quality ratio to compress the file size (in kb). Also changing width and height in px keeping aspect ratio or not, is selectable. You can change the image format as you wish, the options are 'png', 'webp','jpeg'.
+The 'Png' format is not affected by changing the quality ratio.
 Another capability is that you can crop the image by simply dragging and dropping the cropping component. And by clicking on the crop button.
 
+**I just added a new tab for applying filters**. Now you can not only crop, compress and reformat your image, but you have new features like:
+
+1. Contrast level
+2. Brigthness level
+3. Gray
+4. Sepia
+5. Saturation
+6. Blur
+
+🔥🔥🔥🔥🔥 You can have in your website a component like the instagram or linkedin for editing your images. 🔥🔥🔥🔥🔥
+
+![Image 1](https://ngp-image-picker.surge.sh/assets/images/tab-section.png)
 ![Image 2](https://ngp-image-picker.surge.sh/assets/images/2.png)
 
 ### Control section
+
 ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-1.png)
 ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-2.png)
 ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-3.png)
 ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-4.png)
 
 ### Croping images
+
 ![Image 4](https://ngp-image-picker.surge.sh/assets/images/5.png)
+
 ### All together
 
 ### [DEMO](https://ngp-image-picker.surge.sh/)
