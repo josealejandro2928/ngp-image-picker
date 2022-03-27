@@ -1,12 +1,13 @@
 import { IState } from '../components/edit-image/edit-image.component';
 
 export const MAX_BUFFER_UNDO_MEMORY = 25;
+let rotate = 1;
 
 export const convertImageUsingCanvas = (
   datas,
   changeHeight = false,
   state: IState,
-  options?: { getDimFromImage?: boolean },
+  options?: { getDimFromImage?: boolean; rotate?: number },
 ): Promise<string> => {
   return new Promise(async (resolve, _) => {
     let img = document.createElement('img');
@@ -17,7 +18,7 @@ export const convertImageUsingCanvas = (
 
     img.onload = () => {
       var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
+      let ctx = canvas.getContext('2d');
       let ratio = img.width / img.height;
       let width = state.maxWidth;
       let height = state.maxHeight;
@@ -41,6 +42,19 @@ export const convertImageUsingCanvas = (
       if (state.basicFilters) {
         ctx.filter = processFilter(state.basicFilters);
       }
+      // if (options?.rotate) {
+      //   canvas.width = height;
+      //   canvas.height = width;
+      //   if (options?.rotate === 90) {
+      //     ctx.rotate((90 * Math.PI) / 180);
+      //     ctx.translate(0, -canvas.width);
+      //   } else {
+      //     ctx.rotate((-90 * Math.PI) / 180);
+      //     ctx.translate(-canvas.height, 0);
+      //   }
+      //   ctx.drawImage(img, 0, 0);
+      // } else {
+      // }
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       let type = state.format;
       var dataURI = canvas.toDataURL(`image/${type}`, quality);

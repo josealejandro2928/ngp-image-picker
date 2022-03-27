@@ -236,4 +236,13 @@ export class EditImageComponent implements OnInit {
       console.log('🚀 ~ file: edit-image.component.ts ~ line 250 ~ EditImageComponent ~ onChangeFilters ~ e', e);
     }
   }
+
+  // async onRotate(deg = 90) {
+  //   try {
+  //     this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state, { rotate: deg });
+  //     this.chRef.markForCheck();
+  //   } catch (e) {
+  //     console.log('🚀 ~ file: edit-image.component.ts ~ line 250 ~ EditImageComponent ~ onRotate ~ e', e);
+  //   }
+  // }
 }

@@ -87,6 +87,8 @@ export class NgpImagePickerComponent implements OnInit {
     Grayscale: 'Grayscale',
     Saturate: 'Saturate',
     Sepia: 'Sepia',
+    Rotate: 'Rotate',
+    Undo: 'Undo',
   };
   labelEs: any = {
     'Upload a image': 'Suba una imagen',
@@ -112,6 +114,8 @@ export class NgpImagePickerComponent implements OnInit {
     Grayscale: 'Scala de gris',
     Saturate: 'Saturación',
     Sepia: 'Sepia',
+    Rotate: 'Rotar',
+    Undo: 'Deshacer',
   };
   labelFr: any = {
     'Upload a image': 'Charger une image',
@@ -137,6 +141,7 @@ export class NgpImagePickerComponent implements OnInit {
     Grayscale: 'Grayscale',
     Saturate: 'Saturer',
     Sepia: 'Seiche',
+    Undo: 'Annuler',
   };
   labelDe: any = {
     'Upload a image': 'Bild hochladen',
@@ -162,6 +167,7 @@ export class NgpImagePickerComponent implements OnInit {
     Grayscale: 'Graustufen',
     Saturer: 'Sättigen',
     Sepia: 'Tintenfisch',
+    Undo: 'Undo',
   };
 
   labels = this.labelEn;

@@ -108,10 +108,40 @@
               </select>
             </div>
           </div>
+
+          <!-- <p class="item-panel">{{ labels['Rotate'] }}</p>
+
+          <div
+            style="
+              margin-top: 8px !important;
+              flex-direction: row;
+              box-sizing: border-box;
+              display: flex;
+              place-content: flex-start;
+              align-items: flex-start;
+            "
+          >
+            <button [disabled]="showCrop" class="icon-btn" style="padding-left: 0px" (click)="onRotate(90)">
+              <span class="material-icons"> rotate_left </span>
+            </button>
+            <button [disabled]="showCrop" class="icon-btn" (click)="onRestore()" (click)="onRotate(-90)">
+              <span class="material-icons"> rotate_right </span>
+            </button>
+          </div>
+
+          <hr />
+          <br /> -->
+
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
             <span style="display: flex; align-items: center">
-              <input type="checkbox" (change)="onCropStateChange()" [(ngModel)]="showCrop" [style.color]="color" />
-              <span class="item-panel">{{ labels['Crop'] }}</span>
+              <input
+                type="checkbox"
+                (change)="onCropStateChange()"
+                [(ngModel)]="showCrop"
+                [style.color]="color"
+                style="margin-bottom: 3px"
+              />
+              <span class="item-panel" style="margin-left: 4px">{{ labels['Crop'] }}</span>
             </span>
           </div>
 
@@ -168,6 +198,7 @@
       </lib-tabs>
 
       <button
+        title="{{ labels['Undo'] }}"
         [disabled]="this.state.arrayCopiedImages.length <= 1"
         style="position: absolute; right: 10px; top: 30px"
         class="icon-btn"

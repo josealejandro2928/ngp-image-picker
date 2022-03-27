@@ -34,6 +34,16 @@ export class BasicFiltersComponent implements OnInit {
   @Input() set filterState(value) {
     if (value) {
       this.state = JSON.parse(JSON.stringify({ ...this.state, ...value }));
+    } else {
+      this.state = {
+        contrast: 1,
+        blur: 0,
+        brightness: 1,
+        grayscale: 0,
+        invert: 0,
+        saturate: 1,
+        sepia: 0,
+      };
     }
   }
   debounceFlag = false;
@@ -47,7 +57,7 @@ export class BasicFiltersComponent implements OnInit {
     this.debounce(() => {
       this.debounceFlag = false;
       this.changeFilter.next(this.state);
-      console.log(this.state)
+      // console.log(this.state)
     }, 150);
   }
 
