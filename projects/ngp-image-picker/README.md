@@ -166,3 +166,8 @@ Another capability is that you can crop the image by simply dragging and droppin
 ### All together
 
 ### [DEMO](https://ngp-image-picker.surge.sh/)
+
+### Related Pakages
+#### 1. [react-hook-modal](https://www.npmjs.com/package/react-hook-modal)
+#### 2. [react-basic-stepper](https://www.npmjs.com/package/react-basic-stepper)
+#### 3. [tabs-react-component](https://www.npmjs.com/package/tabs-react-component)
