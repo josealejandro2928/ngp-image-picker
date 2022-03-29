@@ -104,11 +104,13 @@ The interface looks like this:
 
 ```typescript
 export interface ImagePickerConf {
-  width?: string;
-  height?: string;
+  width?: string; // Set the specific width of the div that contain the image uploaded
+  height?: string; // Set the specific height of the div that contain the image uploaded
   borderRadius?: string;
+  aspectRatio?: number | null; // This apply a specifict aspect ratio to the div, use this with only setting a width and you can archive the ratio that you want it
+  objectFit?: 'cover' | 'contain' | 'fill' | 'revert' | 'scale-down'; // default is 'cover', but if 'contain' is used the content will be scaled to maintain its aspect ratio while fitting inside the element's content box.
   compressInitial?: number; // Range from [1-100]
-  language?: string; // |en|es|fr|de| //
+  language?: string; // | en | es | fr | de | 
 }
 ```
 
@@ -168,6 +170,9 @@ Another capability is that you can crop the image by simply dragging and droppin
 ### [DEMO](https://ngp-image-picker.surge.sh/)
 
 ### Related Pakages
+
 #### 1. [react-hook-modal](https://www.npmjs.com/package/react-hook-modal)
+
 #### 2. [react-basic-stepper](https://www.npmjs.com/package/react-basic-stepper)
+
 #### 3. [tabs-react-component](https://www.npmjs.com/package/tabs-react-component)

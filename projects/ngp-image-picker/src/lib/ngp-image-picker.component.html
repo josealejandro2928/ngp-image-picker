@@ -4,7 +4,8 @@
     [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
-      borderRadius: this.config.borderRadius
+      borderRadius: this.config.borderRadius,
+      aspectRatio: this.config.aspectRatio
     }"
   >
     <button title="{{ labels['Upload a image'] }}" class="icon-btn image-upload-btn" (click)="onUpload($event)">
@@ -21,10 +22,15 @@
     [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
-      borderRadius: this.config.borderRadius
+      borderRadius: this.config.borderRadius,
+      aspectRatio: this.config.aspectRatio
     }"
   >
-    <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{ borderRadius: this.config.borderRadius }" />
+    <img
+      [src]="this.imageSrc"
+      alt="image-loaded"
+      [ngStyle]="{ borderRadius: this.config.borderRadius, objectFit: this.config.objectFit }"
+    />
     <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
   </div>
   <p

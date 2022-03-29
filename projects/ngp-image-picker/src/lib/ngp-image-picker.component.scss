@@ -20,8 +20,6 @@ ngp-image-picker {
       place-content: center;
       align-items: center;
       position: relative;
-      width: 320px;
-      height: 240px;
       border-radius: 16px;
       max-width: 100% !important;
       box-sizing: border-box;
@@ -80,8 +78,6 @@ ngp-image-picker {
       align-items: center;
       position: relative;
       max-width: 100% !important;
-      width: 320px;
-      height: 240px;
       border-radius: 4px;
       box-sizing: border-box;
       padding: 2px;
@@ -98,8 +94,8 @@ ngp-image-picker {
         max-height: 100%;
         width: 100%;
         max-width: 100%;
-        object-fit: cover;
         object-position: center;
+        background: black;
       }
 
       @media (max-width:599px) {

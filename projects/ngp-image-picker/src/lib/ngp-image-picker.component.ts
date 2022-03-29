@@ -16,6 +16,8 @@ export interface ImagePickerConf {
   width?: string;
   height?: string;
   borderRadius?: string;
+  aspectRatio?: number | null;
+  objectFit?: 'cover' | 'contain' | 'fill' | 'revert' | 'scale-down';
   compressInitial?: number | undefined | null;
   language?: string;
   hideDeleteBtn?: boolean;
@@ -33,10 +35,8 @@ export interface ImagePickerConf {
 })
 export class NgpImagePickerComponent implements OnInit {
   config: ImagePickerConf = {
-    height: '240px',
-    width: '320px',
-    borderRadius: '16px',
     language: 'en',
+    objectFit: 'cover',
     hideDeleteBtn: false,
     hideDownloadBtn: false,
     hideEditBtn: false,

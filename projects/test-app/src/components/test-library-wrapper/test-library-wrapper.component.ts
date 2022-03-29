@@ -10,8 +10,9 @@ export class TestLibraryWrapperComponent implements OnInit {
   config2: ImagePickerConf = {
     borderRadius: '8px',
     language: 'es',
-    width: '300px',
-    height: '300px',
+    width: '330px',
+    objectFit: 'contain',
+    aspectRatio: 4 / 3,
     compressInitial: null,
   };
   initialImage: string = '../../assets/images/pexels-photo-842711.jpeg';
