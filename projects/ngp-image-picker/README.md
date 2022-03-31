@@ -16,16 +16,6 @@ In many projects it is of interest to upload images for a backend, and sometimes
 npm i ngp-image-picker --save
 ```
 
-### External Resource
-
-`NgpImagePicker`, for use the functionality of cropping images, the ResizeObserver api is used
-The ResizeObserver interface reports changes to the dimensions of an Element's content or border box, or the bounding box of an SVGElement.
-Install the package
-
-```sh
-npm i resize-observer --save
-```
-
 ### Usages
 
 You must import the module `NgpImagePicker` where you will use it and use the component
@@ -98,21 +88,39 @@ export class ExampleComponent {
 
 ### More about the component
 
-The `NgpImagePicker` component has a setting to change the width and length of the loaded image. In addition to the language (|en|es|fr|de|). It also has an initial compression ratio option that by default is null.
+The `NgpImagePicker`  component has a setting to change the width, length, the aspectRatio, and objectFit properti of the loaded image. In addition to the language ( en | es | fr | de ). It also has an initial compression ratio option that by default is null.
 It is important to note that the quality factor for image compression is only for formats such as: jpeg and webp.
 The interface looks like this:
 
 ```typescript
 export interface ImagePickerConf {
-  width?: string; // Set the specific width of the div that contain the image uploaded
-  height?: string; // Set the specific height of the div that contain the image uploaded
+  width?: string;
+  height?: string;
   borderRadius?: string;
-  aspectRatio?: number | null; // This apply a specifict aspect ratio to the div, use this with only setting a width and you can archive the ratio that you want it
-  objectFit?: 'cover' | 'contain' | 'fill' | 'revert' | 'scale-down'; // default is 'cover', but if 'contain' is used the content will be scaled to maintain its aspect ratio while fitting inside the element's content box.
+  aspectRatio?: number | null; 
+  objectFit?: 'cover' | 'contain' | 'fill' | 'revert' | 'scale-down';
   compressInitial?: number; // Range from [1-100]
-  language?: string; // | en | es | fr | de | 
+  language?: string;
+  hideDeleteBtn?: boolean;
+  hideDownloadBtn?: boolean;
+  hideEditBtn?: boolean;
+  hideAddBtn?: boolean;
 }
 ```
+
+| name   |      type      |  description | default|
+|----------|:-------------:|:------|------:|
+| width |  string | Set the specific width of the div that contain the image uploaded | null |
+| height |    string   |   Set the specific height of the div that contain the image uploaded | null|
+| borderRadius | string |    Set the property for the holder of the image and the image |null|
+| aspectRatio | string |    This apply a specifict aspect ratio to the div, use this with only setting a width and you can archive the ratio that you want it |null |
+| objectFit | string | Default is 'cover', but if 'contain' is used the content will be scaled to maintain its aspect ratio while fitting inside the element's content box. |'cover'|
+| compressInitial | number | Quality factor applied to images with format: "webp, jpeg"  |null|
+| language | string | set the translations object |'en'|
+| hideDeleteBtn | boolean | hide the botton |false|
+| hideDownloadBtn | boolean | hide the botton |false|
+| hideEditBtn | boolean | hide the botton |false|
+| hideAddBtn | boolean | hide the botton |false|
 
 A basic configuration object with compression applied would be:
 
@@ -165,14 +173,24 @@ Another capability is that you can crop the image by simply dragging and droppin
 
 ![Image 4](https://ngp-image-picker.surge.sh/assets/images/5.png)
 
-### All together
+#### [DEMO](https://ngp-image-picker.surge.sh/)
 
-### [DEMO](https://ngp-image-picker.surge.sh/)
+##### Stackblitz example
 
-### Related Pakages
+#### [stackblitz example](https://stackblitz.com/edit/angular-ivy-otu4f3?file=src/app/app.component.ts)
 
-#### 1. [react-hook-modal](https://www.npmjs.com/package/react-hook-modal)
+##### React version
 
-#### 2. [react-basic-stepper](https://www.npmjs.com/package/react-basic-stepper)
+#### [react-image-picker-editor](https://www.npmjs.com/package/react-image-picker-editor)
 
-#### 3. [tabs-react-component](https://www.npmjs.com/package/tabs-react-component)
+##### More useful Npm packages
+
+#### 1. [ngp-lazy-load](https://www.npmjs.com/package/ngp-lazy-load)
+
+#### 2. [ngp-material-rating](https://www.npmjs.com/package/ngp-material-rating)
+
+#### 3. [react-hook-modal](https://www.npmjs.com/package/react-hook-modal)
+
+#### 4. [react-basic-stepper](https://www.npmjs.com/package/react-basic-stepper)
+
+#### 5. [tabs-react-component](https://www.npmjs.com/package/tabs-react-component)

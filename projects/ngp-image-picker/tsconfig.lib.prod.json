@@ -2,10 +2,12 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "declarationMap": false
+    "declarationMap": false,
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",
-    "strictTemplates": true
+    "strictTemplates": true,
+    "resolveJsonModule": true
   }
 }

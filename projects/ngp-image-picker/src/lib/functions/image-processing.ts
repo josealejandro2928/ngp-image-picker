@@ -1,4 +1,4 @@
-import { IState } from '../components/edit-image/edit-image.component';
+import { IState } from "../models/index.models";
 
 export const MAX_BUFFER_UNDO_MEMORY = 25;
 let rotate = 1;

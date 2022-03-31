@@ -8,14 +8,16 @@
     "declaration": true,
     "inlineSources": true,
     "types": [],
-    "lib": ["dom", "es2018"]
+    "lib": ["dom", "es2018"],
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "enableResourceInlining": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "resolveJsonModule": true
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

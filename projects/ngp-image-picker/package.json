@@ -1,12 +1,11 @@
 {
   "name": "ngp-image-picker",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "peerDependencies": {
     "@angular/common": "^13.1.1",
     "@angular/core": "^13.1.1"
   },
   "devDependencies": {
-    "resize-observer": "^1.0.4"
   },
   "dependencies": {
     "tslib": "^2.0.0"
@@ -17,6 +16,8 @@
     "image picker",
     "image upload",
     "image editor",
+    "image filters",
+    "image compresion",
     "image",
     "compress image",
     "cropping images"

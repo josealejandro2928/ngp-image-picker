@@ -1,6 +1,6 @@
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Contrast'] }}</p>
-  <p class="item-panel">{{ (this.state?.contrast || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.contrast || 0.0).toFixed(2) }}</p>
 </div>
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
   <input
@@ -18,7 +18,7 @@
 <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Brightness'] }}</p>
-  <p class="item-panel">{{ (this.state?.brightness || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.brightness || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -37,7 +37,7 @@
 <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Grayscale'] }}</p>
-  <p class="item-panel">{{ (this.state?.grayscale || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.grayscale || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -56,7 +56,7 @@
 <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Saturate'] }}</p>
-  <p class="item-panel">{{ (this.state?.saturate || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.saturate || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -74,7 +74,7 @@
 <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Sepia'] }}</p>
-  <p class="item-panel">{{ (this.state?.sepia || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.sepia || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -93,7 +93,7 @@
 <!-- <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Invert'] }}</p>
-  <p class="item-panel">{{ (this.state?.invert || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (this.state?.invert || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
@@ -112,7 +112,7 @@
 <br />
 <div style="display: flex; width: 100%; justify-content: space-between">
   <p class="item-panel">{{ labels['Blur'] }}</p>
-  <p class="item-panel">{{ (state?.blur || 0.0).toFixed(1) }}</p>
+  <p class="item-panel">{{ (state?.blur || 0.0).toFixed(2) }}</p>
 </div>
 
 <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">

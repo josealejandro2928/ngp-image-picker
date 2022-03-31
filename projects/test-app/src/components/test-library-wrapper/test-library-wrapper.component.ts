@@ -16,8 +16,12 @@ export class TestLibraryWrapperComponent implements OnInit {
     compressInitial: null,
   };
   initialImage: string = '../../assets/images/pexels-photo-842711.jpeg';
-
+  imageSrc: any = '../../assets/images/pexels-photo-842711.jpeg';
   constructor() {}
 
   ngOnInit(): void {}
+
+  onImageChanged(dataUri) {
+    this.imageSrc = dataUri;
+  }
 }

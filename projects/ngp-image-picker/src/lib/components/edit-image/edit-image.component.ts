@@ -1,27 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY, saveState } from '../../functions/image-processing';
-import { IBasicFilterState } from '../basic-filters/basic-filters.component';
-export interface ICacheData {
-  lastImage: string;
-  originImageSrc: string;
-  width: number;
-  height: number;
-  quality: number;
-  format: string;
-  basicFilters?: IBasicFilterState | null | undefined;
-}
-export interface IState {
-  quality: number;
-  maxHeight: number;
-  maxWidth: number;
-  cropHeight: number;
-  cropWidth: number;
-  maintainAspectRatio: boolean;
-  format: string;
-  arrayCopiedImages: Array<ICacheData>;
-  originImageSrc: string;
-  basicFilters?: IBasicFilterState;
-}
+import { IBasicFilterState, IState } from '../../models/index.models';
+
 @Component({
   selector: 'lib-edit-image',
   templateUrl: './edit-image.component.html',
@@ -134,14 +114,15 @@ export class EditImageComponent implements OnInit {
   }
 
   onCropStateChange() {
-    const croper = document.getElementById('image-croper');
+    const croper: any = document.getElementById('image-croper');
+    const imageFull: any = document.getElementById('image-full');
     if (this.showCrop) {
       croper.style.opacity = '1.0';
       dragElement(croper);
       this.observer = new ResizeObserver((entries) => {
         entries.forEach((entry) => {
           const elemntCropper = document.getElementById('image-croper');
-          const rectHolder = document.getElementById('image-full').getBoundingClientRect();
+          const rectHolder = imageFull.getBoundingClientRect();
           const rectElemnt = elemntCropper.getBoundingClientRect();
           const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 1;
           const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 1;
@@ -149,6 +130,7 @@ export class EditImageComponent implements OnInit {
           elemntCropper.style.maxHeight = maxHeight + 'px';
           this.state.cropWidth = rectElemnt.width;
           this.state.cropHeight = rectElemnt.height;
+          this.chRef.markForCheck();
           if (entry.target.id == 'image-full') {
             if (rectHolder.top > 0) {
               elemntCropper.style.top = rectHolder.top + 1 + 'px';
@@ -157,14 +139,14 @@ export class EditImageComponent implements OnInit {
           }
         });
       });
-      this.observer.observe(document.getElementById('image-croper'));
-      this.observer.observe(document.getElementById('image-full'));
+      this.observer.observe(croper);
+      this.observer.observe(imageFull);
       this.chRef.markForCheck();
     } else {
       croper.style.opacity = '0.0';
       if (this.observer instanceof ResizeObserver) {
-        this.observer.unobserve(document.getElementById('image-croper'));
-        this.observer.unobserve(document.getElementById('image-full'));
+        this.observer.unobserve(croper);
+        this.observer.unobserve(imageFull);
       }
       this.chRef.markForCheck();
     }

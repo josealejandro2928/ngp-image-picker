@@ -1,14 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { IBasicFilterState } from '../../models/index.models';
 
-export interface IBasicFilterState {
-  contrast: number;
-  blur: number;
-  brightness: number;
-  grayscale: number;
-  invert: number;
-  saturate: number;
-  sepia: number;
-}
 
 @Component({
   selector: 'lib-basic-filters',

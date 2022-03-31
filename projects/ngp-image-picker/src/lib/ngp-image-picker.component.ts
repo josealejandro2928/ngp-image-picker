@@ -10,21 +10,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { IState } from './components/edit-image/edit-image.component';
 import { convertImageUsingCanvas } from './functions/image-processing';
-export interface ImagePickerConf {
-  width?: string;
-  height?: string;
-  borderRadius?: string;
-  aspectRatio?: number | null;
-  objectFit?: 'cover' | 'contain' | 'fill' | 'revert' | 'scale-down';
-  compressInitial?: number | undefined | null;
-  language?: string;
-  hideDeleteBtn?: boolean;
-  hideDownloadBtn?: boolean;
-  hideEditBtn?: boolean;
-  hideAddBtn?: boolean;
-}
+import { ImagePickerConf, IState } from './models/index.models';
+import labelEs from './i18n/es.json';
+import labelEn from './i18n/en.json';
+import labelFr from './i18n/fr.json';
+import labelDe from './i18n/de.json';
 
 @Component({
   selector: 'ngp-image-picker',
@@ -61,116 +52,7 @@ export class NgpImagePickerComponent implements OnInit {
   uuidFilePicker = Date.now().toString(20);
   showEditPanel = false;
   imageName = 'donload';
-
-  ///////////////////////////////////////////////////////
-  labelEn: any = {
-    'Upload a image': 'Upload a image',
-    'You must edit the image in order to resize it': 'You must edit the image in order to resize it',
-    'too large': 'too large',
-    'Open the editor panel': 'Open the editor panel',
-    'Download the image': 'Download the image',
-    'Control Panel': 'Control Panel',
-    Quality: 'Quality',
-    'Max dimensions': 'Max dimensions',
-    'aspect-ratio': 'aspect-ratio',
-    'max-width(px)': 'max-width(px)',
-    'max-height(px)': 'max-height(px)',
-    Format: 'Format',
-    Crop: 'Crop',
-    'width(px)': 'width(px)',
-    'height(px)': 'height(px)',
-    Remove: 'Remove',
-    Save: 'Save',
-    Contrast: 'Contrast',
-    Blur: 'Blur',
-    Brightness: 'Brightness',
-    Grayscale: 'Grayscale',
-    Saturate: 'Saturate',
-    Sepia: 'Sepia',
-    Rotate: 'Rotate',
-    Undo: 'Undo',
-  };
-  labelEs: any = {
-    'Upload a image': 'Suba una imagen',
-    'You must edit the image in order to resize it': 'Debe editar la imagen para disminuir su tamaño',
-    'too large': 'muy grande',
-    'Open the editor panel': 'Abra el panel de edición',
-    'Download the image': 'Descarge la imagen',
-    'Control Panel': 'Panel de control',
-    Remove: 'Quitar',
-    Quality: 'Calidad',
-    'Max dimensions': 'Dimensiones',
-    'aspect-ratio': 'relación-aspecto',
-    'max-width(px)': 'max. ancho',
-    'max-height(px)': 'max. alto',
-    Format: 'Formato',
-    Crop: 'Recortar',
-    'width(px)': 'ancho(px)',
-    'height(px)': 'altura(px)',
-    Save: 'Guardar',
-    Contrast: 'Contraste',
-    Blur: 'Blur',
-    Brightness: 'Brillo',
-    Grayscale: 'Scala de gris',
-    Saturate: 'Saturación',
-    Sepia: 'Sepia',
-    Rotate: 'Rotar',
-    Undo: 'Deshacer',
-  };
-  labelFr: any = {
-    'Upload a image': 'Charger une image',
-    'You must edit the image in order to resize it': "Vous devez éditer l'image pour changer sa taille",
-    'too large': 'Trop grande',
-    'Open the editor panel': "Ouvrir le panneau d'édition",
-    'Download the image': "Télécharger l'image",
-    'Control Panel': 'Panneau de commande',
-    Remove: 'Supprimer',
-    Quality: 'Qualité',
-    'Max dimensions': 'Dimensions maximales',
-    'aspect-ratio': 'rapport de forme',
-    'max-width(px)': 'largeur max.',
-    'max-height(px)': 'hauteur max',
-    Format: 'Format',
-    Crop: 'Recadrer',
-    'width(px)': 'largeur(px)',
-    'height(px)': 'hauteur(px)',
-    Save: 'Sauvez',
-    Contrast: 'Contraste',
-    Blur: 'Blur',
-    Brightness: 'Luminosité',
-    Grayscale: 'Grayscale',
-    Saturate: 'Saturer',
-    Sepia: 'Seiche',
-    Undo: 'Annuler',
-  };
-  labelDe: any = {
-    'Upload a image': 'Bild hochladen',
-    'You must edit the image in order to resize it': 'Sie müssen das Bild bearbeiten, um seine Größe zu ändern',
-    'too large': 'zu groß',
-    'Open the editor panel': 'Editor-Fenster öffnen',
-    'Download the image': 'Bild herunterladen',
-    'Control Panel': 'Bedienfeld',
-    Quality: 'Qualität',
-    'Max dimensions': 'Maximale Größe',
-    'aspect-ratio': 'Seitenverhältnis',
-    'max-width(px)': 'Max. Breite(px)',
-    'max-height(px)': 'Max. Höhe(px)',
-    Format: 'Format',
-    Crop: 'Zuschneiden',
-    'width(px)': 'Breite(px)',
-    'height(px)': 'Höhe(px)',
-    Remove: 'Entfernen',
-    Save: 'Speichern',
-    Contrast: 'Kontrast',
-    Blur: 'Blur',
-    Brightness: 'Helligkeit',
-    Grayscale: 'Graustufen',
-    Saturer: 'Sättigen',
-    Sepia: 'Tintenfisch',
-    Undo: 'Undo',
-  };
-
-  labels = this.labelEn;
+  labels: any = labelEn;
   arrayCopiedImages: any[] = [];
 
   @Input() color: string = '#1e88e5';
@@ -344,6 +226,9 @@ export class NgpImagePickerComponent implements OnInit {
           height: canvas.height,
         });
       };
+      img.onerror = (e: any) => {
+        return reject(e.message || `Error loading the src = ${imageUrl}`);
+      };
       img.src = imageUrl;
     }).then((data: any) => {
       this.state = {
@@ -360,16 +245,16 @@ export class NgpImagePickerComponent implements OnInit {
       this.config = { ...this.config, ...value };
       if (value.language != undefined) {
         if (value.language == 'en') {
-          this.labels = { ...this.labelEn };
+          this.labels = { ...labelEn };
         }
         if (value.language == 'es') {
-          this.labels = { ...this.labelEs };
+          this.labels = { ...labelEs };
         }
         if (value.language == 'fr') {
-          this.labels = { ...this.labelFr };
+          this.labels = { ...labelFr };
         }
         if (value.language == 'de') {
-          this.labels = { ...this.labelDe };
+          this.labels = { ...labelDe };
         }
       }
     }
