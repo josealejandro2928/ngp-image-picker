@@ -58,7 +58,8 @@ export class NgpImagePickerComponent implements OnInit {
   @Input() color: string = '#1e88e5';
 
   @Input() set _imageSrc(value) {
-    if (value != undefined) {
+    if (value) {
+      console.log('Aqui');
       this.parseToBase64(value).then((dataUri) => {
         this.imageSrc = dataUri;
         this.state.originImageSrc = value;

@@ -15,8 +15,8 @@ export class TestLibraryWrapperComponent implements OnInit {
     aspectRatio: 4 / 3,
     compressInitial: null,
   };
-  initialImage: string = '../../assets/images/pexels-photo-842711.jpeg';
-  imageSrc: any = '../../assets/images/pexels-photo-842711.jpeg';
+  initialImage: string = '';
+  imageSrc: any = '';
   constructor() {}
 
   ngOnInit(): void {}

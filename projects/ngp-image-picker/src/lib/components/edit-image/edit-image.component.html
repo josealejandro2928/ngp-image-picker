@@ -20,7 +20,7 @@
     <div class="control-panel">
       <lib-tabs [color]="this.color" [_labels]="['Basic', 'Filters']" (indexActivatedChange)="onControlPanelIndexChange($event)">
         <ng-container *ngIf="controlPanelIndex == 0">
-          <ng-container *ngIf="!isMobile">
+          <ng-container *ngIf="!isMobile || (isMobile && !showCrop)">
             <div style="display: flex; width: 100%; justify-content: space-between">
               <p class="item-panel">{{ labels['Quality'] }}</p>
               <p class="item-panel">{{ this.state.quality + '%' }}</p>
@@ -112,99 +112,6 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="!showCrop && isMobile">
-            <div style="display: flex; width: 100%; justify-content: space-between">
-              <p class="item-panel">{{ labels['Quality'] }}</p>
-              <p class="item-panel">{{ this.state.quality + '%' }}</p>
-            </div>
-
-            <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-              <input
-                [readonly]="showCrop"
-                [disabled]="showCrop"
-                class="input-range"
-                (change)="onChangeQuality()"
-                [ngStyle]="{ maxWidth: '100%', width: '100%', color: color }"
-                [(ngModel)]="this.state.quality"
-                type="range"
-                min="1"
-                max="100"
-                value="50"
-              />
-            </div>
-
-            <div class="item-panel" style="display: flex; width: 100%; justify-content: space-between">
-              {{ labels['Max dimensions'] }}
-              <div style="display: flex; align-items: center">
-                <input
-                  [readonly]="showCrop"
-                  [disabled]="showCrop"
-                  type="checkbox"
-                  [(ngModel)]="this.state.maintainAspectRatio"
-                  [style.color]="color"
-                />
-                <span class="caption">{{ labels['aspect-ratio'] }}</span>
-              </div>
-            </div>
-
-            <div
-              style="
-                margin-top: 8px !important;
-                flex-flow: row wrap;
-                box-sizing: border-box;
-                display: flex;
-                place-content: flex-start space-between;
-                align-items: flex-start;
-              "
-            >
-              <div class="form-field" style="max-width: 48%; width: 48%">
-                <label>{{ labels['max-width(px)'] }}</label>
-                <input
-                  [readonly]="showCrop"
-                  [disabled]="showCrop"
-                  (change)="onChangeSize(false)"
-                  placeholder="{{ labels['max-width(px)'] }}"
-                  [(ngModel)]="this.state.maxWidth"
-                  type="number"
-                  [min]="0"
-                  [max]="2000"
-                />
-              </div>
-
-              <div class="form-field" style="max-width: 48%; width: 48%">
-                <label>{{ labels['max-height(px)'] }}</label>
-                <input
-                  [readonly]="showCrop"
-                  [disabled]="showCrop"
-                  (change)="onChangeSize(true)"
-                  placeholder="{{ labels['max-height(px)'] }}"
-                  [(ngModel)]="this.state.maxHeight"
-                  type="number"
-                  [min]="0"
-                  [max]="2000"
-                />
-              </div>
-            </div>
-
-            <p class="item-panel">{{ labels['Format'] }}</p>
-            <div
-              style="
-                margin-top: 8px !important;
-                flex-direction: row;
-                box-sizing: border-box;
-                display: flex;
-                place-content: flex-start;
-                align-items: flex-start;
-              "
-            >
-              <div class="form-field" style="width: 100%">
-                <select [disabled]="showCrop" [(ngModel)]="this.state.format" (change)="onChangeFormat()">
-                  <option *ngFor="let formatItem of allFormats" [value]="formatItem">{{ formatItem }}</option>
-                </select>
-              </div>
-            </div>
-          </ng-container>
-
           <!-- <p class="item-panel">{{ labels['Rotate'] }}</p>
 
           <div
