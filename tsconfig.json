@@ -11,15 +11,12 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"],
     "paths": {
-      "ngp-image-picker": [
-        "dist/ngp-image-picker/ngp-image-picker",
-        "dist/ngp-image-picker"
-      ]
+      "ngp-image-picker": ["dist/ngp-image-picker/ngp-image-picker", "dist/ngp-image-picker"]
     }
   }
 }

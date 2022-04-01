@@ -1,0 +1,232 @@
+<div id="popup" class="popup">
+  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
+    <button class="icon-btn" (click)="onCloseEditPanel(false)">
+      <span class="material-icons">clear</span>
+    </button>
+  </div>
+
+  <div class="image-container">
+    <div class="image-holder-full">
+      <img id="image-full" [src]="this.imageSrc" [style.display]="showCrop ? 'none' : ''" />
+
+      <lib-cropper-wrapper
+        [setSize]="this.croppSize"
+        (croppUpdate)="onCroppUpdate($event)"
+        [_imageSrc]="this.imageSrc"
+        *ngIf="showCrop"
+      ></lib-cropper-wrapper>
+    </div>
+
+    <div class="control-panel">
+      <lib-tabs [color]="this.color" [_labels]="['Basic', 'Filters']" (indexActivatedChange)="onControlPanelIndexChange($event)">
+        <ng-container *ngIf="controlPanelIndex == 0">
+          <ng-container *ngIf="!showCrop">
+            <div style="display: flex; width: 100%; justify-content: space-between">
+              <p class="item-panel">{{ labels['Quality'] }}</p>
+              <p class="item-panel">{{ this.state.quality + '%' }}</p>
+            </div>
+
+            <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
+              <input
+                [readonly]="showCrop"
+                [disabled]="showCrop"
+                class="input-range"
+                (change)="onChangeQuality()"
+                [ngStyle]="{ maxWidth: '100%', width: '100%', color: color }"
+                [(ngModel)]="this.state.quality"
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+              />
+            </div>
+
+            <div class="item-panel" style="display: flex; width: 100%; justify-content: space-between">
+              {{ labels['Max dimensions'] }}
+              <div style="display: flex; align-items: center">
+                <input
+                  [readonly]="showCrop"
+                  [disabled]="showCrop"
+                  type="checkbox"
+                  [(ngModel)]="this.state.maintainAspectRatio"
+                  [style.color]="color"
+                />
+                <span class="caption">{{ labels['aspect-ratio'] }}</span>
+              </div>
+            </div>
+
+            <div
+              style="
+                margin-top: 8px !important;
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                display: flex;
+                place-content: flex-start space-between;
+                align-items: flex-start;
+              "
+            >
+              <div class="form-field" style="max-width: 48%; width: 48%">
+                <label>{{ labels['max-width(px)'] }}</label>
+                <input
+                  [readonly]="showCrop"
+                  [disabled]="showCrop"
+                  (change)="onChangeSize(false)"
+                  placeholder="{{ labels['max-width(px)'] }}"
+                  [(ngModel)]="this.state.maxWidth"
+                  type="number"
+                  [min]="0"
+                  [max]="2000"
+                />
+              </div>
+
+              <div class="form-field" style="max-width: 48%; width: 48%">
+                <label>{{ labels['max-height(px)'] }}</label>
+                <input
+                  [readonly]="showCrop"
+                  [disabled]="showCrop"
+                  (change)="onChangeSize(true)"
+                  placeholder="{{ labels['max-height(px)'] }}"
+                  [(ngModel)]="this.state.maxHeight"
+                  type="number"
+                  [min]="0"
+                  [max]="2000"
+                />
+              </div>
+            </div>
+
+            <p class="item-panel">{{ labels['Format'] }}</p>
+            <div
+              style="
+                margin-top: 8px !important;
+                flex-direction: row;
+                box-sizing: border-box;
+                display: flex;
+                place-content: flex-start;
+                align-items: flex-start;
+              "
+            >
+              <div class="form-field" style="width: 100%">
+                <select [disabled]="showCrop" [(ngModel)]="this.state.format" (change)="onChangeFormat()">
+                  <option *ngFor="let formatItem of allFormats" [value]="formatItem">{{ formatItem }}</option>
+                </select>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- <p class="item-panel">{{ labels['Rotate'] }}</p>
+
+          <div
+            style="
+              margin-top: 8px !important;
+              flex-direction: row;
+              box-sizing: border-box;
+              display: flex;
+              place-content: flex-start;
+              align-items: flex-start;
+            "
+          >
+            <button [disabled]="showCrop" class="icon-btn" style="padding-left: 0px" (click)="onRotate(90)">
+              <span class="material-icons"> rotate_left </span>
+            </button>
+            <button [disabled]="showCrop" class="icon-btn" (click)="onRestore()" (click)="onRotate(-90)">
+              <span class="material-icons"> rotate_right </span>
+            </button>
+          </div>
+
+          <hr />
+          <br /> -->
+
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <span style="display: flex; align-items: center">
+              <input type="checkbox" [(ngModel)]="showCrop" [style.color]="color" style="margin-bottom: 3px" />
+              <span class="item-panel" style="margin-left: 4px">{{ labels['Crop'] }}</span>
+            </span>
+          </div>
+
+          <ng-container *ngIf="showCrop">
+            <div
+              style="
+                margin-top: 8px !important;
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                display: flex;
+                place-content: flex-start space-between;
+                align-items: flex-start;
+              "
+            >
+              <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
+                <label>{{ labels['width(px)'] }}</label>
+                <input
+                  (change)="onChangeCrop()"
+                  placeholder="{{ labels['width(px)'] }}"
+                  [(ngModel)]="state.cropWidth"
+                  type="number"
+                  [min]="0"
+                  [max]="2000"
+                />
+              </div>
+              <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
+                <label>{{ labels['height(px)'] }}</label>
+                <input
+                  (change)="onChangeCrop()"
+                  placeholder="{{ labels['height(px)'] }}"
+                  [(ngModel)]="state.cropHeight"
+                  type="number"
+                  [min]="0"
+                  [max]="2000"
+                />
+              </div>
+            </div>
+
+            <p style="margin-bottom: 4px !important">
+              <button title="Cut the image" class="icon-btn" (click)="onCrop()">
+                <span class="material-icons"> crop </span>
+              </button>
+            </p>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="controlPanelIndex == 1">
+          <lib-basic-filters
+            [filterState]="this.state.basicFilters"
+            (changeFilter)="onChangeFilters($event)"
+            [labels]="this.labels"
+            [color]="this.color"
+          ></lib-basic-filters>
+        </ng-container>
+      </lib-tabs>
+
+      <button
+        title="{{ labels['Undo'] }}"
+        [disabled]="this.state.arrayCopiedImages.length <= 1"
+        style="position: absolute; right: 10px; top: 30px"
+        class="icon-btn"
+        (click)="onRestore()"
+      >
+        <span class="material-icons"> refresh </span>
+      </button>
+      <div
+        style="
+          flex-direction: row;
+          box-sizing: border-box;
+          display: flex;
+          place-content: center space-between;
+          align-items: center;
+          margin-top: 8px;
+        "
+      >
+        <button class="save-btn" (click)="onCloseEditPanel(true)">{{ labels['Save'] }}</button>
+
+        <p
+          *ngIf="this.calculateSize()"
+          class="caption image-caption"
+          [ngStyle]="{
+            color: this.calculateSize() > 120 ? '#f44336' : 'unset',
+            fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
+          }"
+        >
+          size: {{ this.calculateSize() }}Kb &nbsp; {{ this.state.format }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,13 +54,8 @@
             "polyfills": "projects/test-app/src/polyfills.ts",
             "tsConfig": "projects/test-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/test-app/src/favicon.ico",
-              "projects/test-app/src/assets"
-            ],
-            "styles": [
-              "projects/test-app/src/styles.scss"
-            ],
+            "assets": ["projects/test-app/src/favicon.ico", "projects/test-app/src/assets"],
+            "styles": ["projects/test-app/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -122,17 +117,13 @@
             "tsConfig": "projects/test-app/tsconfig.spec.json",
             "karmaConfig": "projects/test-app/karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/test-app/src/favicon.ico",
-              "projects/test-app/src/assets"
-            ],
-            "styles": [
-              "projects/test-app/src/styles.scss"
-            ],
+            "assets": ["projects/test-app/src/favicon.ico", "projects/test-app/src/assets"],
+            "styles": ["projects/test-app/src/styles.scss"],
             "scripts": []
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ngp-image-picker"
 }

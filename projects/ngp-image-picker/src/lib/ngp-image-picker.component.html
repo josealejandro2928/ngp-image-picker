@@ -4,7 +4,8 @@
     [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
-      borderRadius: this.config.borderRadius
+      borderRadius: this.config.borderRadius,
+      aspectRatio: this.config.aspectRatio
     }"
   >
     <button title="{{ labels['Upload a image'] }}" class="icon-btn image-upload-btn" (click)="onUpload($event)">
@@ -21,10 +22,15 @@
     [ngStyle]="{
       width: this.config.width,
       height: this.config.height,
-      borderRadius: this.config.borderRadius
+      borderRadius: this.config.borderRadius,
+      aspectRatio: this.config.aspectRatio
     }"
   >
-    <img [src]="this.imageSrc" alt="image-loaded" [ngStyle]="{ borderRadius: this.config.borderRadius }" />
+    <img
+      [src]="this.imageSrc"
+      alt="image-loaded"
+      [ngStyle]="{ borderRadius: this.config.borderRadius, objectFit: this.config.objectFit }"
+    />
     <input #imagePicker type="file" style="display: none" [id]="'filePicker-' + this.uuidFilePicker" (change)="handleFileSelect($event)" />
   </div>
   <p
@@ -35,17 +41,38 @@
       fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
     }"
   >
-    size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
+    size: {{ this.calculateSize() }}Kb &nbsp; {{ this.state.format }}
   </p>
 
-  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start" class="editing-bar-btn">
-    <button class="icon-btn" id="upload-img" *ngIf="!this.config.hideAddBtn" title="{{ labels['Upload a image'] }}" (click)="onUpload($event)">
+  <div
+    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start"
+    class="editing-bar-btn"
+  >
+    <button
+      class="icon-btn"
+      id="upload-img"
+      *ngIf="!this.config.hideAddBtn"
+      title="{{ labels['Upload a image'] }}"
+      (click)="onUpload($event)"
+    >
       <span class="material-icons">add_a_photo</span>
     </button>
-    <button class="icon-btn" id="edit-img" *ngIf="!this.config.hideEditBtn" title="{{ labels['Open the editor panel'] }}" (click)="onOpenEditPanel()">
+    <button
+      class="icon-btn"
+      id="edit-img"
+      *ngIf="!this.config.hideEditBtn"
+      title="{{ labels['Open the editor panel'] }}"
+      (click)="onOpenEditPanel()"
+    >
       <span class="material-icons">edit</span>
     </button>
-    <a id="download-img" *ngIf="!this.config.hideDownloadBtn" title="{{ labels['Download the image'] }}" [href]="this.imageSrc" download="{{ imageName }}">
+    <a
+      id="download-img"
+      *ngIf="!this.config.hideDownloadBtn"
+      title="{{ labels['Download the image'] }}"
+      [href]="this.imageSrc"
+      download="{{ imageName }}"
+    >
       <span class="material-icons">cloud_download</span>
     </a>
     <button class="icon-btn" id="delete-img" *ngIf="!this.config.hideDeleteBtn" title="{{ labels['Remove'] }}" (click)="onRemove()">
@@ -54,143 +81,11 @@
   </div>
 </div>
 
-<div #popup *ngIf="showEditPanel" id="popup" class="popup">
-  <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center">
-    <button class="icon-btn" (click)="onCloseEditPanel()">
-      <span class="material-icons">clear</span>
-    </button>
-  </div>
-
-  <div class="image-container">
-    <div class="image-holder-full">
-      <img id="image-full" [src]="this.imageSrc" />
-
-      <div id="image-croper" class="image-croper" [style.display]="showCrop ? '' : 'none'">
-        <div class="grid"></div>
-        <div id="image-croper-header">
-          <div
-            *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-            style="border: 1px dashed #fafafa; flex: 0 1 32%; width: 33%; height: 33%; background-color: rgba(0, 0, 0, 0.48)"
-          ></div>
-          <span class="material-icons" style="position: absolute; top: 0; left: 0">drag_indicator</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="control-panel">
-      <p class="title-panel">{{ labels['Control Panel'] }}</p>
-
-      <div style="display: flex; width: 100%; justify-content: space-between">
-        <p class="item-panel">{{ labels['Quality'] }}</p>
-        <p class="item-panel">{{ quality + '%' }}</p>
-      </div>
-
-      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <input
-          [readonly]="showCrop"
-          [disabled]="showCrop"
-          class="input-range"
-          (change)="onChangeQuality($event)"
-          [ngStyle]="{ maxWidth: '100%', width: '100%', color: color }"
-          [(ngModel)]="quality"
-          type="range"
-          min="1"
-          max="100"
-          value="50"
-        />
-      </div>
-
-      <div class="item-panel" style="display: flex; width: 100%; justify-content: space-between">
-        {{ labels['Max dimensions'] }}
-        <div style="display: flex; align-items: center">
-          <input type="checkbox" [(ngModel)]="maintainAspectRatio" [style.color]="color" />
-          <span class="caption">{{ labels['aspect-ratio'] }}</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
-        <div class="form-field" style="max-width: 48%; width: 48%">
-          <label>{{ labels['max-width(px)'] }}</label>
-          <input
-            [readonly]="showCrop"
-            [disabled]="showCrop"
-            (change)="onChangeSize(true, false)"
-            placeholder="{{ labels['max-width(px)'] }}"
-            [(ngModel)]="maxWidth"
-            type="number"
-            [min]="0"
-            [max]="2000"
-          />
-        </div>
-
-        <div class="form-field" style="max-width: 48%; width: 48%">
-          <label>{{ labels['max-height(px)'] }}</label>
-          <input
-            [readonly]="showCrop"
-            [disabled]="showCrop"
-            (change)="onChangeSize(false, true)"
-            placeholder="{{ labels['max-height(px)'] }}"
-            [(ngModel)]="maxHeight"
-            type="number"
-            [min]="0"
-            [max]="2000"
-          />
-        </div>
-      </div>
-
-      <p class="item-panel">{{ labels['Format'] }}</p>
-      <div style="margin-top: 8px !important; flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start">
-        <div class="form-field" style="width: 100%">
-          <select [disabled]="showCrop" [(ngModel)]="format" (change)="onChangeFormat($event?.target?.value)">
-            <option *ngFor="let formatItem of allFormats" [value]="formatItem">{{ formatItem }}</option>
-          </select>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
-        <span style="display: flex; align-items: center">
-          <input type="checkbox" (change)="onCropStateChange()" [(ngModel)]="showCrop" [style.color]="color" />
-          <span class="item-panel">{{ labels['Crop'] }}</span>
-        </span>
-
-        <button class="icon-btn" (click)="onRestore()">
-          <span class="material-icons"> refresh </span>
-        </button>
-      </div>
-
-      <ng-container *ngIf="showCrop">
-        <div style="margin-top: 8px !important; flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: flex-start space-between; align-items: flex-start">
-          <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
-            <label>{{ labels['width(px)'] }}</label>
-            <input (change)="onChangeCrop($event.target.valueAsNumber)" placeholder="{{ labels['width(px)'] }}" [(ngModel)]="cropWidth" type="number" [min]="0" [max]="2000" />
-          </div>
-          <div class="form-field" style="max-width: 48%; width: 48%; margin-bottom: 8px">
-            <label>{{ labels['height(px)'] }}</label>
-            <input (change)="onChangeCrop($event.target.valueAsNumber)" placeholder="{{ labels['height(px)'] }}" [(ngModel)]="cropHeight" type="number" [min]="0" [max]="2000" />
-          </div>
-        </div>
-
-        <p style="margin-bottom: 4px !important">
-          <button title="Cut the image" class="icon-btn" (click)="onCrop()">
-            <span class="material-icons"> crop </span>
-          </button>
-        </p>
-      </ng-container>
-
-      <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center; margin-top: 8px">
-        <button class="save-btn" (click)="onCloseEditPanel()">{{ labels['Save'] }}</button>
-
-        <p
-          *ngIf="this.calculateSize()"
-          class="caption image-caption"
-          [ngStyle]="{
-            color: this.calculateSize() > 120 ? '#f44336' : 'unset',
-            fontWeight: this.calculateSize() > 120 ? '500' : 'unset'
-          }"
-        >
-          size: {{ this.calculateSize() }}Kb &nbsp; {{ this.format }}
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+<lib-edit-image
+  *ngIf="showEditPanel"
+  [imageSrc]="this.imageSrc"
+  [initialState]="this.state"
+  [labels]="this.labels"
+  [color]="this.color"
+  (closeModal)="this.onCloseEditPanel($event)"
+></lib-edit-image>

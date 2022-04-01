@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <script src="dist/croppr.js"></script>
+    <link rel="stylesheet" href="dist/croppr.css">
+</head>
+
+<style>
+.modal {
+    padding: 18px;
+    position: absolute;
+    border: 1px solid lightgrey;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+}
+
+.modal img {
+    max-width: 100%;
+}
+</style>
+
+<body>
+    <h1>Croppr.js</h1>
+    <div class="modal">
+        <img src="https://unsplash.it/500/500/?random" alt="" id="cropper">
+    </div>
+
+    <script>
+        var croppr = new Croppr('#cropper', {
+            onInitialize: (instance) => { console.log(instance); },
+            onCropStart: (data) => { console.log('start', data); },
+            onCropEnd: (data) => { console.log('end', data); },
+            onCropMove: (data) => { console.log('move', data); }
+        });
+    </script>
+</body>
+</html>
