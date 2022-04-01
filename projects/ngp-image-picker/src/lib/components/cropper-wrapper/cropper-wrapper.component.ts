@@ -17,7 +17,6 @@ export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy
 
   @Input() set setSize(value) {
     this.croppSize = value;
-    console.log("🚀 ~ file: cropper-wrapper.component.ts ~ line 20 ~ CropperWrapperComponent ~ @Input ~ this.croppSize", this.croppSize)
     if (this.croppr) this.croppr.resizeTo(this.croppSize.width, this.croppSize.height);
   }
 
@@ -35,11 +34,11 @@ export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy
     this.croppr = new Croppr('#croppr', {
       minSize: [32, 32, 'px'],
       startSize: [this.croppSize.width, this.croppSize.height, 'px'],
-      onCropStart: (data: { x: number; y: number; width: number; height: number }) => {
-        this.croppUpdate.next(data);
+      onInitialize: (data:Croppr) => {
+        this.croppUpdate.emit(data.getValue());
       },
       onCropEnd: (data: { x: number; y: number; width: number; height: number }) => {
-        this.croppUpdate.next(data);
+        this.croppUpdate.emit(data);
       },
     });
   }

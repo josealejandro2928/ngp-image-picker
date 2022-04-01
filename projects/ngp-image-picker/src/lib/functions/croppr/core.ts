@@ -215,12 +215,12 @@ export default class CropprCore {
     box.constrainToBoundary(parentWidth, parentHeight, [0.5, 0.5]);
 
     // // Move to center
-    // const x = this.cropperEl.offsetWidth / 2 - box.width() / 2;
-    // const y = this.cropperEl.offsetHeight / 2 - box.height() / 2;
+    const x = this.cropperEl.offsetWidth / 2 - box.width() / 2;
+    const y = this.cropperEl.offsetHeight / 2 - box.height() / 2;
 
     // console.log("🚀 ~ file: core.ts ~ line 219 ~ CropprCore ~ initializeBox ~ this.cropperEl", this.cropperEl.offsetWidth)
     // console.log("🚀 ~ file: core.ts ~ line 223 ~ CropprCore ~ initializeBox ~ x, y", x, y)
-    box.move(0,0);
+    box.move(x,y);
 
     return box;
   }

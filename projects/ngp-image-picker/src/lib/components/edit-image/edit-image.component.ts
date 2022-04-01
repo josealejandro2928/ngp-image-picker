@@ -117,6 +117,7 @@ export class EditImageComponent implements OnInit {
   }
 
   onCroppUpdate(data: { x: number; y: number; width: number; height: number }) {
+    // console.log('🚀 ~ file: edit-image.component.ts ~ line 120 ~ EditImageComponent ~ onCroppUpdate ~ data', data);
     this.croppState = data;
     this.state.cropHeight = data.height;
     this.state.cropWidth = data.width;
@@ -127,31 +128,18 @@ export class EditImageComponent implements OnInit {
   }
 
   onCrop() {
-    const dataHolderRect = document.querySelector('.croppr-container').getBoundingClientRect();
-    console.log('🚀 ~ file: edit-image.component.ts ~ line 152 ~ EditImageComponent ~ onCrop ~ dataHolderRect', dataHolderRect);
+    // const dataHolderRect = document.querySelector('.croppr-container').getBoundingClientRect();
     const canvas = document.createElement('canvas');
     return new Promise((resolve, reject) => {
       let ctx = canvas.getContext('2d');
       let image = new Image();
       image.src = this.imageSrc;
       image.onload = () => {
-        let ratio = image.height / dataHolderRect.height;
-        console.log('🚀 ~ file: edit-image.component.ts ~ line 161 ~ EditImageComponent ~ returnnewPromise ~ ratio', ratio);
+        // let ratio = image.height / dataHolderRect.height;
         let newWidth = this.croppState.width;
         let newHeight = this.croppState.height;
         canvas.height = newHeight;
         canvas.width = newWidth;
-        // ctx.drawImage(
-        //   image,
-        //   Math.abs(this.croppState.x * ratio) - Math.abs(dataHolderRect.x * ratio),
-        //   Math.abs(this.croppState.y * ratio) - Math.abs(dataHolderRect.y * ratio),
-        //   newWidth,
-        //   newHeight,
-        //   0,
-        //   0,
-        //   newWidth,
-        //   newHeight,
-        // );
         ctx.drawImage(
           image,
           Math.abs(this.croppState.x),
