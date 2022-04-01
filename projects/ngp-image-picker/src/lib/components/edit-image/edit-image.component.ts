@@ -42,6 +42,7 @@ export class EditImageComponent implements OnInit {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
     // console.log(this.state);
     this.isMobile = window.innerWidth < 800;
+    console.log('🚀 ~ file: edit-image.component.ts ~ line 45 ~ EditImageComponent ~ ngOnInit ~ this.isMobile', this.isMobile);
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {

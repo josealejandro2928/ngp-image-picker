@@ -192,6 +192,19 @@ ngp-image-picker {
   }
 
 
+  @keyframes show {
+    0% {
+      top: -100vh;
+      opacity: 0;
+    }
+
+    100% {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+
   .btn {
     padding: 4px 8px;
     border-radius: 4px;
