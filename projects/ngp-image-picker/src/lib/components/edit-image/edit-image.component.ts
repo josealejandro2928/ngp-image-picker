@@ -32,6 +32,7 @@ export class EditImageComponent implements OnInit {
   };
   croppState: { x: number; y: number; width: number; height: number };
   croppSize: { width: number; height: number } = { width: 150, height: 150 };
+  isMobile = false;
 
   @Output() closeModal = new EventEmitter<{ state: IState; imageSrc: string } | null | undefined>();
 
@@ -40,6 +41,7 @@ export class EditImageComponent implements OnInit {
   ngOnInit() {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
     // console.log(this.state);
+    this.isMobile = window.innerWidth < 800;
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {
