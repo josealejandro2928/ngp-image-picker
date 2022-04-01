@@ -1,13 +1,15 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY, saveState } from '../../functions/image-processing';
 import { IBasicFilterState, IState } from '../../models/index.models';
+ import Croppr from '../../functions/croppr';
 
+// const Croppr = require('../../services/croppr-service')
 @Component({
   selector: 'lib-edit-image',
   templateUrl: './edit-image.component.html',
   styleUrls: ['./edit-image.component.scss'],
 })
-export class EditImageComponent implements OnInit {
+export class EditImageComponent implements OnInit, AfterViewInit {
   @Input() labels: any;
   @Input() imageSrc: string;
   @Input() color: string;
@@ -37,6 +39,19 @@ export class EditImageComponent implements OnInit {
   ngOnInit() {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
     // console.log(this.state);
+  }
+
+  ngAfterViewInit(): void {
+    var croppr = new Croppr('#croppr', {
+      minSize: [32, 32, 'px'],
+      startSize: [150, 150,'px'],
+      onCropStart: (value: any) => {
+        console.log(value.x, value.y, value.width, value.height);
+      },
+      onCropEnd: (value: any) => {
+        console.log(value.x, value.y, value.width, value.height);
+      },
+    });
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {

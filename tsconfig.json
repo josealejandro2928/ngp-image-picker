@@ -14,6 +14,7 @@
     "lib": ["es2018", "dom"],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["node"],
     "paths": {
       "ngp-image-picker": ["dist/ngp-image-picker/ngp-image-picker", "dist/ngp-image-picker"]
     }
