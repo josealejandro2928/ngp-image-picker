@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { EditImageComponent } from './components/edit-image/edit-image.component';
 import { BasicFiltersComponent } from './components/basic-filters/basic-filters.component';
+import { CropperWrapperComponent } from './components/cropper-wrapper/cropper-wrapper.component';
 @NgModule({
-  declarations: [NgpImagePickerComponent, TabsComponent, EditImageComponent, BasicFiltersComponent],
+  declarations: [NgpImagePickerComponent, TabsComponent, EditImageComponent, BasicFiltersComponent, CropperWrapperComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [NgpImagePickerComponent],
   providers: [],

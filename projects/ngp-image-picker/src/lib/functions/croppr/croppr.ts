@@ -102,8 +102,12 @@ export default class Croppr extends CropprCore {
   /**
    * Resets the crop region to the initial settings.
    */
-  reset() {
+  reset(newOptions?) {
+    if (newOptions) {
+      this.options = { ...this.options, newOptions };
+    }
     this.box = this.initializeBox(this.options);
+    // console.log('🚀 ~ file: croppr.ts ~ line 110 ~ Croppr ~ reset ~ this.box', this.box);
     this.redraw();
 
     // Call the callback
@@ -111,5 +115,15 @@ export default class Croppr extends CropprCore {
       this.options.onCropEnd(this.getValue());
     }
     return this;
+  }
+
+  enableVisibility(state: boolean) {
+    let croppContainer: HTMLElement = document.querySelector('.croppr-container');
+    if (!croppContainer) throw new Error('THere is not any croppr');
+    if (state) {
+      croppContainer.style.display = 'block';
+    } else {
+      croppContainer.style.display = 'none';
+    }
   }
 }

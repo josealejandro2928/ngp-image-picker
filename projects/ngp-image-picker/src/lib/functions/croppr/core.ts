@@ -199,6 +199,7 @@ export default class CropprCore {
     const width = opts.startSize.width;
     const height = opts.startSize.height;
     let box = new Box(0, 0, width, height);
+    // console.log("🚀 ~ file: core.ts ~ line 202 ~ CropprCore ~ initializeBox ~ box", box)
 
     // Maintain ratio
     box.constrainToRatio(opts.aspectRatio, [0.5, 0.5]);
@@ -213,10 +214,13 @@ export default class CropprCore {
     const parentHeight = this.cropperEl.offsetHeight;
     box.constrainToBoundary(parentWidth, parentHeight, [0.5, 0.5]);
 
-    // Move to center
-    const x = this.cropperEl.offsetWidth / 2 - box.width() / 2;
-    const y = this.cropperEl.offsetHeight / 2 - box.height() / 2;
-    box.move(x, y);
+    // // Move to center
+    // const x = this.cropperEl.offsetWidth / 2 - box.width() / 2;
+    // const y = this.cropperEl.offsetHeight / 2 - box.height() / 2;
+
+    // console.log("🚀 ~ file: core.ts ~ line 219 ~ CropprCore ~ initializeBox ~ this.cropperEl", this.cropperEl.offsetWidth)
+    // console.log("🚀 ~ file: core.ts ~ line 223 ~ CropprCore ~ initializeBox ~ x, y", x, y)
+    box.move(0,0);
 
     return box;
   }

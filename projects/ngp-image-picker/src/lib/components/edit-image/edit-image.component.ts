@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { convertImageUsingCanvas, dragElement, MAX_BUFFER_UNDO_MEMORY, saveState } from '../../functions/image-processing';
 import { IBasicFilterState, IState } from '../../models/index.models';
- import Croppr from '../../functions/croppr';
 
 // const Croppr = require('../../services/croppr-service')
 @Component({
@@ -9,7 +8,7 @@ import { IBasicFilterState, IState } from '../../models/index.models';
   templateUrl: './edit-image.component.html',
   styleUrls: ['./edit-image.component.scss'],
 })
-export class EditImageComponent implements OnInit, AfterViewInit {
+export class EditImageComponent implements OnInit {
   @Input() labels: any;
   @Input() imageSrc: string;
   @Input() color: string;
@@ -31,6 +30,8 @@ export class EditImageComponent implements OnInit, AfterViewInit {
     arrayCopiedImages: [],
     originImageSrc: '',
   };
+  croppState: { x: number; y: number; width: number; height: number };
+  croppSize: { width: number; height: number } = { width: 150, height: 150 };
 
   @Output() closeModal = new EventEmitter<{ state: IState; imageSrc: string } | null | undefined>();
 
@@ -39,19 +40,6 @@ export class EditImageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
     // console.log(this.state);
-  }
-
-  ngAfterViewInit(): void {
-    var croppr = new Croppr('#croppr', {
-      minSize: [32, 32, 'px'],
-      startSize: [150, 150,'px'],
-      onCropStart: (value: any) => {
-        console.log(value.x, value.y, value.width, value.height);
-      },
-      onCropEnd: (value: any) => {
-        console.log(value.x, value.y, value.width, value.height);
-      },
-    });
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {
@@ -128,55 +116,19 @@ export class EditImageComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onCropStateChange() {
-    const croper: any = document.getElementById('image-croper');
-    const imageFull: any = document.getElementById('image-full');
-    if (this.showCrop) {
-      croper.style.opacity = '1.0';
-      dragElement(croper);
-      this.observer = new ResizeObserver((entries) => {
-        entries.forEach((entry) => {
-          const elemntCropper = document.getElementById('image-croper');
-          const rectHolder = imageFull.getBoundingClientRect();
-          const rectElemnt = elemntCropper.getBoundingClientRect();
-          const maxWidth = rectHolder.x + rectHolder.width - rectElemnt.x - 1;
-          const maxHeight = rectHolder.y + rectHolder.height - rectElemnt.y - 1;
-          elemntCropper.style.maxWidth = maxWidth + 'px';
-          elemntCropper.style.maxHeight = maxHeight + 'px';
-          this.state.cropWidth = rectElemnt.width;
-          this.state.cropHeight = rectElemnt.height;
-          this.chRef.markForCheck();
-          if (entry.target.id == 'image-full') {
-            if (rectHolder.top > 0) {
-              elemntCropper.style.top = rectHolder.top + 1 + 'px';
-            }
-            elemntCropper.style.left = rectHolder.left + 1 + 'px';
-          }
-        });
-      });
-      this.observer.observe(croper);
-      this.observer.observe(imageFull);
-      this.chRef.markForCheck();
-    } else {
-      croper.style.opacity = '0.0';
-      if (this.observer instanceof ResizeObserver) {
-        this.observer.unobserve(croper);
-        this.observer.unobserve(imageFull);
-      }
-      this.chRef.markForCheck();
-    }
+  onCroppUpdate(data: { x: number; y: number; width: number; height: number }) {
+    this.croppState = data;
+    this.state.cropHeight = data.height;
+    this.state.cropWidth = data.width;
   }
 
   onChangeCrop() {
-    const croper = document.getElementById('image-croper');
-    croper.style.width = this.state.cropWidth + 'px';
-    croper.style.height = this.state.cropHeight + 'px';
+    this.croppSize = { width: this.state.cropWidth, height: this.state.cropHeight };
   }
 
   onCrop() {
-    const croper = document.getElementById('image-croper');
-    const rectCroper = croper.getBoundingClientRect();
-    const dataHolderRect = document.getElementById('image-full').getBoundingClientRect();
+    const dataHolderRect = document.querySelector('.croppr-container').getBoundingClientRect();
+    console.log('🚀 ~ file: edit-image.component.ts ~ line 152 ~ EditImageComponent ~ onCrop ~ dataHolderRect', dataHolderRect);
     const canvas = document.createElement('canvas');
     return new Promise((resolve, reject) => {
       let ctx = canvas.getContext('2d');
@@ -184,20 +136,32 @@ export class EditImageComponent implements OnInit, AfterViewInit {
       image.src = this.imageSrc;
       image.onload = () => {
         let ratio = image.height / dataHolderRect.height;
-        let newWidth = rectCroper.width * ratio;
-        let newHeight = rectCroper.height * ratio;
+        console.log('🚀 ~ file: edit-image.component.ts ~ line 161 ~ EditImageComponent ~ returnnewPromise ~ ratio', ratio);
+        let newWidth = this.croppState.width;
+        let newHeight = this.croppState.height;
         canvas.height = newHeight;
         canvas.width = newWidth;
+        // ctx.drawImage(
+        //   image,
+        //   Math.abs(this.croppState.x * ratio) - Math.abs(dataHolderRect.x * ratio),
+        //   Math.abs(this.croppState.y * ratio) - Math.abs(dataHolderRect.y * ratio),
+        //   newWidth,
+        //   newHeight,
+        //   0,
+        //   0,
+        //   newWidth,
+        //   newHeight,
+        // );
         ctx.drawImage(
           image,
-          Math.abs(rectCroper.x * ratio) - Math.abs(dataHolderRect.x * ratio),
-          Math.abs(rectCroper.y * ratio) - Math.abs(dataHolderRect.y * ratio),
-          newWidth,
-          newHeight,
+          Math.abs(this.croppState.x),
+          Math.abs(this.croppState.y),
+          this.croppState.width,
+          this.croppState.height,
           0,
           0,
-          newWidth,
-          newHeight,
+          this.croppState.width,
+          this.croppState.height,
         );
         return resolve(canvas.toDataURL(`image/${this.state.format}`, this.state.quality));
       };
@@ -208,11 +172,13 @@ export class EditImageComponent implements OnInit, AfterViewInit {
       .then((dataUri: string) => {
         this.imageSrc = dataUri;
         this.showCrop = false;
-        this.onCropStateChange();
         this.state.maxWidth = canvas.width;
         this.state.maxHeight = canvas.height;
         this.state.originImageSrc = dataUri;
+        this.state.cropHeight = 150;
+        this.state.cropWidth = 150;
         saveState(this.state, dataUri);
+        this.croppSize = { width: 150, height: 150 };
         this.chRef.markForCheck();
       })
       .catch((e) => {

@@ -17,7 +17,7 @@
     "strictMetadataEmit": true,
     "enableResourceInlining": true,
     "strictTemplates": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

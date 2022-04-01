@@ -7,9 +7,16 @@
 
   <div class="image-container">
     <div class="image-holder-full">
-      <img id="image-full" [src]="this.imageSrc" id="croppr" />
+      <img id="image-full" [src]="this.imageSrc" [style.display]="showCrop ? 'none' : ''" />
 
-      <div id="image-croper" class="image-croper" [style.display]="showCrop ? '' : 'none'">
+      <lib-cropper-wrapper
+        [setSize]="this.croppSize"
+        (croppUpdate)="onCroppUpdate($event)"
+        [_imageSrc]="this.imageSrc"
+        *ngIf="showCrop"
+      ></lib-cropper-wrapper>
+
+      <!-- <div id="image-croper" class="image-croper" [style.display]="showCrop ? '' : 'none'">
         <div class="grid"></div>
         <div id="image-croper-header">
           <div
@@ -18,11 +25,11 @@
           ></div>
           <span class="material-icons" style="position: absolute; top: 0; left: 0">drag_indicator</span>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="control-panel">
-      <lib-tabs [color]="this.color" [_labels]="['Basic', 'Filters']" (indexActivatedChange)="onControlPanelIndexChange($event)">
+      <lib-tabs [color]="this.color"  [_labels]="['Basic', 'Filters']" (indexActivatedChange)="onControlPanelIndexChange($event)">
         <ng-container *ngIf="controlPanelIndex == 0">
           <div style="display: flex; width: 100%; justify-content: space-between">
             <p class="item-panel">{{ labels['Quality'] }}</p>
@@ -47,7 +54,13 @@
           <div class="item-panel" style="display: flex; width: 100%; justify-content: space-between">
             {{ labels['Max dimensions'] }}
             <div style="display: flex; align-items: center">
-              <input type="checkbox" [(ngModel)]="this.state.maintainAspectRatio" [style.color]="color" />
+              <input
+                [readonly]="showCrop"
+                [disabled]="showCrop"
+                type="checkbox"
+                [(ngModel)]="this.state.maintainAspectRatio"
+                [style.color]="color"
+              />
               <span class="caption">{{ labels['aspect-ratio'] }}</span>
             </div>
           </div>
@@ -134,13 +147,7 @@
 
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
             <span style="display: flex; align-items: center">
-              <input
-                type="checkbox"
-                (change)="onCropStateChange()"
-                [(ngModel)]="showCrop"
-                [style.color]="color"
-                style="margin-bottom: 3px"
-              />
+              <input type="checkbox" [(ngModel)]="showCrop" [style.color]="color" style="margin-bottom: 3px" />
               <span class="item-panel" style="margin-left: 4px">{{ labels['Crop'] }}</span>
             </span>
           </div>
@@ -161,7 +168,7 @@
                 <input
                   (change)="onChangeCrop()"
                   placeholder="{{ labels['width(px)'] }}"
-                  [(ngModel)]="this.state.cropWidth"
+                  [(ngModel)]="state.cropWidth"
                   type="number"
                   [min]="0"
                   [max]="2000"
@@ -172,7 +179,7 @@
                 <input
                   (change)="onChangeCrop()"
                   placeholder="{{ labels['height(px)'] }}"
-                  [(ngModel)]="this.state.cropHeight"
+                  [(ngModel)]="state.cropHeight"
                   type="number"
                   [min]="0"
                   [max]="2000"
