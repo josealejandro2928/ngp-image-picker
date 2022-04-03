@@ -73,6 +73,11 @@ export default class Croppr extends CropprCore {
    */
   resizeTo(width, height, origin = [0.5, 0.5]) {
     this.box.resize(width, height, origin);
+    //////////////////////////////////////////////////////////////////
+    const parentWidth = this.cropperEl.offsetWidth;
+    const parentHeight = this.cropperEl.offsetHeight;
+    this.box.constrainToBoundary(parentWidth, parentHeight, [0.5, 0.5]);
+    ///////////////////////////////////////////////////////////////////
     this.redraw();
 
     // Call the callback

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, OnDestroy, HostListener } from '@angular/core';
 import Croppr from '../../functions/croppr/index';
 
 @Component({
@@ -10,6 +10,15 @@ export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy
   imageSrc: string = '';
   croppr: Croppr;
   croppSize: { width: number; height: number } = { width: 150, height: 150 };
+
+  @HostListener('document:keydown.Control', ['$event'])
+  onKeyDown() {
+    this.croppr.options.aspectRatio = 1.0;
+  }
+  @HostListener('document:keyup.Control', ['$event'])
+  onKeyUp() {
+    this.croppr.options.aspectRatio = null;
+  }
 
   @Input() set _imageSrc(value) {
     this.imageSrc = value;
@@ -34,7 +43,7 @@ export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy
     this.croppr = new Croppr('#croppr', {
       minSize: [32, 32, 'px'],
       startSize: [this.croppSize.width, this.croppSize.height, 'px'],
-      onInitialize: (data:Croppr) => {
+      onInitialize: (data: Croppr) => {
         this.croppUpdate.emit(data.getValue());
       },
       onCropEnd: (data: { x: number; y: number; width: number; height: number }) => {
