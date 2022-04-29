@@ -87,8 +87,6 @@ export class ExampleComponent {
 <!-- ![Image 1](https://ngp-image-picker.surge.sh/assets/images/1.png) -->
 ![1](https://user-images.githubusercontent.com/37028825/165946155-66c83156-418b-4d41-b681-48e5b141f818.png)
 
-
-
 ### More about the component
 
 The `NgpImagePicker`  component has a setting to change the width, length, the aspectRatio, and objectFit properti of the loaded image. In addition to the language ( en | es | fr | de ). It also has an initial compression ratio option that by default is null.
@@ -168,7 +166,6 @@ Another capability is that you can crop the image by simply dragging and droppin
 <!-- ![Image 2](https://ngp-image-picker.surge.sh/assets/images/2.png) -->
 ![2](https://user-images.githubusercontent.com/37028825/165946318-10abdfe4-254f-4f7c-8df1-64ece3f15308.png)
 
-
 ### Control section
 
 <!-- ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-1.png) -->
@@ -183,12 +180,10 @@ Another capability is that you can crop the image by simply dragging and droppin
 <!-- ![Image 3](https://ngp-image-picker.surge.sh/assets/images/n-4.png) -->
 ![n-4](https://user-images.githubusercontent.com/37028825/165946487-5cb954db-92e3-4ce2-8432-add386f8ec22.png)
 
-
 ### Croping images
 
 <!-- ![Image 4](https://ngp-image-picker.surge.sh/assets/images/5.png) -->
 ![5](https://user-images.githubusercontent.com/37028825/165946595-d5f04d40-bd38-45fa-aeb1-c607dc524fdc.png)
-
 
 #### [DEMO](https://ngp-image-picker.surge.sh/)
 
