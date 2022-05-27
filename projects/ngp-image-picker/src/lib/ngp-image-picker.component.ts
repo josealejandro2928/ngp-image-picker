@@ -59,7 +59,6 @@ export class NgpImagePickerComponent implements OnInit {
 
   @Input() set _imageSrc(value) {
     if (value) {
-      console.log('Aqui');
       this.parseToBase64(value).then((dataUri) => {
         this.imageSrc = dataUri;
         this.state.originImageSrc = value;
