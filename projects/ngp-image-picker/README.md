@@ -1,7 +1,7 @@
 # NgpImagePicker
 
 Angular library for the selection, edition and compression of images in png, jpeg and webp formats
-This library was generated with Angular CLI version 12.0.0, and support the latest version of angular.
+This library was generated with Angular CLI version 15, and support the latest version of angular.
 Previous versions of this library relied entirely on angular material components.
 Today it is made with html and css without any extra components.
 **Recently new functionality has been added. More image editing capabilities, initial compression indexing is now available for the first time an more**
