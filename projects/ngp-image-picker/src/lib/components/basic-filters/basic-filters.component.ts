@@ -37,29 +37,23 @@ export class BasicFiltersComponent implements OnInit {
       };
     }
   }
-  debounceFlag = false;
+  timeout: number | NodeJS.Timeout | undefined;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   onChange() {
-    // this.changeFilter.next(this.state);
     this.debounce(() => {
-      this.debounceFlag = false;
       this.changeFilter.next(this.state);
-      // console.log(this.state)
     }, 150);
   }
 
   debounce = (callback: Function, delay: number | undefined) => {
-    if (this.debounceFlag) return;
-    this.debounceFlag = true;
-    let timeout: number | NodeJS.Timeout | undefined;
-    clearTimeout(timeout as any);
-    timeout = setTimeout(() => {
+    clearTimeout(this.timeout as any);
+    this.timeout = setTimeout(() => {
       callback();
-      clearTimeout(timeout as any);
+      clearTimeout(this.timeout as any);
     }, delay);
   };
 }

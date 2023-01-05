@@ -9,15 +9,24 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "resolveJsonModule": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "paths": {
-      "ngp-image-picker": ["dist/ngp-image-picker/ngp-image-picker", "dist/ngp-image-picker"]
-    }
+      "ngp-image-picker": [
+        "dist/ngp-image-picker/ngp-image-picker",
+        "dist/ngp-image-picker"
+      ]
+    },
+    "useDefineForClassFields": false
   },
 }
