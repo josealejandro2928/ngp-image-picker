@@ -21,7 +21,7 @@ export class TestLibraryWrapperComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onImageChanged(dataUri) {
+  onImageChanged(dataUri: string) {
     this.imageSrc = dataUri;
   }
 }

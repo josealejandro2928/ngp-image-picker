@@ -9,14 +9,15 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2020",
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "resolveJsonModule": true,
+    "strict": true,
     "allowSyntheticDefaultImports": true,
     "types": ["node"],
     "paths": {
       "ngp-image-picker": ["dist/ngp-image-picker/ngp-image-picker", "dist/ngp-image-picker"]
     }
-  }
+  },
 }

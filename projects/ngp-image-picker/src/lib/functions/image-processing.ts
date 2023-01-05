@@ -1,10 +1,10 @@
-import { IState } from "../models/index.models";
+import { IState } from '../models/index.models';
 
 export const MAX_BUFFER_UNDO_MEMORY = 25;
 let rotate = 1;
 
 export const convertImageUsingCanvas = (
-  datas,
+  datas: any,
   changeHeight = false,
   state: IState,
   options?: { getDimFromImage?: boolean; rotate?: number },
@@ -19,6 +19,7 @@ export const convertImageUsingCanvas = (
     img.onload = () => {
       var canvas = document.createElement('canvas');
       let ctx = canvas.getContext('2d');
+      if (!ctx) return;
       let ratio = img.width / img.height;
       let width = state.maxWidth;
       let height = state.maxHeight;
@@ -71,7 +72,7 @@ export const convertImageUsingCanvas = (
     return data.dataUri;
   });
 
-  function processFilter(data) {
+  function processFilter(data: any) {
     return Object.keys(data)
       .map((key) => {
         if (['blur'].includes(key)) {
@@ -84,22 +85,25 @@ export const convertImageUsingCanvas = (
   }
 };
 
-export const dragElement = (elemnt) => {
-  var pos1 = 0,
+export const dragElement = (elemnt: any) => {
+  if (!elemnt) return;
+  let pos1 = 0,
     pos2 = 0,
     pos3 = 0,
     pos4 = 0;
   if (document.getElementById(elemnt.id + '-header')) {
     /* if present, the header is where you move the DIV from:*/
-    document.getElementById(elemnt.id + '-header').onmousedown = dragPressOn;
-    document.getElementById(elemnt.id + '-header').ontouchstart = dragPressOn;
+    let elementRef = document.getElementById((elemnt?.id as any) + '-header');
+    if (!elementRef) return;
+    elementRef.onmousedown = dragPressOn;
+    elementRef.ontouchstart = dragPressOn;
   } else {
     /* otherwise, move the DIV from anywhere inside the DIV:*/
     elemnt.ontouchstart = dragPressOn;
     elemnt.onmousedown = dragPressOn;
   }
 
-  function dragPressOn(e) {
+  function dragPressOn(e: any) {
     let popup: any = document.querySelector('#popup');
     popup.style.overflowY = 'hidden';
     e = e || window.event;
@@ -111,7 +115,7 @@ export const dragElement = (elemnt) => {
     document.onmousemove = elementDragMouse;
   }
 
-  function elementDragMouse(e) {
+  function elementDragMouse(e: any) {
     let holderImage = document.getElementById('image-full');
     e = e || window.event;
     pos1 = pos3 - e.clientX;
@@ -121,20 +125,20 @@ export const dragElement = (elemnt) => {
 
     let newTop = elemnt.offsetTop - pos2;
     let newLeft = elemnt.offsetLeft - pos1;
-    let rectHolder = holderImage.getBoundingClientRect();
+    let rectHolder = holderImage?.getBoundingClientRect();
     let rectElemnt = elemnt.getBoundingClientRect();
     // console.log('====================================');
     // console.log(rectElemnt,rectHolder);
     // console.log('====================================');
-    newTop = Math.max(newTop, rectHolder.top);
-    newTop = Math.min(newTop, rectHolder.bottom - rectElemnt.height);
-    newLeft = Math.max(newLeft, rectHolder.left);
-    newLeft = Math.min(newLeft, rectHolder.right - rectElemnt.width);
+    newTop = Math.max(newTop, rectHolder?.top as number);
+    newTop = Math.min(newTop, (rectHolder?.bottom as number) - rectElemnt.height);
+    newLeft = Math.max(newLeft, rectHolder?.left as number);
+    newLeft = Math.min(newLeft, (rectHolder?.right as number) - rectElemnt.width);
     elemnt.style.top = newTop + 'px';
     elemnt.style.left = newLeft + 'px';
   }
 
-  function elementDragTouch(e) {
+  function elementDragTouch(e: any) {
     let holderImage = document.getElementById('image-full');
     e = e || window.event;
 
@@ -149,17 +153,17 @@ export const dragElement = (elemnt) => {
 
     let newTop = elemnt.offsetTop - pos2;
     let newLeft = elemnt.offsetLeft - pos1;
-    let rectHolder = holderImage.getBoundingClientRect();
+    let rectHolder = holderImage?.getBoundingClientRect();
     let rectElemnt = elemnt.getBoundingClientRect();
 
     // console.log('====================================');
     // console.log(rectElemnt,rectHolder);
     // console.log('====================================');
 
-    newTop = Math.max(newTop, rectHolder.top);
-    newTop = Math.min(newTop, rectHolder.bottom - rectElemnt.height);
-    newLeft = Math.max(newLeft, rectHolder.left);
-    newLeft = Math.min(newLeft, rectHolder.right - rectElemnt.width);
+    newTop = Math.max(newTop, rectHolder?.top as number);
+    newTop = Math.min(newTop, (rectHolder?.bottom as number) - rectElemnt.height);
+    newLeft = Math.max(newLeft, rectHolder?.left as number);
+    newLeft = Math.min(newLeft, (rectHolder?.right as number) - rectElemnt.width);
     elemnt.style.top = newTop + 'px';
     elemnt.style.left = newLeft + 'px';
   }
@@ -178,22 +182,22 @@ export const dragElement = (elemnt) => {
 export const saveState = (state: IState, lastImage?: string) => {
   if (state.arrayCopiedImages.length <= MAX_BUFFER_UNDO_MEMORY) {
     state.arrayCopiedImages.push({
-      lastImage: lastImage,
+      lastImage: lastImage as string,
       width: state.maxWidth,
       height: state.maxHeight,
       quality: state.quality,
       format: state.format,
-      originImageSrc: state.originImageSrc,
+      originImageSrc: state.originImageSrc as string,
       basicFilters: state.basicFilters,
     });
   } else {
     state.arrayCopiedImages[state.arrayCopiedImages.length - 1] = {
-      lastImage: lastImage,
+      lastImage: lastImage as string,
       width: state.maxWidth,
       height: state.maxHeight,
       quality: state.quality,
       format: state.format,
-      originImageSrc: state.originImageSrc,
+      originImageSrc: state.originImageSrc as string,
       basicFilters: state.basicFilters,
     };
   }

@@ -8,23 +8,25 @@ import Croppr from '../../functions/croppr/index';
 })
 export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy {
   imageSrc: string = '';
-  croppr: Croppr;
+  croppr: Croppr | undefined | null = null;
   croppSize: { width: number; height: number } = { width: 150, height: 150 };
 
   @HostListener('document:keydown.Control', ['$event'])
   onKeyDown() {
+    if (!this.croppr) return;
     this.croppr.options.aspectRatio = 1.0;
   }
   @HostListener('document:keyup.Control', ['$event'])
   onKeyUp() {
+    if (!this.croppr) return;
     this.croppr.options.aspectRatio = null;
   }
 
-  @Input() set _imageSrc(value) {
-    this.imageSrc = value;
+  @Input() set _imageSrc(value: string) {
+    this.imageSrc = value as string;
   }
 
-  @Input() set setSize(value) {
+  @Input() set setSize(value: any) {
     this.croppSize = value;
     if (this.croppr) this.croppr.resizeTo(this.croppSize.width, this.croppSize.height);
   }
@@ -53,6 +55,7 @@ export class CropperWrapperComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy(): void {
+    if (!this.croppr) return;
     this.croppr.destroy();
   }
 }

@@ -47,8 +47,8 @@ export class NgpImagePickerComponent implements OnInit {
   };
   imageSrc: any;
   loadImage = false;
-  fileType;
-  urlImage;
+  fileType: string = '';
+  urlImage: string = '';
   uuidFilePicker = Date.now().toString(20);
   showEditPanel = false;
   imageName = 'donload';
@@ -57,7 +57,7 @@ export class NgpImagePickerComponent implements OnInit {
 
   @Input() color: string = '#1e88e5';
 
-  @Input() set _imageSrc(value) {
+  @Input() set _imageSrc(value: any) {
     if (value) {
       this.parseToBase64(value).then((dataUri) => {
         this.imageSrc = dataUri;
@@ -94,11 +94,11 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  @Input() set _config(value) {
+  @Input() set _config(value: any) {
     this.processConfig(value);
   }
 
-  @ViewChild('imagePicker', { static: false }) imagePicker: ElementRef;
+  @ViewChild('imagePicker', { static: false }) imagePicker: ElementRef | null | undefined = null;
   @Output() $imageChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() $imageOriginal: EventEmitter<any> = new EventEmitter<any>();
 
@@ -110,7 +110,7 @@ export class NgpImagePickerComponent implements OnInit {
 
   appendLinkIconsToHead() {
     let head: HTMLElement = document.head;
-    let linkIcons: HTMLElement = head.querySelector('#ngp-image-picker-icons-id');
+    let linkIcons: HTMLElement | null | undefined = head.querySelector('#ngp-image-picker-icons-id') as HTMLElement;
     if (linkIcons) return;
     let link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
@@ -119,12 +119,12 @@ export class NgpImagePickerComponent implements OnInit {
     head.appendChild(link);
   }
 
-  onUpload(event) {
+  onUpload(event: any) {
     event.preventDefault();
-    this.imagePicker.nativeElement.click();
+    this.imagePicker?.nativeElement.click();
   }
 
-  handleFileSelect(evt) {
+  handleFileSelect(evt: any) {
     const files = evt.target?.files;
     if (files) {
       const file = files[0];
@@ -142,7 +142,7 @@ export class NgpImagePickerComponent implements OnInit {
     }
   }
 
-  async handleReaderLoaded(readerEvt) {
+  async handleReaderLoaded(readerEvt: any) {
     const binaryString = readerEvt.target.result;
     const base64textString = btoa(binaryString);
     this.state.originImageSrc = this.urlImage + base64textString;
@@ -168,7 +168,7 @@ export class NgpImagePickerComponent implements OnInit {
           height: img.height,
           quality: this.state.quality,
           format: this.state.format,
-          originImageSrc: this.state.originImageSrc,
+          originImageSrc: this.state.originImageSrc as string,
         });
       };
     }
@@ -181,7 +181,7 @@ export class NgpImagePickerComponent implements OnInit {
     this.showEditPanel = true;
   }
 
-  onCloseEditPanel(data) {
+  onCloseEditPanel(data: any) {
     if (data) {
       this.state = data.state;
       this.imageSrc = data.imageSrc;
@@ -190,7 +190,7 @@ export class NgpImagePickerComponent implements OnInit {
     this.showEditPanel = false;
   }
 
-  parseToBase64(imageUrl) {
+  parseToBase64(imageUrl: string) {
     let types = imageUrl.split('.');
     let type = types[types.length - 1];
     if (type && (type == 'png' || type == 'jpeg' || type == 'webp')) {
@@ -215,6 +215,7 @@ export class NgpImagePickerComponent implements OnInit {
       img.onload = () => {
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
+        if (!ctx) return;
         let ratio = 1.0;
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
@@ -264,7 +265,7 @@ export class NgpImagePickerComponent implements OnInit {
     if (this.imageSrc && this.imageSrc.length) {
       return Math.ceil(((3 / 4) * this.imageSrc.length) / 1024);
     } else {
-      return;
+      return 0;
     }
   }
 
@@ -285,7 +286,7 @@ export class NgpImagePickerComponent implements OnInit {
       cropWidth: 150,
       maintainAspectRatio: true,
       arrayCopiedImages: [],
-      basicFilters: null,
+      basicFilters: undefined,
       quality: 92,
     };
     this.showEditPanel = false;

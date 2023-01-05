@@ -1,14 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IBasicFilterState } from '../../models/index.models';
 
-
 @Component({
   selector: 'lib-basic-filters',
   templateUrl: './basic-filters.component.html',
   styleUrls: ['./basic-filters.component.scss'],
 })
 export class BasicFiltersComponent implements OnInit {
-  @Input() color: string;
+  @Input() color: string = '';
   @Input() labels: any;
 
   @Output() changeFilter = new EventEmitter<IBasicFilterState>();
@@ -23,7 +22,7 @@ export class BasicFiltersComponent implements OnInit {
     sepia: 0,
   };
 
-  @Input() set filterState(value) {
+  @Input() set filterState(value: any) {
     if (value) {
       this.state = JSON.parse(JSON.stringify({ ...this.state, ...value }));
     } else {
@@ -53,14 +52,14 @@ export class BasicFiltersComponent implements OnInit {
     }, 150);
   }
 
-  debounce = (callback: Function, delay) => {
+  debounce = (callback: Function, delay: number | undefined) => {
     if (this.debounceFlag) return;
     this.debounceFlag = true;
-    let timeout;
-    clearTimeout(timeout);
+    let timeout: number | NodeJS.Timeout | undefined;
+    clearTimeout(timeout as any);
     timeout = setTimeout(() => {
       callback();
-      clearTimeout(timeout);
+      clearTimeout(timeout as any);
     }, delay);
   };
 }

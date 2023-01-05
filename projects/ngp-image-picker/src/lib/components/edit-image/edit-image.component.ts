@@ -10,11 +10,11 @@ import { IBasicFilterState, IState } from '../../models/index.models';
 })
 export class EditImageComponent implements OnInit {
   @Input() labels: any;
-  @Input() imageSrc: string;
-  @Input() color: string;
+  @Input() imageSrc: string = '';
+  @Input() color: string = '';
   controlPanelIndex: number = 0;
   showCrop: boolean = false;
-  observer: ResizeObserver = null;
+  observer: ResizeObserver | undefined | null = null;
   allFormats = ['webp', 'jpeg', 'png'];
 
   @Input() initialState: IState | null | any = {};
@@ -30,7 +30,7 @@ export class EditImageComponent implements OnInit {
     arrayCopiedImages: [],
     originImageSrc: '',
   };
-  croppState: { x: number; y: number; width: number; height: number };
+  croppState: { x: number; y: number; width: number; height: number } | undefined | null;
   croppSize: { width: number; height: number } = { width: 150, height: 150 };
   isMobile = false;
 
@@ -47,8 +47,10 @@ export class EditImageComponent implements OnInit {
 
   onCloseEditPanel(saveChanges: boolean = false) {
     if (this.observer instanceof ResizeObserver) {
-      this.observer.unobserve(document.getElementById('image-croper'));
-      this.observer.unobserve(document.getElementById('image-full'));
+      let imageCroperElRef: any = document.getElementById('image-croper');
+      let imageFullElRef: any = document.getElementById('image-full');
+      this.observer.unobserve(imageCroperElRef);
+      this.observer.unobserve(imageFullElRef);
     }
     this.showCrop = false;
     if (saveChanges) this.closeModal.next({ state: this.state, imageSrc: this.imageSrc });
@@ -63,7 +65,7 @@ export class EditImageComponent implements OnInit {
     if (this.imageSrc && this.imageSrc.length) {
       return Math.ceil(((3 / 4) * this.imageSrc.length) / 1024);
     } else {
-      return;
+      return "";
     }
   }
 
@@ -109,7 +111,7 @@ export class EditImageComponent implements OnInit {
           quality: newValue.quality,
           format: newValue.format,
           originImageSrc: newValue.originImageSrc,
-          basicFilters: newValue.basicFilters,
+          basicFilters: newValue.basicFilters as IBasicFilterState,
         };
         this.imageSrc = newValue.lastImage;
         this.chRef.markForCheck();
@@ -120,7 +122,6 @@ export class EditImageComponent implements OnInit {
   }
 
   onCroppUpdate(data: { x: number; y: number; width: number; height: number }) {
-    // console.log('🚀 ~ file: edit-image.component.ts ~ line 120 ~ EditImageComponent ~ onCroppUpdate ~ data', data);
     this.croppState = data;
     this.state.cropHeight = data.height;
     this.state.cropWidth = data.width;
@@ -134,25 +135,25 @@ export class EditImageComponent implements OnInit {
     // const dataHolderRect = document.querySelector('.croppr-container').getBoundingClientRect();
     const canvas = document.createElement('canvas');
     return new Promise((resolve, reject) => {
-      let ctx = canvas.getContext('2d');
+      let ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
       let image = new Image();
       image.src = this.imageSrc;
       image.onload = () => {
         // let ratio = image.height / dataHolderRect.height;
-        let newWidth = this.croppState.width;
-        let newHeight = this.croppState.height;
-        canvas.height = newHeight;
-        canvas.width = newWidth;
+        let newWidth = this.croppState?.width;
+        let newHeight = this.croppState?.height;
+        canvas.height = newHeight as number;
+        canvas.width = newWidth as number;
         ctx.drawImage(
           image,
-          Math.abs(this.croppState.x),
-          Math.abs(this.croppState.y),
-          this.croppState.width,
-          this.croppState.height,
+          Math.abs(this.croppState?.x || 0),
+          Math.abs(this.croppState?.y || 0),
+          this.croppState?.width || 0,
+          this.croppState?.height || 0,
           0,
           0,
-          this.croppState.width,
-          this.croppState.height,
+          this.croppState?.width || 0,
+          this.croppState?.height || 0,
         );
         return resolve(canvas.toDataURL(`image/${this.state.format}`, this.state.quality));
       };
@@ -160,15 +161,15 @@ export class EditImageComponent implements OnInit {
         reject(e);
       };
     })
-      .then((dataUri: string) => {
+      .then((dataUri: any) => {
         this.imageSrc = dataUri;
         this.showCrop = false;
         this.state.maxWidth = canvas.width;
         this.state.maxHeight = canvas.height;
-        this.state.originImageSrc = dataUri;
+        this.state.originImageSrc = dataUri as string;
         this.state.cropHeight = 150;
         this.state.cropWidth = 150;
-        saveState(this.state, dataUri);
+        saveState(this.state, dataUri as string);
         this.croppSize = { width: 150, height: 150 };
         this.chRef.markForCheck();
       })

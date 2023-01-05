@@ -124,6 +124,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ngp-image-picker"
+  }
 }
