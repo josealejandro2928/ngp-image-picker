@@ -189,7 +189,7 @@ Another capability is that you can crop the image by simply dragging and droppin
 
 ##### Stackblitz example
 
-#### [stackblitz example](https://stackblitz.com/edit/angular-ivy-otu4f3?file=src/app/app.component.ts)
+#### [stackblitz example](https://stackblitz.com/edit/ngp-image-picker-example-usage?file=src/app/app.component.ts)
 
 ##### React version
 
