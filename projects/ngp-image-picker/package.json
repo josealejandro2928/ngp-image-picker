@@ -1,6 +1,6 @@
 {
   "name": "ngp-image-picker",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Angular library for the selection, edition and compression of images in png, jpeg and webp formats.",
   "author": "josealejandro2928",
   "repository": "https://github.com/josealejandro2928/ngp-image-picker",
