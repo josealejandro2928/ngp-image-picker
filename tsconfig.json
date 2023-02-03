@@ -19,7 +19,8 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "types": [
-      "node"
+      "node",
+      "jasmine"
     ],
     "paths": {
       "ngp-image-picker": [
