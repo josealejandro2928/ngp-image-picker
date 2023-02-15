@@ -32,7 +32,7 @@ describe('NgpImagePickerComponent', () => {
   });
 
   it(`imageName has default value`, () => {
-    expect(component.imageName).toEqual(`donload`);
+    expect(component.imageName).toEqual(`download`);
   });
 
   it(`labels has default value`, () => {

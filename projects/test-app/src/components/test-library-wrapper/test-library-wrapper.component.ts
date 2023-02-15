@@ -15,11 +15,13 @@ export class TestLibraryWrapperComponent implements OnInit {
     aspectRatio: 4 / 3,
     compressInitial: null,
   };
-  initialImage: string = '';
+  initialImage: string = "https://josealejandro2928.github.io/portfolio/archives/pokedex/1.jpeg";
+  // initialImage: string = "https://local-spaces.fra1.digitaloceanspaces.com/test.jpg";
   imageSrc: any = '';
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   onImageChanged(dataUri: string) {
     this.imageSrc = dataUri;

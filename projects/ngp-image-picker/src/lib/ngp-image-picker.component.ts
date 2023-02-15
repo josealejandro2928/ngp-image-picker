@@ -51,7 +51,7 @@ export class NgpImagePickerComponent implements OnInit {
   urlImage: string = '';
   uuidFilePicker = Date.now().toString(20);
   showEditPanel = false;
-  imageName = 'donload';
+  imageName = 'download';
   labels: any = labelEn;
   arrayCopiedImages: any[] = [];
 
@@ -59,21 +59,25 @@ export class NgpImagePickerComponent implements OnInit {
 
   @Input() set _imageSrc(value: any) {
     if (value) {
-      this.parseToBase64(value).then((dataUri) => {
-        this.imageSrc = dataUri;
-        this.state.originImageSrc = value;
-        this.state.arrayCopiedImages.push({
-          lastImage: dataUri,
-          width: this.state.maxWidth,
-          height: this.state.maxHeight,
-          quality: this.state.quality,
-          format: this.state.format,
-          originImageSrc: value,
+      this.parseToBase64(value)
+        .then((dataUri) => {
+          this.imageSrc = dataUri;
+          this.state.originImageSrc = value;
+          this.state.arrayCopiedImages.push({
+            lastImage: dataUri,
+            width: this.state.maxWidth,
+            height: this.state.maxHeight,
+            quality: this.state.quality,
+            format: this.state.format,
+            originImageSrc: value,
+          });
+          this.$imageOriginal.next(this.state.originImageSrc);
+          this.loadImage = true;
+          this.chRef.markForCheck();
+        })
+        .catch((e) => {
+          console.error('!!!!ERROR: ', e);
         });
-        this.$imageOriginal.next(this.state.originImageSrc);
-        this.loadImage = true;
-        this.chRef.markForCheck();
-      });
     } else {
       this.imageSrc = null;
       this.state.originImageSrc = null;
@@ -205,14 +209,14 @@ export class NgpImagePickerComponent implements OnInit {
     };
 
     return new Promise((resolve, reject) => {
-      let img = new Image();
-      img.crossOrigin = 'Anonymous';
+      let img: HTMLImageElement = new window.Image()
+      img.crossOrigin = "Anonymous"
       this.state = {
         ...this.state,
         maxHeight: img.height,
         maxWidth: img.width,
       };
-      img.onload = () => {
+      img.onload = (e) => {
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
         if (!ctx) return;

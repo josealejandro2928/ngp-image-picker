@@ -40,9 +40,7 @@ export class EditImageComponent implements OnInit {
 
   ngOnInit() {
     this.state = JSON.parse(JSON.stringify({ ...this.state, ...this.initialState }));
-    // console.log(this.state);
     this.isMobile = window.innerWidth < 800;
-    console.log('🚀 ~ file: edit-image.component.ts ~ line 45 ~ EditImageComponent ~ ngOnInit ~ this.isMobile', this.isMobile);
   }
 
   onCloseEditPanel(saveChanges: boolean = false) {
@@ -74,7 +72,7 @@ export class EditImageComponent implements OnInit {
       this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, changeHeight, this.state);
       this.chRef.markForCheck();
     } catch (error) {
-      console.log('🚀 ~ file: edit-image.component.ts ~ line 76 ~ EditImageComponent ~ onChangeSize ~ error', error);
+      console.error('🚀 ~ file: edit-image.component.ts ~ line 76 ~ EditImageComponent ~ onChangeSize ~ error', error);
       this.chRef.markForCheck();
     }
   }
@@ -84,7 +82,7 @@ export class EditImageComponent implements OnInit {
       this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
       this.chRef.markForCheck();
     } catch (error) {
-      console.log('🚀 ~ file: edit-image.component.ts ~ line 86 ~ EditImageComponent ~ onChangeQuality ~ error', error);
+      console.error('🚀 ~ file: edit-image.component.ts ~ line 86 ~ EditImageComponent ~ onChangeQuality ~ error', error);
       this.chRef.markForCheck();
     }
   }
@@ -94,7 +92,7 @@ export class EditImageComponent implements OnInit {
       this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
       this.chRef.markForCheck();
     } catch (error) {
-      console.log('🚀 ~ file: edit-image.component.ts ~ line 98 ~ EditImageComponent ~ onChangeFormat ~ error', error);
+      console.error('🚀 ~ file: edit-image.component.ts ~ line 98 ~ EditImageComponent ~ onChangeFormat ~ error', error);
       this.chRef.markForCheck();
     }
   }
@@ -117,7 +115,7 @@ export class EditImageComponent implements OnInit {
         this.chRef.markForCheck();
       }
     } catch (e) {
-      console.log('🚀 ~ file: edit-image.component.ts ~ line 126 ~ EditImageComponent ~ onRestore ~ e', e);
+      console.error('🚀 ~ file: edit-image.component.ts ~ line 126 ~ EditImageComponent ~ onRestore ~ e', e);
     }
   }
 
@@ -174,7 +172,7 @@ export class EditImageComponent implements OnInit {
         this.chRef.markForCheck();
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   }
 
@@ -188,7 +186,7 @@ export class EditImageComponent implements OnInit {
       this.imageSrc = await convertImageUsingCanvas(this.state.originImageSrc, false, this.state);
       this.chRef.markForCheck();
     } catch (e) {
-      console.log('🚀 ~ file: edit-image.component.ts ~ line 250 ~ EditImageComponent ~ onChangeFilters ~ e', e);
+      console.error('🚀 ~ file: edit-image.component.ts ~ line 250 ~ EditImageComponent ~ onChangeFilters ~ e', e);
     }
   }
 
