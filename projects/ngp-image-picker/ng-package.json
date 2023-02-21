@@ -3,5 +3,9 @@
   "dest": "../../dist/ngp-image-picker",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "./LICENSE.md",
+    "./README.md"
+  ]
 }
