@@ -3,12 +3,12 @@
   "version": "2.4.4",
   "description": "Angular library for the selection, edition and compression of images in png, jpeg and webp formats.",
   "peerDependencies": {
-    "@angular/common": "^15.0.4",
-    "@angular/core": "^15.0.4"
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0"
   },
   "devDependencies": {},
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.5.0"
   },
   "license": "MIT",
   "keywords": [
