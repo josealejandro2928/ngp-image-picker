@@ -1,7 +1,11 @@
 # NgpImagePicker
 
+<center><span style="color: red">
+This package is used to provide Angular v16 support until the original [ngp-image-picker](https://www.npmjs.com/package/ngp-image-picker) package is updated.
+</span></center>
+
 Angular library for the selection, edition and compression of images in png, jpeg and webp formats
-This library was generated with Angular CLI version 15, and support the latest version of angular.
+This library was generated with Angular CLI version 16, and support the latest version of angular.
 Previous versions of this library relied entirely on angular material components.
 Today it is made with html and css without any extra components.
 **Recently new functionality has been added. More image editing capabilities, initial compression indexing is now available for the first time an more**
@@ -13,7 +17,7 @@ In many projects it is of interest to upload images for a backend, and sometimes
 ### Installation
 
 ```sh
-npm i ngp-image-picker --save
+npm i @codebuilt/ngp-image-picker --save
 ```
 
 ### Usages
@@ -22,7 +26,7 @@ You must import the module `NgpImagePicker` where you will use it and use the co
 
 ```typescript
 ***
-import { NgpImagePickerModule } from 'ngp-image-picker';
+import { NgpImagePickerModule } from '@codebuilt/ngp-image-picker';
 @NgModule({
   ***
   imports: [
