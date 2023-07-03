@@ -62,9 +62,9 @@ export class EditImageComponent implements OnInit {
   calculateSize() {
     if (this.imageSrc && this.imageSrc.length) {
       return Math.ceil(((3 / 4) * this.imageSrc.length) / 1024);
-    } else {
-      return "";
     }
+    
+    return 0;
   }
 
   async onChangeSize(changeHeight = false) {
